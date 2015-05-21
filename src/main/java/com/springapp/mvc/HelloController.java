@@ -22,15 +22,28 @@ public class HelloController {
 		return "hello";
 	}
 
-    @RequestMapping(value = "registro", method = RequestMethod.GET)
-    public String registro(ModelMap model){
-        model.addAttribute("asdf","asdf");
-        return "registro";
-    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap model){
         model.addAttribute("index","index");
         return "index";
+    }
+
+    @RequestMapping(value = "/historial", method = RequestMethod.GET)
+    public String historial(ModelMap model){
+        model.addAttribute("asdf","asdf");
+        return "historial";
+    }
+
+    @RequestMapping(value = "/Registro", method = RequestMethod.GET)
+    public String registro(ModelMap model){
+        model.addAttribute("asdf","asdf");
+        return "Registro";
+    }
+
+    @RequestMapping(value = "/Registros-informacion", method = RequestMethod.GET)
+    public String registros_informacion(ModelMap model){
+        model.addAttribute("asdf","asdf");
+        return "Registros-informacion";
     }
 }

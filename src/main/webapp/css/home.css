@@ -1,0 +1,68 @@
+body {
+    background-image: url("media/background.jpg");
+    background-color: black;
+
+
+}
+
+@font-face {
+    font-family: "Maven";
+    src: url("Fonts/MavenProLight-100.otf");
+
+}
+
+#content-main{
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height:100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+
+
+}
+
+
+
+h1,h2,h3 {
+    font-family: Maven;
+    text-align: center;
+    color: white;
+}
+
+h2{
+    margin-top: 8%
+}
+
+.buttons {
+    width: 400px;
+    /*margin: 85px 50px 10px 1px;*/
+    margin: 90px auto;
+    height: auto;
+}
+
+.buttons img{
+    margin-left: 25px;
+}
+
+
+
+
+#header-line {
+    width: 40%;
+    margin: 0 auto 0 auto
+    }
+
+#line {
+
+
+}
+
+#line2{
+
+}
+
+
+
+
+

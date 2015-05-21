@@ -1,0 +1,42 @@
+@font-face {
+    font-family: "Maven";
+    src: url("Fonts/MavenProLight-100.otf");
+
+}
+
+a{
+    color: #ebe941;
+}
+#titulo {
+    text-align:center;
+    font-family: Maven;
+    padding:5px;
+}
+#correlativo{
+    padding: 5px;
+    font-family: Maven;
+    -webkit-align-self: center;
+}
+#numero{
+    text-align: right;
+    font-family: Maven;
+    float: left;
+    padding: 5px;
+}
+#paciente{
+    text-align: left;
+    padding: 5px;
+    font-family: Maven;
+    float: left;
+}
+#cirujia{
+    text-align: left;
+    font-family: Maven;
+    padding: 5px;
+    float: left;
+}
+#menu_inferior{
+    text-align: center;
+    font-family: Maven;
+    float: right;
+}

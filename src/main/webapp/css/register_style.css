@@ -1,0 +1,174 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background: url(/css/media/cirujia.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    /*background: #567;*/
+    font-family: 'Open Sans', sans-serif;
+}
+
+.button {
+    width: 100px;
+    background: #3399cc;
+    display: block;
+    margin: 0 auto;
+    margin-top: 1%;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s;
+    -webkit-transition: background .3s;
+}
+
+.button:hover {
+    background: #2288bb;
+}
+
+#login {
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 8px;
+    margin-bottom: 2%;
+    transition: opacity 1s;
+    -webkit-transition: opacity 1s;
+}
+
+#triangle {
+    width: 0;
+    border-top: 12x solid transparent;
+    border-right: 12px solid transparent;
+    border-bottom: 12px solid #3399cc;
+    border-left: 12px solid transparent;
+    margin: 0 auto;
+}
+
+#login h1 {
+    background: #3399cc;
+    padding: 20px 0;
+    font-size: 140%;
+    font-weight: 300;
+    text-align: center;
+    color: #fff;
+}
+
+form {
+    background: #f0f0f0;
+    padding: 6% 4%;
+}
+
+#login p{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 95%;
+    text-align: center;
+    padding-right: 2%;
+    float: left;
+}
+
+input[type="date"],
+input[type="time"]{
+    width: 46%;
+    background: #fff;
+    margin-bottom: 4%;
+    border: 1px solid #ccc;
+    padding: 4%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 95%;
+    color: #555;
+
+}
+
+input[type="text"]{
+    width: 46%;
+    background: #fff;
+    margin-bottom: 4%;
+    border: 1px solid #ccc;
+    padding: 4%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 95%;
+    color: #555;
+}
+
+input[type=radio] {
+    display:none;
+}
+
+input[type=radio] + label {
+    display:inline-block;
+
+    padding: 4px 12px;
+    margin-bottom: 2%;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.75);
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top,#fff,#e6e6e6);
+    background-image: -webkit-gradient(linear,0 0,0 100%,from(#fff),to(#e6e6e6));
+    background-image: -webkit-linear-gradient(top,#fff,#e6e6e6);
+    background-image: -o-linear-gradient(top,#fff,#e6e6e6);
+    background-image: linear-gradient(to bottom,#fff,#e6e6e6);
+    background-repeat: repeat-x;
+    border: 1px solid #ccc;
+    border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+    border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+    border-bottom-color: #b3b3b3;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff',endColorstr='#ffe6e6e6',GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+}
+
+input[type=radio]:checked + label {
+    background-image: none;
+    outline: 0;
+    -webkit-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+    -moz-box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.15),0 1px 2px rgba(0,0,0,0.05);
+    background-color:#e0e0e0;
+}
+
+hr {
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.7em;
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    border-style: inset;
+    border-width: 2px;
+    width: 92%;
+    color: #cccccc;
+}
+
+input[type="submit"] {
+    width: 100%;
+    background: #3399cc;
+    border: 0;
+    padding: 4%;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 100%;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s;
+    -webkit-transition: background .3s;
+}
+
+input[type="submit"]:hover {
+    background: #2288bb;
+}
+

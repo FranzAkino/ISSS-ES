@@ -14,5 +14,6 @@
 </div>
 
 	<a href="${pageContext.request.contextPath}registro">asdf</a>
+	<h1>${message}</h1>
 </body>
 </html>

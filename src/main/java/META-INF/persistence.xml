@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+
+    <persistence-unit name="NewPersistenceUnit">
+        <!--<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>-->
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>com.persistencia.Cie9</class>
+        <class>com.persistencia.Cirujano</class>
+        <class>com.persistencia.Cirujia</class>
+        <class>com.persistencia.Especialidad</class>
+        <class>com.persistencia.Horario</class>
+        <class>com.persistencia.Metas</class>
+        <class>com.persistencia.Paciente</class>
+        <class>com.persistencia.Quirofano</class>
+        <class>com.persistencia.Riesgo</class>
+        <properties>
+            <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/ISSS"/>
+            <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="eclipselink.jdbc.user" value="root"/>
+            <property name="eclipselink.jdbc.password" value="isss"/>
+        </properties>
+    </persistence-unit>
+</persistence>

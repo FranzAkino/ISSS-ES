@@ -3,6 +3,7 @@ package com.springapp.mvc;
 import com.persistencia.Cie9JpaController;
 import com.persistencia.Cirujia;
 import com.persistencia.CirujiaJpaController;
+import com.persistencia.exceptions.Coasa;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,15 +13,19 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
 
+
 @Controller
 //@RequestMapping("/")
 public class HelloController {
 
     EntityManagerFactory emf = CreadorEntityManager.crearEMF();
 
+
+
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
-		model.addAttribute("message","");
+        Coasa asdf = new Coasa();
+		model.addAttribute("message",asdf);
 		return "hello";
 	}
 
@@ -39,6 +44,7 @@ public class HelloController {
         model.addAttribute("asdf", "asfd");
         return "historial";
     }
+
 
 
 

@@ -6,13 +6,18 @@
 package com.persistencia;
 
 import com.persistencia.exceptions.NonexistentEntityException;
+
+import java.beans.Expression;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Properties;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
 
 /**
@@ -184,14 +189,18 @@ public class CirujiaJpaController implements Serializable {
     private List<Cirujia> findCirujiaEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
-            CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Cirujia.class));
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery cq = cb.createQuery();
+            Root<Cirujia> cir = cq.from(Cirujia.class);
+            cq.select(cir);
+            cq.orderBy(cb.asc(cir.get("idCirujia")));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
                 q.setFirstResult(firstResult);
             }
             return q.getResultList();
+
         } finally {
             em.close();
         }

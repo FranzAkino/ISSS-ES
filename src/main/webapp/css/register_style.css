@@ -17,6 +17,25 @@ body {
     font-family: 'Open Sans', sans-serif;
 }
 
+.button_inicio {
+    width: 100px;
+    background: #7baea5;
+    display: block;
+    /*margin: 0 auto;*/
+    margin-top: 1%;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s;
+    -webkit-transition: background .3s;
+}
+
+.button_inicio:hover {
+    background: #7baea5;
+}
+
 .button {
     width: 100px;
     background: #3399cc;

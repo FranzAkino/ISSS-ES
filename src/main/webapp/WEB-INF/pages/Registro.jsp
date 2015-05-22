@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.persistencia.Cirujia" %>
 <html>
 <head>
   <link type="text/css" rel="stylesheet" href="/css/register_style.css" />
@@ -25,6 +26,8 @@
   </script>
 </head>
 <body>
+
+<a href="${pageContext.request.contextPath}/" class="button_inicio" id="toggle-inicio">Inicio</a>
 
 <span href="#" class="button" id="toggle-login">Registro</span>
 

@@ -58,6 +58,9 @@
 <body>
 
 <div id="content-main">
+
+  <a href="${pageContext.request.contextPath}/" class="button_inicio" id="toggle-inicio">Inicio</a>
+
   <span href="#" class="button2" id="toggle-login2">Cirujano</span>
 
   <div id="cirujano">

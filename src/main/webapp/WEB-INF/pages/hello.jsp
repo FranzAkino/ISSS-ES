@@ -31,8 +31,7 @@
 
 	<a href="${pageContext.request.contextPath}registro">asdf</a>
 
-	<%--asi se puede imprimir--%>
-	<h1><%= texto%></h1>
+	<%--asi se puede imprimir--%>	<h1><%= texto%></h1>
 	<h2><%= cosa.getCasdf()%></h2>
 
 

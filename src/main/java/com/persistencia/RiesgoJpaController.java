@@ -5,8 +5,10 @@
  */
 package com.persistencia;
 
+import com.persistencia.exceptions.IllegalOrphanException;
 import com.persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -31,11 +33,29 @@ public class RiesgoJpaController implements Serializable {
     }
 
     public void create(Riesgo riesgo) {
+        if (riesgo.getCirujiaList() == null) {
+            riesgo.setCirujiaList(new ArrayList<Cirujia>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Cirujia> attachedCirujiaList = new ArrayList<Cirujia>();
+            for (Cirujia cirujiaListCirujiaToAttach : riesgo.getCirujiaList()) {
+                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getIdCirujia());
+                attachedCirujiaList.add(cirujiaListCirujiaToAttach);
+            }
+            riesgo.setCirujiaList(attachedCirujiaList);
             em.persist(riesgo);
+            for (Cirujia cirujiaListCirujia : riesgo.getCirujiaList()) {
+                Riesgo oldFkRiesgoOfCirujiaListCirujia = cirujiaListCirujia.getFkRiesgo();
+                cirujiaListCirujia.setFkRiesgo(riesgo);
+                cirujiaListCirujia = em.merge(cirujiaListCirujia);
+                if (oldFkRiesgoOfCirujiaListCirujia != null) {
+                    oldFkRiesgoOfCirujiaListCirujia.getCirujiaList().remove(cirujiaListCirujia);
+                    oldFkRiesgoOfCirujiaListCirujia = em.merge(oldFkRiesgoOfCirujiaListCirujia);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -44,12 +64,45 @@ public class RiesgoJpaController implements Serializable {
         }
     }
 
-    public void edit(Riesgo riesgo) throws NonexistentEntityException, Exception {
+    public void edit(Riesgo riesgo) throws IllegalOrphanException, NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Riesgo persistentRiesgo = em.find(Riesgo.class, riesgo.getIdRiesgo());
+            List<Cirujia> cirujiaListOld = persistentRiesgo.getCirujiaList();
+            List<Cirujia> cirujiaListNew = riesgo.getCirujiaList();
+            List<String> illegalOrphanMessages = null;
+            for (Cirujia cirujiaListOldCirujia : cirujiaListOld) {
+                if (!cirujiaListNew.contains(cirujiaListOldCirujia)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain Cirujia " + cirujiaListOldCirujia + " since its fkRiesgo field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
+            List<Cirujia> attachedCirujiaListNew = new ArrayList<Cirujia>();
+            for (Cirujia cirujiaListNewCirujiaToAttach : cirujiaListNew) {
+                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getIdCirujia());
+                attachedCirujiaListNew.add(cirujiaListNewCirujiaToAttach);
+            }
+            cirujiaListNew = attachedCirujiaListNew;
+            riesgo.setCirujiaList(cirujiaListNew);
             riesgo = em.merge(riesgo);
+            for (Cirujia cirujiaListNewCirujia : cirujiaListNew) {
+                if (!cirujiaListOld.contains(cirujiaListNewCirujia)) {
+                    Riesgo oldFkRiesgoOfCirujiaListNewCirujia = cirujiaListNewCirujia.getFkRiesgo();
+                    cirujiaListNewCirujia.setFkRiesgo(riesgo);
+                    cirujiaListNewCirujia = em.merge(cirujiaListNewCirujia);
+                    if (oldFkRiesgoOfCirujiaListNewCirujia != null && !oldFkRiesgoOfCirujiaListNewCirujia.equals(riesgo)) {
+                        oldFkRiesgoOfCirujiaListNewCirujia.getCirujiaList().remove(cirujiaListNewCirujia);
+                        oldFkRiesgoOfCirujiaListNewCirujia = em.merge(oldFkRiesgoOfCirujiaListNewCirujia);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -67,7 +120,7 @@ public class RiesgoJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -78,6 +131,17 @@ public class RiesgoJpaController implements Serializable {
                 riesgo.getIdRiesgo();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The riesgo with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<Cirujia> cirujiaListOrphanCheck = riesgo.getCirujiaList();
+            for (Cirujia cirujiaListOrphanCheckCirujia : cirujiaListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Riesgo (" + riesgo + ") cannot be destroyed since the Cirujia " + cirujiaListOrphanCheckCirujia + " in its cirujiaList field has a non-nullable fkRiesgo field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             em.remove(riesgo);
             em.getTransaction().commit();
@@ -133,5 +197,5 @@ public class RiesgoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

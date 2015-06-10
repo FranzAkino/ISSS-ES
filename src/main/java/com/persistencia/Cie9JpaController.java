@@ -44,9 +44,7 @@ public class Cie9JpaController implements Serializable {
             cie9.setCirujiaList(attachedCirujiaList);
             em.persist(cie9);
             for (Cirujia cirujiaListCirujia : cie9.getCirujiaList()) {
-//                Cie9 oldFkCie9OfCirujiaListCirujia = cirujiaListCirujia.getCie9ByFkCie9();
                 Cie9 oldFkCie9OfCirujiaListCirujia = cirujiaListCirujia.getFkCie9();
-//                cirujiaListCirujia.setCie9ByFkCie9(cie9);
                 cirujiaListCirujia.setFkCie9(cie9);
                 cirujiaListCirujia = em.merge(cirujiaListCirujia);
                 if (oldFkCie9OfCirujiaListCirujia != null) {
@@ -97,9 +95,7 @@ public class Cie9JpaController implements Serializable {
             cie9 = em.merge(cie9);
             for (Cirujia cirujiaListNewCirujia : cirujiaListNew) {
                 if (!cirujiaListOld.contains(cirujiaListNewCirujia)) {
-//                    Cie9 oldFkCie9OfCirujiaListNewCirujia = cirujiaListNewCirujia.getCie9ByFkCie9();
                     Cie9 oldFkCie9OfCirujiaListNewCirujia = cirujiaListNewCirujia.getFkCie9();
-//                    cirujiaListNewCirujia.setCie9ByFkCie9(cie9);
                     cirujiaListNewCirujia.setFkCie9(cie9);
                     cirujiaListNewCirujia = em.merge(cirujiaListNewCirujia);
                     if (oldFkCie9OfCirujiaListNewCirujia != null && !oldFkCie9OfCirujiaListNewCirujia.equals(cie9)) {

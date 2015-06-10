@@ -2,6 +2,9 @@ package com.persistencia;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by akino on 05-15-15.
@@ -13,52 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
         @NamedQuery(name = "Riesgo.findAll", query = "SELECT r FROM Riesgo r"),
         @NamedQuery(name = "Riesgo.findByIdRiesgo", query = "SELECT r FROM Riesgo r WHERE r.idRiesgo = :idRiesgo"),
         @NamedQuery(name = "Riesgo.findByNombre", query = "SELECT r FROM Riesgo r WHERE r.nombre = :nombre")})
-public class Riesgo {
-    //region Comentado
-    /*private Integer idRiesgo;
-    private String nombre;
-
-    @Id
-    @Column(name = "idRiesgo", nullable = false, insertable = true, updatable = true)
-    public Integer getIdRiesgo() {
-        return idRiesgo;
-    }
-
-    public void setIdRiesgo(Integer idRiesgo) {
-        this.idRiesgo = idRiesgo;
-    }
-
-    @Basic
-    @Column(name = "Nombre", nullable = false, insertable = true, updatable = true, length = 45)
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Riesgo riesgo = (Riesgo) o;
-
-        if (idRiesgo != null ? !idRiesgo.equals(riesgo.idRiesgo) : riesgo.idRiesgo != null) return false;
-        if (nombre != null ? !nombre.equals(riesgo.nombre) : riesgo.nombre != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idRiesgo != null ? idRiesgo.hashCode() : 0;
-        result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
-        return result;
-    }*/
-    //endregion
-
+public class Riesgo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,6 +26,8 @@ public class Riesgo {
     @Basic(optional = false)
     @Column(name = "Nombre")
     private String nombre;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkRiesgo")
+    private List<Cirujia> cirujiaList;
 
     public Riesgo() {
     }
@@ -97,6 +57,15 @@ public class Riesgo {
         this.nombre = nombre;
     }
 
+    @XmlTransient
+    public List<Cirujia> getCirujiaList() {
+        return cirujiaList;
+    }
+
+    public void setCirujiaList(List<Cirujia> cirujiaList) {
+        this.cirujiaList = cirujiaList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -119,7 +88,7 @@ public class Riesgo {
 
     @Override
     public String toString() {
-        return "huuu.Riesgo[ idRiesgo=" + idRiesgo + " ]";
+        return "persistencia.Riesgo[ idRiesgo=" + idRiesgo + " ]";
     }
 
 }

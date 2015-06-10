@@ -13,6 +13,7 @@
         <class>com.persistencia.Paciente</class>
         <class>com.persistencia.Quirofano</class>
         <class>com.persistencia.Riesgo</class>
+        <class>com.persistencia.Suspenciones</class>
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/ISSS"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>

@@ -2,6 +2,7 @@ package com.persistencia;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  * Created by akino on 05-15-15.
@@ -11,135 +12,49 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
         @NamedQuery(name = "Metas.findAll", query = "SELECT m FROM Metas m"),
-        @NamedQuery(name = "Metas.findByIdMetas", query = "SELECT m FROM Metas m WHERE m.idMetas = :idMetas"),
-        @NamedQuery(name = "Metas.findByMes", query = "SELECT m FROM Metas m WHERE m.mes = :mes"),
-        @NamedQuery(name = "Metas.findByMeta", query = "SELECT m FROM Metas m WHERE m.meta = :meta")})
-public class Metas {
-    //region Comentado
-    /*private Integer idMetas;
-    private Integer mes;
-    private Integer meta;
-    private Integer fkCirujano;
-    private Cirujano cirujanoByFkCirujano;
-
-    @Id
-    @Column(name = "idMetas", nullable = false, insertable = true, updatable = true)
-    public Integer getIdMetas() {
-        return idMetas;
-    }
-
-    public void setIdMetas(Integer idMetas) {
-        this.idMetas = idMetas;
-    }
-
-    @Basic
-    @Column(name = "Mes", nullable = false, insertable = true, updatable = true)
-    public Integer getMes() {
-        return mes;
-    }
-
-    public void setMes(Integer mes) {
-        this.mes = mes;
-    }
-
-    @Basic
-    @Column(name = "Meta", nullable = false, insertable = true, updatable = true)
-    public Integer getMeta() {
-        return meta;
-    }
-
-    public void setMeta(Integer meta) {
-        this.meta = meta;
-    }
-
-    @Basic
-    @Column(name = "fk_Cirujano", nullable = false, insertable = true, updatable = true)
-    public Integer getFkCirujano() {
-        return fkCirujano;
-    }
-
-    public void setFkCirujano(Integer fkCirujano) {
-        this.fkCirujano = fkCirujano;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Metas metas = (Metas) o;
-
-        if (idMetas != null ? !idMetas.equals(metas.idMetas) : metas.idMetas != null) return false;
-        if (mes != null ? !mes.equals(metas.mes) : metas.mes != null) return false;
-        if (meta != null ? !meta.equals(metas.meta) : metas.meta != null) return false;
-        if (fkCirujano != null ? !fkCirujano.equals(metas.fkCirujano) : metas.fkCirujano != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idMetas != null ? idMetas.hashCode() : 0;
-        result = 31 * result + (mes != null ? mes.hashCode() : 0);
-        result = 31 * result + (meta != null ? meta.hashCode() : 0);
-        result = 31 * result + (fkCirujano != null ? fkCirujano.hashCode() : 0);
-        return result;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "fk_Cirujano", referencedColumnName = "idCirujano", nullable = false)
-    public Cirujano getCirujanoByFkCirujano() {
-        return cirujanoByFkCirujano;
-    }
-
-    public void setCirujanoByFkCirujano(Cirujano cirujanoByFkCirujano) {
-        this.cirujanoByFkCirujano = cirujanoByFkCirujano;
-    }*/
-    //endregion
-
+        @NamedQuery(name = "Metas.findByIdCirujanofk", query = "SELECT m FROM Metas m WHERE m.metasPK.idCirujanofk = :idCirujanofk"),
+        @NamedQuery(name = "Metas.findByMes", query = "SELECT m FROM Metas m WHERE m.metasPK.mes = :mes"),
+        @NamedQuery(name = "Metas.findByAnio", query = "SELECT m FROM Metas m WHERE m.metasPK.anio = :anio"),
+        @NamedQuery(name = "Metas.findByMeta", query = "SELECT m FROM Metas m WHERE m.meta = :meta"),
+        @NamedQuery(name = "Metas.findByRealizadas", query = "SELECT m FROM Metas m WHERE m.realizadas = :realizadas"),
+        @NamedQuery(name = "Metas.findBySuspendidas", query = "SELECT m FROM Metas m WHERE m.suspendidas = :suspendidas")})
+public class Metas implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Basic(optional = false)
-    @Column(name = "idMetas")
-    private Integer idMetas;
-    @Basic(optional = false)
-    @Column(name = "Mes")
-    private int mes;
+    @EmbeddedId
+    protected MetasPK metasPK;
     @Basic(optional = false)
     @Column(name = "Meta")
     private int meta;
-    @JoinColumn(name = "fk_Cirujano", referencedColumnName = "idCirujano")
+    @Column(name = "Realizadas")
+    private Integer realizadas;
+    @Column(name = "Suspendidas")
+    private Integer suspendidas;
+    @JoinColumn(name = "idCirujano_fk", referencedColumnName = "idCirujano", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Cirujano fkCirujano;
+    private Cirujano cirujano;
 
     public Metas() {
     }
 
-    public Metas(Integer idMetas) {
-        this.idMetas = idMetas;
+    public Metas(MetasPK metasPK) {
+        this.metasPK = metasPK;
     }
 
-    public Metas(Integer idMetas, int mes, int meta) {
-        this.idMetas = idMetas;
-        this.mes = mes;
+    public Metas(MetasPK metasPK, int meta) {
+        this.metasPK = metasPK;
         this.meta = meta;
     }
 
-    public Integer getIdMetas() {
-        return idMetas;
+    public Metas(int idCirujanofk, int mes, int anio) {
+        this.metasPK = new MetasPK(idCirujanofk, mes, anio);
     }
 
-    public void setIdMetas(Integer idMetas) {
-        this.idMetas = idMetas;
+    public MetasPK getMetasPK() {
+        return metasPK;
     }
 
-    public int getMes() {
-        return mes;
-    }
-
-    public void setMes(int mes) {
-        this.mes = mes;
+    public void setMetasPK(MetasPK metasPK) {
+        this.metasPK = metasPK;
     }
 
     public int getMeta() {
@@ -150,18 +65,34 @@ public class Metas {
         this.meta = meta;
     }
 
-    public Cirujano getFkCirujano() {
-        return fkCirujano;
+    public Integer getRealizadas() {
+        return realizadas;
     }
 
-    public void setFkCirujano(Cirujano fkCirujano) {
-        this.fkCirujano = fkCirujano;
+    public void setRealizadas(Integer realizadas) {
+        this.realizadas = realizadas;
+    }
+
+    public Integer getSuspendidas() {
+        return suspendidas;
+    }
+
+    public void setSuspendidas(Integer suspendidas) {
+        this.suspendidas = suspendidas;
+    }
+
+    public Cirujano getCirujano() {
+        return cirujano;
+    }
+
+    public void setCirujano(Cirujano cirujano) {
+        this.cirujano = cirujano;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idMetas != null ? idMetas.hashCode() : 0);
+        hash += (metasPK != null ? metasPK.hashCode() : 0);
         return hash;
     }
 
@@ -172,7 +103,7 @@ public class Metas {
             return false;
         }
         Metas other = (Metas) object;
-        if ((this.idMetas == null && other.idMetas != null) || (this.idMetas != null && !this.idMetas.equals(other.idMetas))) {
+        if ((this.metasPK == null && other.metasPK != null) || (this.metasPK != null && !this.metasPK.equals(other.metasPK))) {
             return false;
         }
         return true;
@@ -180,8 +111,7 @@ public class Metas {
 
     @Override
     public String toString() {
-        return "huuu.Metas[ idMetas=" + idMetas + " ]";
+        return "persistencia.Metas[ metasPK=" + metasPK + " ]";
     }
-
 
 }

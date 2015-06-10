@@ -3,6 +3,7 @@ package com.persistencia;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,129 +22,7 @@ import java.util.List;
         @NamedQuery(name = "Paciente.findBySexo", query = "SELECT p FROM Paciente p WHERE p.sexo = :sexo"),
         @NamedQuery(name = "Paciente.findByEstadoCivil", query = "SELECT p FROM Paciente p WHERE p.estadoCivil = :estadoCivil"),
         @NamedQuery(name = "Paciente.findByCalidadAsegurado", query = "SELECT p FROM Paciente p WHERE p.calidadAsegurado = :calidadAsegurado")})
-public class Paciente {
-    //region Comentado
-/*    private Integer idPaciente;
-    private String nombres;
-    private String apellidos;
-    private Integer edad;
-    private String sexo;
-    private String estadoCivil;
-    private String calidadAsegurado;
-    private Collection<Cirujia> cirujiasByIdPaciente;
-
-    @Id
-    @Column(name = "idPaciente", nullable = false, insertable = true, updatable = true)
-    public Integer getIdPaciente() {
-        return idPaciente;
-    }
-
-    public void setIdPaciente(Integer idPaciente) {
-        this.idPaciente = idPaciente;
-    }
-
-    @Basic
-    @Column(name = "Nombres", nullable = false, insertable = true, updatable = true, length = 45)
-    public String getNombres() {
-        return nombres;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    @Basic
-    @Column(name = "Apellidos", nullable = false, insertable = true, updatable = true, length = 45)
-    public String getApellidos() {
-        return apellidos;
-    }
-
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    @Basic
-    @Column(name = "Edad", nullable = false, insertable = true, updatable = true)
-    public Integer getEdad() {
-        return edad;
-    }
-
-    public void setEdad(Integer edad) {
-        this.edad = edad;
-    }
-
-    @Basic
-    @Column(name = "Sexo", nullable = false, insertable = true, updatable = true, length = 1)
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    @Basic
-    @Column(name = "Estado Civil", nullable = false, insertable = true, updatable = true, length = 1)
-    public String getEstadoCivil() {
-        return estadoCivil;
-    }
-
-    public void setEstadoCivil(String estadoCivil) {
-        this.estadoCivil = estadoCivil;
-    }
-
-    @Basic
-    @Column(name = "Calidad Asegurado", nullable = false, insertable = true, updatable = true, length = 10)
-    public String getCalidadAsegurado() {
-        return calidadAsegurado;
-    }
-
-    public void setCalidadAsegurado(String calidadAsegurado) {
-        this.calidadAsegurado = calidadAsegurado;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Paciente paciente = (Paciente) o;
-
-        if (idPaciente != null ? !idPaciente.equals(paciente.idPaciente) : paciente.idPaciente != null) return false;
-        if (nombres != null ? !nombres.equals(paciente.nombres) : paciente.nombres != null) return false;
-        if (apellidos != null ? !apellidos.equals(paciente.apellidos) : paciente.apellidos != null) return false;
-        if (edad != null ? !edad.equals(paciente.edad) : paciente.edad != null) return false;
-        if (sexo != null ? !sexo.equals(paciente.sexo) : paciente.sexo != null) return false;
-        if (estadoCivil != null ? !estadoCivil.equals(paciente.estadoCivil) : paciente.estadoCivil != null)
-            return false;
-        if (calidadAsegurado != null ? !calidadAsegurado.equals(paciente.calidadAsegurado) : paciente.calidadAsegurado != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idPaciente != null ? idPaciente.hashCode() : 0;
-        result = 31 * result + (nombres != null ? nombres.hashCode() : 0);
-        result = 31 * result + (apellidos != null ? apellidos.hashCode() : 0);
-        result = 31 * result + (edad != null ? edad.hashCode() : 0);
-        result = 31 * result + (sexo != null ? sexo.hashCode() : 0);
-        result = 31 * result + (estadoCivil != null ? estadoCivil.hashCode() : 0);
-        result = 31 * result + (calidadAsegurado != null ? calidadAsegurado.hashCode() : 0);
-        return result;
-    }
-
-    @OneToMany(mappedBy = "pacienteByFkPaciente")
-    public Collection<Cirujia> getCirujiasByIdPaciente() {
-        return cirujiasByIdPaciente;
-    }
-
-    public void setCirujiasByIdPaciente(Collection<Cirujia> cirujiasByIdPaciente) {
-        this.cirujiasByIdPaciente = cirujiasByIdPaciente;
-    }*/
-    //endregion
-
+public class Paciente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
 //    @Basic(optional = false)
@@ -274,9 +153,7 @@ public class Paciente {
 
     @Override
     public String toString() {
-        return "huuu.Paciente[ idPaciente=" + idPaciente + " ]";
+        return "persistencia.Paciente[ idPaciente=" + idPaciente + " ]";
     }
-
-
 
 }

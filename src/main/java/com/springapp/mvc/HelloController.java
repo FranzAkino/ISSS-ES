@@ -20,8 +20,6 @@ public class HelloController {
 
     EntityManagerFactory emf = CreadorEntityManager.crearEMF();
 
-
-
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
         Coasa asdf = new Coasa();
@@ -45,13 +43,8 @@ public class HelloController {
         return "historial";
     }
 
-
-
-
-
     @RequestMapping(value = "/Registro", method = RequestMethod.GET)
     public String registro(ModelMap model){
-
 
         model.addAttribute("asdf","asdf");
         return "Registro";

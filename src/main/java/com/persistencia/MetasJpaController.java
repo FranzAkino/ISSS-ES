@@ -6,6 +6,8 @@
 package com.persistencia;
 
 import com.persistencia.exceptions.NonexistentEntityException;
+import com.persistencia.exceptions.PreexistingEntityException;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -30,22 +32,31 @@ public class MetasJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Metas metas) {
+    public void create(Metas metas) throws PreexistingEntityException, Exception {
+        if (metas.getMetasPK() == null) {
+            metas.setMetasPK(new MetasPK());
+        }
+        metas.getMetasPK().setIdCirujanofk(metas.getCirujano().getIdCirujano());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Cirujano fkCirujano = metas.getFkCirujano();
-            if (fkCirujano != null) {
-                fkCirujano = em.getReference(fkCirujano.getClass(), fkCirujano.getIdCirujano());
-                metas.setFkCirujano(fkCirujano);
+            Cirujano cirujano = metas.getCirujano();
+            if (cirujano != null) {
+                cirujano = em.getReference(cirujano.getClass(), cirujano.getIdCirujano());
+                metas.setCirujano(cirujano);
             }
             em.persist(metas);
-            if (fkCirujano != null) {
-                fkCirujano.getMetasList().add(metas);
-                fkCirujano = em.merge(fkCirujano);
+            if (cirujano != null) {
+                cirujano.getMetasList().add(metas);
+                cirujano = em.merge(cirujano);
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findMetas(metas.getMetasPK()) != null) {
+                throw new PreexistingEntityException("Metas " + metas + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -54,31 +65,32 @@ public class MetasJpaController implements Serializable {
     }
 
     public void edit(Metas metas) throws NonexistentEntityException, Exception {
+        metas.getMetasPK().setIdCirujanofk(metas.getCirujano().getIdCirujano());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Metas persistentMetas = em.find(Metas.class, metas.getIdMetas());
-            Cirujano fkCirujanoOld = persistentMetas.getFkCirujano();
-            Cirujano fkCirujanoNew = metas.getFkCirujano();
-            if (fkCirujanoNew != null) {
-                fkCirujanoNew = em.getReference(fkCirujanoNew.getClass(), fkCirujanoNew.getIdCirujano());
-                metas.setFkCirujano(fkCirujanoNew);
+            Metas persistentMetas = em.find(Metas.class, metas.getMetasPK());
+            Cirujano cirujanoOld = persistentMetas.getCirujano();
+            Cirujano cirujanoNew = metas.getCirujano();
+            if (cirujanoNew != null) {
+                cirujanoNew = em.getReference(cirujanoNew.getClass(), cirujanoNew.getIdCirujano());
+                metas.setCirujano(cirujanoNew);
             }
             metas = em.merge(metas);
-            if (fkCirujanoOld != null && !fkCirujanoOld.equals(fkCirujanoNew)) {
-                fkCirujanoOld.getMetasList().remove(metas);
-                fkCirujanoOld = em.merge(fkCirujanoOld);
+            if (cirujanoOld != null && !cirujanoOld.equals(cirujanoNew)) {
+                cirujanoOld.getMetasList().remove(metas);
+                cirujanoOld = em.merge(cirujanoOld);
             }
-            if (fkCirujanoNew != null && !fkCirujanoNew.equals(fkCirujanoOld)) {
-                fkCirujanoNew.getMetasList().add(metas);
-                fkCirujanoNew = em.merge(fkCirujanoNew);
+            if (cirujanoNew != null && !cirujanoNew.equals(cirujanoOld)) {
+                cirujanoNew.getMetasList().add(metas);
+                cirujanoNew = em.merge(cirujanoNew);
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = metas.getIdMetas();
+                MetasPK id = metas.getMetasPK();
                 if (findMetas(id) == null) {
                     throw new NonexistentEntityException("The metas with id " + id + " no longer exists.");
                 }
@@ -91,7 +103,7 @@ public class MetasJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(MetasPK id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -99,14 +111,14 @@ public class MetasJpaController implements Serializable {
             Metas metas;
             try {
                 metas = em.getReference(Metas.class, id);
-                metas.getIdMetas();
+                metas.getMetasPK();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The metas with id " + id + " no longer exists.", enfe);
             }
-            Cirujano fkCirujano = metas.getFkCirujano();
-            if (fkCirujano != null) {
-                fkCirujano.getMetasList().remove(metas);
-                fkCirujano = em.merge(fkCirujano);
+            Cirujano cirujano = metas.getCirujano();
+            if (cirujano != null) {
+                cirujano.getMetasList().remove(metas);
+                cirujano = em.merge(cirujano);
             }
             em.remove(metas);
             em.getTransaction().commit();
@@ -141,7 +153,7 @@ public class MetasJpaController implements Serializable {
         }
     }
 
-    public Metas findMetas(Integer id) {
+    public Metas findMetas(MetasPK id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Metas.class, id);
@@ -162,5 +174,5 @@ public class MetasJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

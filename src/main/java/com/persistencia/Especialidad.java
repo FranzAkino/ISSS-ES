@@ -3,6 +3,7 @@ package com.persistencia;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,62 +17,7 @@ import java.util.List;
         @NamedQuery(name = "Especialidad.findAll", query = "SELECT e FROM Especialidad e"),
         @NamedQuery(name = "Especialidad.findByIdEspecialidad", query = "SELECT e FROM Especialidad e WHERE e.idEspecialidad = :idEspecialidad"),
         @NamedQuery(name = "Especialidad.findByEspecialidad", query = "SELECT e FROM Especialidad e WHERE e.especialidad = :especialidad")})
-public class Especialidad {
-    //region Comentado
-    /*private Integer idEspecialidad;
-    private String especialidad;
-    private Collection<Cirujano> cirujanosByIdEspecialidad;
-
-    @Id
-    @Column(name = "idEspecialidad", nullable = false, insertable = true, updatable = true)
-    public Integer getIdEspecialidad() {
-        return idEspecialidad;
-    }
-
-    public void setIdEspecialidad(Integer idEspecialidad) {
-        this.idEspecialidad = idEspecialidad;
-    }
-
-    @Basic
-    @Column(name = "Especialidad", nullable = true, insertable = true, updatable = true, length = 45)
-    public String getEspecialidad() {
-        return especialidad;
-    }
-
-    public void setEspecialidad(String especialidad) {
-        this.especialidad = especialidad;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Especialidad that = (Especialidad) o;
-
-        if (idEspecialidad != null ? !idEspecialidad.equals(that.idEspecialidad) : that.idEspecialidad != null)
-            return false;
-        if (especialidad != null ? !especialidad.equals(that.especialidad) : that.especialidad != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = idEspecialidad != null ? idEspecialidad.hashCode() : 0;
-        result = 31 * result + (especialidad != null ? especialidad.hashCode() : 0);
-        return result;
-    }
-
-    @OneToMany(mappedBy = "especialidadByFkEspeciadlidades")
-    public Collection<Cirujano> getCirujanosByIdEspecialidad() {
-        return cirujanosByIdEspecialidad;
-    }
-
-    public void setCirujanosByIdEspecialidad(Collection<Cirujano> cirujanosByIdEspecialidad) {
-        this.cirujanosByIdEspecialidad = cirujanosByIdEspecialidad;
-    }*/
-    //endregion
+public class Especialidad implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -80,8 +26,8 @@ public class Especialidad {
     private Integer idEspecialidad;
     @Column(name = "Especialidad")
     private String especialidad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkEspeciadlidades")
-    private List<Cirujano> cirujanoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "especialidad")
+    private List<CirujanoEspecialidad> cirujanoEspecialidadList;
 
     public Especialidad() {
     }
@@ -107,12 +53,12 @@ public class Especialidad {
     }
 
     @XmlTransient
-    public List<Cirujano> getCirujanoList() {
-        return cirujanoList;
+    public List<CirujanoEspecialidad> getCirujanoEspecialidadList() {
+        return cirujanoEspecialidadList;
     }
 
-    public void setCirujanoList(List<Cirujano> cirujanoList) {
-        this.cirujanoList = cirujanoList;
+    public void setCirujanoEspecialidadList(List<CirujanoEspecialidad> cirujanoEspecialidadList) {
+        this.cirujanoEspecialidadList = cirujanoEspecialidadList;
     }
 
     @Override
@@ -137,7 +83,6 @@ public class Especialidad {
 
     @Override
     public String toString() {
-        return "huuu.Especialidad[ idEspecialidad=" + idEspecialidad + " ]";
+        return "persistencia.Especialidad[ idEspecialidad=" + idEspecialidad + " ]";
     }
-
 }

@@ -241,7 +241,7 @@ input[type=radio]:checked + label {
 
 #triangle3{
     width:0;
-    border-top:12x solid transparent;
+    border-top:12px solid transparent;
     border-right:12px solid transparent;
     border-bottom:12px solid #ffb86f;
     border-left:12px solid transparent;
@@ -309,7 +309,7 @@ input[type=radio]:checked + label {
 
 #triangle4{
     width:0;
-    border-top:12x solid transparent;
+    border-top:12px solid transparent;
     border-right:12px solid transparent;
     border-bottom:12px solid #bf211e;
     border-left:12px solid transparent;
@@ -377,7 +377,7 @@ input[type=radio]:checked + label {
 
 #triangle5{
     width:0;
-    border-top:12x solid transparent;
+    border-top:12px solid transparent;
     border-right:12px solid transparent;
     border-bottom:12px solid #7baea5;
     border-left:12px solid transparent;

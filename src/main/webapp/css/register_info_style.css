@@ -11,9 +11,9 @@ html {
 }
 
 body{
-    /*background:#567;*/
+
     font-family:'Open Sans',sans-serif;
-    /*background-image: url("estetoscopio.jpg");*/
+
 }
 
 
@@ -40,6 +40,7 @@ form{
     display: block;
     /*margin: 0 auto;*/
     margin-top: 1%;
+    margin-left: 1%;
     padding: 10px;
     text-align: center;
     text-decoration: none;
@@ -59,8 +60,9 @@ form{
     width:100px;
     background: #ebe941;
     display:block;
-    margin:0 auto;
+    /*margin:0 auto;*/
     margin-top:1%;
+    margin-left: 1%;
     padding:10px;
     text-align:center;
     text-decoration:none;
@@ -78,21 +80,27 @@ form{
 
 #cirujano{
     width:400px;
-    margin:0 auto;
-    margin-top:8px;
+    /*margin:0 auto;*/
+    /*margin-top:1px;*/
     margin-bottom:2%;
+    margin-right: 30%;
     transition:opacity 1s;
     -webkit-transition:opacity 1s;
+    float: right;
 }
 
 
 #triangle2{
-    width:0;
-    border-top:12x solid transparent;
-    border-right:12px solid transparent;
-    border-bottom:12px solid #ebe941;
-    border-left:12px solid transparent;
-    margin:0 auto;
+    width: 0;
+    border-top: 1px solid transparent;
+    border-right: 1px solid transparent;
+    border-bottom: 25px solid #ebe941;
+    border-left: 25px solid transparent;
+    /*margin: 0 1px;*/
+    height: 25px;
+    float: left;
+
+    margin-left: -25px;
 }
 
 
@@ -203,19 +211,20 @@ input[type=radio]:checked + label {
 
 #CIE9{
     width:400px;
-    margin:0 auto;
-    margin-top:8px;
     margin-bottom:2%;
+    margin-right: 30%;
     transition:opacity 1s;
     -webkit-transition:opacity 1s;
+    float: right;;
 }
 
 .button3{
     width:100px;
     background: #ffb86f;
     display:block;
-    margin:0 auto;
+    /*margin:0 auto;*/
     margin-top:1%;
+    margin-left: 1%;
     padding:10px;
     text-align:center;
     text-decoration:none;
@@ -268,19 +277,22 @@ input[type=radio]:checked + label {
 /*CSS para Especialidad*/
 #especialidad{
     width:400px;
-    margin:0 auto;
-    margin-top:8px;
+    /*margin:0 auto;*/
+    /*margin-top:1px;*/
     margin-bottom:2%;
+    margin-right: 30%;
     transition:opacity 1s;
     -webkit-transition:opacity 1s;
+    float: right;
 }
 
 .button4{
     width:100px;
     background: #bf211e;
     display:block;
-    margin:0 auto;
+    /*margin:0 auto;*/
     margin-top:1%;
+    margin-left: 1%;
     padding:10px;
     text-align:center;
     text-decoration:none;
@@ -333,18 +345,21 @@ input[type=radio]:checked + label {
 /*CSS para Horario*/
 #horario{
     width:400px;
-    margin:0 auto;
-    margin-top:8px;
+    /*margin:0 auto;*/
+    /*margin-top:1px;*/
     margin-bottom:2%;
+    margin-right: 30%;
     transition:opacity 1s;
     -webkit-transition:opacity 1s;
+    float: right;
 }
 
 .button5{
     width:100px;
     background: #7baea5;
     display:block;
-    margin:0 auto;
+    /*margin:0 auto;*/
+    margin-left: 1%;
     margin-top:1%;
     padding:10px;
     text-align:center;
@@ -411,18 +426,21 @@ input[type=radio]:checked + label {
 /*CSS para MEtas*/
 #metas{
     width:400px;
-    margin:0 auto;
-    margin-top:8px;
+    /*margin:0 auto;*/
+    /*margin-top:1px;*/
     margin-bottom:2%;
+    margin-right: 30%;
     transition:opacity 1s;
     -webkit-transition:opacity 1s;
+    float: right;
 }
 
 .button6{
     width:100px;
     background: #54428e;
     display:block;
-    margin:0 auto;
+    /*margin:0 auto;*/
+    margin-left: 1%;
     margin-top:1%;
     padding:10px;
     text-align:center;
@@ -440,7 +458,7 @@ input[type=radio]:checked + label {
 
 #triangle6{
     width:0;
-    border-top:12x solid transparent;
+    border-top:12px solid transparent;
     border-right:12px solid transparent;
     border-bottom:12px solid #54428e;
     border-left:12px solid transparent;
@@ -500,19 +518,22 @@ input[type=radio]:checked + label {
 /*CSS para Quirofanos*/
 #quirofanos{
     width:400px;
-    margin:0 auto;
-    margin-top:8px;
+    /*margin:0 auto;*/
+    /*margin-top:1px;*/
     margin-bottom:2%;
+    margin-right: 30%;
     transition:opacity 1s;
     -webkit-transition:opacity 1s;
+    float: right;
 }
 
 .button7{
     width:100px;
     background: #1b998b;
     display:block;
-    margin:0 auto;
+    /*margin:0 auto;*/
     margin-top:1%;
+    margin-left: 1%;
     padding:10px;
     text-align:center;
     text-decoration:none;
@@ -529,7 +550,7 @@ input[type=radio]:checked + label {
 
 #triangle7{
     width:0;
-    border-top:12x solid transparent;
+    border-top:12px solid transparent;
     border-right:12px solid transparent;
     border-bottom:12px solid #1b998b;
     border-left:12px solid transparent;
@@ -591,19 +612,22 @@ input[type=radio]:checked + label {
 /*CSS para Quirofanos*/
 #riesgo{
     width:400px;
-    margin:0 auto;
-    margin-top:8px;
+    /*margin:0 auto;*/
+    /*margin-top:1px;*/
     margin-bottom:2%;
+    margin-right: 30%;
     transition:opacity 1s;
     -webkit-transition:opacity 1s;
+    float: right;
 }
 
 .button8{
     width:100px;
     background: #36413e;
     display:block;
-    margin:0 auto;
+    /*margin:0 auto;*/
     margin-top:1%;
+    margin-left: 1%;
     padding:10px;
     text-align:center;
     text-decoration:none;
@@ -620,7 +644,7 @@ input[type=radio]:checked + label {
 
 #triangle8{
     width:0;
-    border-top:12x solid transparent;
+    border-top:12px solid transparent;
     border-right:12px solid transparent;
     border-bottom:12px solid #36413e;
     border-left:12px solid transparent;

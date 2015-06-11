@@ -28,6 +28,13 @@ body {
     height: 100%;
 }
 
+
+#ss-subtitle{
+    margin-top: 3%;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+}
+
 .ss-row{
     width: 100%;
     clear: both;
@@ -54,6 +61,19 @@ body {
     float: left;
     width: 60%;
     position: relative;
+
+}
+
+.ss-right table{
+    width: 100%;
+    text-align: left;
+
+}
+
+
+.ss-right table td{
+    width: 40%;
+
 
 }
 

@@ -10,7 +10,7 @@
 <head>
   <link type="text/css" rel="stylesheet" href="/css/register_info_style.css" />
   <title></title>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="/css/http_ajax.googleapis.com_ajax_libs_jquery_1.11.2_jquery.js"></script>
   <script>
     $(document).ready(function(){
 

@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.persistencia.Cirujia" %>
 <html>
 <head>
   <link type="text/css" rel="stylesheet" href="/css/timeline_style.css" />
@@ -14,19 +15,14 @@
 <div class="container">
 
 
-  <h2 class="ss-subtitle">isssEQ Timeline</h2>
+  <h2 id="ss-subtitle">isssEQ | Datos Historicos de Cirujias Realizadas | Sala de Operaciones - Hospital Regional ISSS Santa Ana</h2>
   <div id="ss-links" class="ss-links">
     <a href="${pageContext.request.contextPath}/">Inicio</a>
-    <a href="#november">Nov</a>
-    <a href="#october">Oct</a>
-    <a href="#september">Sep</a>
-    <a href="#august">Aug</a>
-    <a href="#july">Jul</a>
-    <a href="#june">Jun</a>
+
   </div>
 
   <div id="ss-container" class="ss-container">
-    <h2 id="november">Noviembre</h2>
+
 
     <div class="ss-row ss-medium">
       <div class="ss-left">
@@ -35,21 +31,46 @@
       </div>
       <div class="ss-right">
         <h3>
-          <span>November 28, 2011 10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5 Nombre: Juan Perez</span>
-          <span>Sexo: M Edad: 39 Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
+          <table>
+            <tr>
+              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: Juan Perez</span></td>
+              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
+            </tr>
+            </table>
+          <hr>
+            <table >
+            <tr>
+              <td><span>Calidad Asegurado: Beneficiado</span>
+              <td><span>Riesgo: Enfermedad Comun</span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: Apendicectomia</span></td>
+              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
+            </tr>
+            <tr>
+              <td><span>Region: Abdominal</span></td>
+              <td><span>Emergencia: NO</span></td></td>
+            </tr>
+            </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: Sra de Gonzales</span>
+              <td><span>Tipo de anestecia: General</span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: 4</span></td>
+              <td><span>Cirujano: Dr. Anaya</span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
         </h3>
       </div>
     </div>
@@ -61,24 +82,46 @@
       </div>
       <div class="ss-right">
         <h3>
-          <span>Noviembre 28, 2011 12:30 pm</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
+          <table>
+            <tr>
+              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: Juan Perez</span></td>
+              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Calidad Asegurado: Beneficiado</span>
+              <td><span>Riesgo: Enfermedad Comun</span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: Apendicectomia</span></td>
+              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
+            </tr>
+            <tr>
+              <td><span>Region: Abdominal</span></td>
+              <td><span>Emergencia: NO</span></td></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: Sra de Gonzales</span>
+              <td><span>Tipo de anestecia: General</span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: 4</span></td>
+              <td><span>Cirujano: Dr. Anaya</span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
         </h3>
       </div>
     </div>
@@ -92,25 +135,46 @@
       </div>
       <div class="ss-right">
         <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
+          <table>
+            <tr>
+              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: Juan Perez</span></td>
+              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Calidad Asegurado: Beneficiado</span>
+              <td><span>Riesgo: Enfermedad Comun</span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: Apendicectomia</span></td>
+              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
+            </tr>
+            <tr>
+              <td><span>Region: Abdominal</span></td>
+              <td><span>Emergencia: NO</span></td></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: Sra de Gonzales</span>
+              <td><span>Tipo de anestecia: General</span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: 4</span></td>
+              <td><span>Cirujano: Dr. Anaya</span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
         </h3>
       </div>
     </div>
@@ -123,25 +187,46 @@
       </div>
       <div class="ss-right">
         <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
+          <table>
+            <tr>
+              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: Juan Perez</span></td>
+              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Calidad Asegurado: Beneficiado</span>
+              <td><span>Riesgo: Enfermedad Comun</span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: Apendicectomia</span></td>
+              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
+            </tr>
+            <tr>
+              <td><span>Region: Abdominal</span></td>
+              <td><span>Emergencia: NO</span></td></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: Sra de Gonzales</span>
+              <td><span>Tipo de anestecia: General</span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: 4</span></td>
+              <td><span>Cirujano: Dr. Anaya</span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
         </h3>
       </div>
     </div>
@@ -153,25 +238,46 @@
       </div>
       <div class="ss-right">
         <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
+          <table>
+            <tr>
+              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: Juan Perez</span></td>
+              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Calidad Asegurado: Beneficiado</span>
+              <td><span>Riesgo: Enfermedad Comun</span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: Apendicectomia</span></td>
+              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
+            </tr>
+            <tr>
+              <td><span>Region: Abdominal</span></td>
+              <td><span>Emergencia: NO</span></td></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: Sra de Gonzales</span>
+              <td><span>Tipo de anestecia: General</span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: 4</span></td>
+              <td><span>Cirujano: Dr. Anaya</span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
         </h3>
       </div>
     </div>
@@ -183,25 +289,46 @@
       </div>
       <div class="ss-right">
         <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
+          <table>
+            <tr>
+              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: Juan Perez</span></td>
+              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Calidad Asegurado: Beneficiado</span>
+              <td><span>Riesgo: Enfermedad Comun</span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: Apendicectomia</span></td>
+              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
+            </tr>
+            <tr>
+              <td><span>Region: Abdominal</span></td>
+              <td><span>Emergencia: NO</span></td></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: Sra de Gonzales</span>
+              <td><span>Tipo de anestecia: General</span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: 4</span></td>
+              <td><span>Cirujano: Dr. Anaya</span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
         </h3>
       </div>
     </div>
@@ -212,25 +339,46 @@
       </div>
       <div class="ss-right">
         <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
+          <table>
+            <tr>
+              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: Juan Perez</span></td>
+              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Calidad Asegurado: Beneficiado</span>
+              <td><span>Riesgo: Enfermedad Comun</span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: Apendicectomia</span></td>
+              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
+            </tr>
+            <tr>
+              <td><span>Region: Abdominal</span></td>
+              <td><span>Emergencia: NO</span></td></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: Sra de Gonzales</span>
+              <td><span>Tipo de anestecia: General</span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: 4</span></td>
+              <td><span>Cirujano: Dr. Anaya</span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
         </h3>
       </div>
     </div>
@@ -242,25 +390,46 @@
       </div>
       <div class="ss-right">
         <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
+          <table>
+            <tr>
+              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: Juan Perez</span></td>
+              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Calidad Asegurado: Beneficiado</span>
+              <td><span>Riesgo: Enfermedad Comun</span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: Apendicectomia</span></td>
+              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
+            </tr>
+            <tr>
+              <td><span>Region: Abdominal</span></td>
+              <td><span>Emergencia: NO</span></td></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: Sra de Gonzales</span>
+              <td><span>Tipo de anestecia: General</span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: 4</span></td>
+              <td><span>Cirujano: Dr. Anaya</span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
         </h3>
       </div>
     </div>
@@ -275,25 +444,46 @@
       </div>
       <div class="ss-right">
         <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
+          <table>
+            <tr>
+              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: Juan Perez</span></td>
+              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Calidad Asegurado: Beneficiado</span>
+              <td><span>Riesgo: Enfermedad Comun</span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: Apendicectomia</span></td>
+              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
+            </tr>
+            <tr>
+              <td><span>Region: Abdominal</span></td>
+              <td><span>Emergencia: NO</span></td></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: Sra de Gonzales</span>
+              <td><span>Tipo de anestecia: General</span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: 4</span></td>
+              <td><span>Cirujano: Dr. Anaya</span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
         </h3>
       </div>
     </div>
@@ -304,355 +494,50 @@
       </div>
       <div class="ss-right">
         <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
+          <table>
+            <tr>
+              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: Juan Perez</span></td>
+              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Calidad Asegurado: Beneficiado</span>
+              <td><span>Riesgo: Enfermedad Comun</span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: Apendicectomia</span></td>
+              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
+            </tr>
+            <tr>
+              <td><span>Region: Abdominal</span></td>
+              <td><span>Emergencia: NO</span></td></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: Sra de Gonzales</span>
+              <td><span>Tipo de anestecia: General</span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: 4</span></td>
+              <td><span>Cirujano: Dr. Anaya</span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
         </h3>
       </div>
     </div>
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>11</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
-        </h3>
-      </div>
-    </div>
-
-
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>12</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
-        </h3>
-      </div>
-    </div>
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>13</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
-        </h3>
-      </div>
-    </div>
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>14</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
-        </h3>
-      </div>
-    </div>
-    <div class="ss-row">
-      <div class="ss-left">
-        <h2 id="august">August</h2>
-      </div>
-      <div class="ss-right">
-        <h2>2011</h2>
-      </div>
-    </div>
-    <div class="ss-row ss-medium">
-
-      <div class="ss-left">
-        <h3>15</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
-        </h3>
-      </div>
-    </div>
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>16</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
-        </h3>
-      </div>
-    </div>
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>17</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
-        </h3>
-      </div>
-    </div>
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>18</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
-        </h3>
-      </div>
-    </div>
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>19</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
-        </h3>
-      </div>
-
-    </div>
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>20</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <span>November 28, 2011</span>
-          <span>10:00 am</span>
-          <span>Numero de Afiliacion (DUI): 040501000-5</span>
-          <span>Nombre: Juan Perez</span>
-          <span>Sexo: M</span>
-          <span>Edad: 39</span>
-          <span>Estado Civil: Viudo</span>
-          <span>Calidad Asegurado: Beneficiado</span>
-          <span>Riesgo: Enfermedad Comun</span>
-          <span>Clase de intervencion: Apendicectomia</span>
-          <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-          <span>Region: Abdominal</span>
-          <span>Emergencia: NO</span>
-          <span>Anestesista: Sra de Gonzales</span>
-          <span>Tipo de anestecia: General</span>
-          <span>Sala de operaciones: 4</span>
-          <span>Cirujano: Dr. Anaya</span>
-          <span>Ayudante: Dra. Rodriguez</span>
-
-        </h3>
-      </div>
-    </div>
-
-
-    <div class="ss-left">
-      <h3>21</h3>
-    </div>
-
-    <div class="ss-right">
-      <h3>
-        <span>November 28, 2011</span>
-        <span>10:00 am</span>
-        <span>Numero de Afiliacion (DUI): 040501000-5</span>
-        <span>Nombre: Juan Perez</span>
-        <span>Sexo: M</span>
-        <span>Edad: 39</span>
-        <span>Estado Civil: Viudo</span>
-        <span>Calidad Asegurado: Beneficiado</span>
-        <span>Riesgo: Enfermedad Comun</span>
-        <span>Clase de intervencion: Apendicectomia</span>
-        <span>Diagnostico post-operatorio: Apendicitis Aguda</span>
-        <span>Region: Abdominal</span>
-        <span>Emergencia: NO</span>
-        <span>Anestesista: Sra de Gonzales</span>
-        <span>Tipo de anestecia: General</span>
-        <span>Sala de operaciones: 4</span>
-        <span>Cirujano: Dr. Anaya</span>
-        <span>Ayudante: Dra. Rodriguez</span>
-
-      </h3>
-    </div>
-  </div>
+   </div>
 </div>
 </div>
 <script type="text/javascript" src="/css/http_ajax.googleapis.com_ajax_libs_jquery_1.7.1_jquery.js"></script>

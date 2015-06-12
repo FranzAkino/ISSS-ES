@@ -1,3 +1,8 @@
+<%@ page import="com.persistencia.Cirujia" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.Collections" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%--
   Created by IntelliJ IDEA.
   User: zaldana
@@ -6,7 +11,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.persistencia.Cirujia" %>
 <html>
 <head>
   <link type="text/css" rel="stylesheet" href="/css/timeline_style.css" />
@@ -23,10 +27,87 @@
 
   <div id="ss-container" class="ss-container">
 
+  <%
+
+   List<Cirujia> lista1= (List<Cirujia>)request.getAttribute("listita");
+    int num=lista1.size();
+
+    Collections.reverse(lista1); //Para invertir el orden la lista primero el ultimo
+    Iterator<Cirujia> it=lista1.iterator();
+    Cirujia temp;
+    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-mm-yyyy HH:mm:SS");
+
+  %>
+       <%
+      while(it.hasNext()){
+        temp=it.next();
+        %>
+    <div class="ss-row ss-medium">
+      <div class="ss-left">
+        <h3 class="" ><%= temp.getIdCirujia()%></h3>
+
+    </div>
+      <div class="ss-right">
+        <h3>
+          <table>
+            <tr>
+              <td><span><%= DATE_FORMAT.format(temp.getFecha())%></span></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td> <span>Nombre: <%= temp.getFkPaciente().getNombres()%> <%= temp.getFkPaciente().getApellidos()%></span></td>
+              <td> <span>Numero de Afiliacion (DUI): <%=temp.getFkPaciente().getIdPaciente()%></span></td>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Calidad Asegurado: <%=temp.getFkPaciente().getCalidadAsegurado()%></span>
+              <td><span>Riesgo: <%=temp.getFkRiesgo().getNombre()%></span></td>
+            </tr>
+            <tr>
+              <td><span>Clase de intervencion: <%=temp.getFkCie9().getNombre()%></span></td>
+              <td><span>Diagnostico post-operatorio: <%= temp.getDiagnosticoPostoperatorio()%></span></td>
+            </tr>
+            <tr>
+              <td><span>Region: <%= temp.getRegion()%></span></td>
+              <% if (temp.getEmergencia() == 1)
+              {%>
+              <td><span>Emergencia: SI</span></td>
+              <%
+              } else {
+              %><td><span>Emergencia: NO</span></td>
+              <%
+                }
+              %>
+              <%--<td><span>Emergencia: <%= temp.getEmergencia()%></span></td>--%>
+            </tr>
+          </table>
+          <hr>
+          <table >
+            <tr>
+              <td><span>Anestesista: <%= temp.getAnestesista()%></span>
+              <td><span>Tipo de anestecia: <%= temp.getTipoAnestecia()%></span></td>
+            </tr>
+            <tr>
+              <td><span>Sala de operaciones: <%=temp.getFkQuirofano().getDescripcion()%></span></td>
+              <td><span>Cirujano: <%=temp.getFkCirujano().getNombres()%> <%=temp.getFkCirujano().getApellidos()%></span></td>
+            </tr>
+            <tr>
+              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
+              <td></td>
+            </tr>
+          </table>
+        </h3>
+      </div>
+
+    <%
+      }
+    %>
 
     <div class="ss-row ss-medium">
       <div class="ss-left">
-        <%--<a href="http://tympanus.net/Tutorials/TypographyEffects/" class="ss-circle "></a>--%>
+
         <h3 class="" >1</h3>
       </div>
       <div class="ss-right">
@@ -53,7 +134,7 @@
             </tr>
             <tr>
               <td><span>Region: Abdominal</span></td>
-              <td><span>Emergencia: NO</span></td></td>
+              <td><span>Emergencia: NO</span></td>
             </tr>
             </table>
           <hr>

@@ -38,8 +38,9 @@ public class HelloController {
     public String historial(ModelMap model) {
 
         CirujiaJpaController cirujiaJpaController = new CirujiaJpaController(emf);
-//        List<Cirujia> lista = cirujiaJpaController.findCirujiaEntities(3,0);
-        model.addAttribute("asdf", "asfd");
+        List<Cirujia> lista = cirujiaJpaController.findCirujiaEntities();
+
+        model.addAttribute("listita",lista);
         return "historial";
     }
 

@@ -20,6 +20,8 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.1.1.RELEASE" />
           <element id="library" level="project" name="mysql-connector-java-5.1.35-bin" />
           <element id="library" level="project" name="org.eclipse.persistence:eclipselink:2.6.0" />
+          <element id="library" level="project" name="com.googlecode.wicked-charts:wicked-charts-wicket15:1.5.0" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.34-bin.jar" />
         </element>
       </element>
       <element id="directory" name="META-INF">

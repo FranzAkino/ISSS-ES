@@ -41,10 +41,10 @@ public class Paciente implements Serializable {
     @Column(name = "Sexo")
     private Character sexo;
     @Basic(optional = false)
-    @Column(name = "Estado_Civil")
+    @Column(name = "EstadoCivil")
     private Character estadoCivil;
     @Basic(optional = false)
-    @Column(name = "Calidad_Asegurado")
+    @Column(name = "CalidadAsegurado")
     private String calidadAsegurado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPaciente")
     private List<Cirujia> cirujiaList;

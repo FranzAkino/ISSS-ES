@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.persistencia.Cirujia" %>
+<%@ page import="com.persistencia.Paciente" %>
 <html>
 <head>
   <link type="text/css" rel="stylesheet" href="/css/register_style.css" />
@@ -34,11 +35,12 @@
 <div id="login">
   <div id="triangle"></div>
   <h1>Registro</h1>
-  <form>
-    <input type="date" placeholder="Fecha" />
-    <input type="time" placeholder="Tiempo" />
-    <input type="text" placeholder="Nombre del Paciente">
-    <input type="text" placeholder="Numero de Afiliado">
+  <form action="respuesta.jsp" method="get">
+
+    <input type="date" name="fecha" placeholder="Fecha" />
+    <input type="time" name="hora" placeholder="Tiempo" />
+    <input type="text" name="paciente" placeholder="Nombre del Paciente">
+    <input type="text" name="ID" placeholder="Numero de Afiliado">
     <br>
     <p>Sexo:</p>
     <input type="radio" id="gen1" name="sex" value="M"><label for="gen1" >Masculino</label>
@@ -68,7 +70,11 @@
     <input type="text" placeholder="Cirujano">
     <input type="text" placeholder="Ayudante">
 
+  <%
+  Cirujia nueva= new Cirujia();
+    Paciente nuevoP= new Paciente();
 
+  %>
 
     <input type="submit" value="Registro" />
   </form>

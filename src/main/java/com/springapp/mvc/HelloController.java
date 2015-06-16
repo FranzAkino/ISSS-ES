@@ -51,6 +51,13 @@ public class HelloController {
         return "Registro";
     }
 
+    @RequestMapping(value = "/respuesta", method = RequestMethod.GET)
+    public String respuesta(ModelMap model){
+
+        model.addAttribute("asxx","asxx");
+                return "respuesta";
+    }
+
     @RequestMapping(value = "/Registros-informacion", method = RequestMethod.GET)
     public String registros_informacion(ModelMap model){
         model.addAttribute("asdf","asdf");

@@ -1,14 +1,29 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.persistencia;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
 
 /**
- * Created by akino on 05-15-15.
+ *
+ * @author akino
  */
 @Entity
 @Table(name = "Especialidad")
@@ -27,7 +42,7 @@ public class Especialidad implements Serializable {
     @Column(name = "Especialidad")
     private String especialidad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "especialidad")
-    private List<CirujanoEspecialidad> cirujanoEspecialidadList;
+    private List<Cirujano> cirujanoList;
 
     public Especialidad() {
     }
@@ -53,12 +68,12 @@ public class Especialidad implements Serializable {
     }
 
     @XmlTransient
-    public List<CirujanoEspecialidad> getCirujanoEspecialidadList() {
-        return cirujanoEspecialidadList;
+    public List<Cirujano> getCirujanoList() {
+        return cirujanoList;
     }
 
-    public void setCirujanoEspecialidadList(List<CirujanoEspecialidad> cirujanoEspecialidadList) {
-        this.cirujanoEspecialidadList = cirujanoEspecialidadList;
+    public void setCirujanoList(List<Cirujano> cirujanoList) {
+        this.cirujanoList = cirujanoList;
     }
 
     @Override
@@ -83,6 +98,7 @@ public class Especialidad implements Serializable {
 
     @Override
     public String toString() {
-        return "persistencia.Especialidad[ idEspecialidad=" + idEspecialidad + " ]";
+        return "com.persistencia.Especialidad[ idEspecialidad=" + idEspecialidad + " ]";
     }
+
 }

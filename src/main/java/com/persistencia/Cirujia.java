@@ -1,34 +1,59 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.persistencia;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 import java.util.Date;
-import java.sql.Timestamp;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * Created by akino on 05-15-15.
+ *
+ * @author akino
  */
 @Entity
 @Table(name = "Cirujia")
 @XmlRootElement
 @NamedQueries({
         @NamedQuery(name = "Cirujia.findAll", query = "SELECT c FROM Cirujia c"),
-        @NamedQuery(name = "Cirujia.findByIdCirujia", query = "SELECT c FROM Cirujia c WHERE c.idCirujia = :idCirujia"),
+        @NamedQuery(name = "Cirujia.findByIdCirujia", query = "SELECT c FROM Cirujia c WHERE c.cirujiaPK.idCirujia = :idCirujia"),
         @NamedQuery(name = "Cirujia.findByFecha", query = "SELECT c FROM Cirujia c WHERE c.fecha = :fecha"),
+        @NamedQuery(name = "Cirujia.findByFkPaciente", query = "SELECT c FROM Cirujia c WHERE c.cirujiaPK.fkPaciente = :fkPaciente"),
+        @NamedQuery(name = "Cirujia.findByFkCie9", query = "SELECT c FROM Cirujia c WHERE c.cirujiaPK.fkCie9 = :fkCie9"),
         @NamedQuery(name = "Cirujia.findByDiagnosticoPostoperatorio", query = "SELECT c FROM Cirujia c WHERE c.diagnosticoPostoperatorio = :diagnosticoPostoperatorio"),
         @NamedQuery(name = "Cirujia.findByRegion", query = "SELECT c FROM Cirujia c WHERE c.region = :region"),
         @NamedQuery(name = "Cirujia.findByTipoAnestecia", query = "SELECT c FROM Cirujia c WHERE c.tipoAnestecia = :tipoAnestecia"),
+        @NamedQuery(name = "Cirujia.findByFkQuirofano", query = "SELECT c FROM Cirujia c WHERE c.cirujiaPK.fkQuirofano = :fkQuirofano"),
         @NamedQuery(name = "Cirujia.findByAnestesista", query = "SELECT c FROM Cirujia c WHERE c.anestesista = :anestesista"),
+        @NamedQuery(name = "Cirujia.findByInstrumentista", query = "SELECT c FROM Cirujia c WHERE c.instrumentista = :instrumentista"),
+        @NamedQuery(name = "Cirujia.findByCircular", query = "SELECT c FROM Cirujia c WHERE c.circular = :circular"),
         @NamedQuery(name = "Cirujia.findByEmergencia", query = "SELECT c FROM Cirujia c WHERE c.emergencia = :emergencia"),
-        @NamedQuery(name = "Cirujia.findByRealizada", query = "SELECT c FROM Cirujia c WHERE c.realizada = :realizada")})
-public class Cirujia {
+        @NamedQuery(name = "Cirujia.findByRealizada", query = "SELECT c FROM Cirujia c WHERE c.realizada = :realizada"),
+        @NamedQuery(name = "Cirujia.findByAnestesiologo", query = "SELECT c FROM Cirujia c WHERE c.anestesiologo = :anestesiologo"),
+        @NamedQuery(name = "Cirujia.findByInicio", query = "SELECT c FROM Cirujia c WHERE c.inicio = :inicio"),
+        @NamedQuery(name = "Cirujia.findByFinalizacion", query = "SELECT c FROM Cirujia c WHERE c.finalizacion = :finalizacion")})
+public class Cirujia implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EmbeddedId
+    protected CirujiaPK cirujiaPK;
 //    @Basic(optional = false)
-    @Column(name = "idCirujia")
-    private Integer idCirujia;
-    @Basic(optional = false)
     @Column(name = "Fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
@@ -45,54 +70,73 @@ public class Cirujia {
     @Column(name = "Anestesista")
     private String anestesista;
     @Basic(optional = false)
+    @Column(name = "Instrumentista")
+    private String instrumentista;
+    @Basic(optional = false)
+    @Column(name = "Circular")
+    private String circular;
+    @Basic(optional = false)
     @Column(name = "Emergencia")
     private int emergencia;
     @Basic(optional = false)
     @Column(name = "Realizada")
     private int realizada;
+    @Column(name = "Anestesiologo")
+    private String anestesiologo;
+    @Column(name = "Inicio")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date inicio;
+    @Column(name = "Finalizacion")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date finalizacion;
     @JoinColumn(name = "fk_Suspencion", referencedColumnName = "idSuspenciones")
     @ManyToOne
     private Suspenciones fkSuspencion;
     @JoinColumn(name = "fk_Riesgo", referencedColumnName = "idRiesgo")
     @ManyToOne(optional = false)
     private Riesgo fkRiesgo;
-    @JoinColumn(name = "fk_Quirofano", referencedColumnName = "idQuirofano")
+    @JoinColumn(name = "fk_Quirofano", referencedColumnName = "idQuirofano", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Quirofano fkQuirofano;
-    @JoinColumn(name = "fk_Paciente", referencedColumnName = "idPaciente")
+    private Quirofano quirofano;
+    @JoinColumn(name = "fk_Paciente", referencedColumnName = "idPaciente", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Paciente fkPaciente;
-    @JoinColumn(name = "fk_Cie9", referencedColumnName = "idProcedimiento")
+    private Paciente paciente;
+    @JoinColumn(name = "fk_Cie9", referencedColumnName = "idProcedimiento", insertable = false, updatable = false)
     @ManyToOne(optional = false)
-    private Cie9 fkCie9;
-    @JoinColumn(name = "fk_Cirujano", referencedColumnName = "idCirujano")
-    @ManyToOne(optional = false)
-    private Cirujano fkCirujano;
+    private Cie9 cie9;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cirujia")
+    private List<CirujanoCirujia> cirujanoCirujiaList;
 
     public Cirujia() {
     }
 
-    public Cirujia(Integer idCirujia) {
-        this.idCirujia = idCirujia;
+    public Cirujia(CirujiaPK cirujiaPK) {
+        this.cirujiaPK = cirujiaPK;
     }
 
-    public Cirujia(Integer idCirujia, Date fecha, String diagnosticoPostoperatorio, String region, String tipoAnestecia, String anestesista, int emergencia, int realizada) {
-        this.idCirujia = idCirujia;
+    public Cirujia(CirujiaPK cirujiaPK, Date fecha, String diagnosticoPostoperatorio, String region, String tipoAnestecia, String anestesista, String instrumentista, String circular, int emergencia, int realizada) {
+        this.cirujiaPK = cirujiaPK;
         this.fecha = fecha;
         this.diagnosticoPostoperatorio = diagnosticoPostoperatorio;
         this.region = region;
         this.tipoAnestecia = tipoAnestecia;
         this.anestesista = anestesista;
+        this.instrumentista = instrumentista;
+        this.circular = circular;
         this.emergencia = emergencia;
         this.realizada = realizada;
     }
 
-    public Integer getIdCirujia() {
-        return idCirujia;
+    public Cirujia(int idCirujia, int fkPaciente, int fkCie9, int fkQuirofano) {
+        this.cirujiaPK = new CirujiaPK(idCirujia, fkPaciente, fkCie9, fkQuirofano);
     }
 
-    public void setIdCirujia(Integer idCirujia) {
-        this.idCirujia = idCirujia;
+    public CirujiaPK getCirujiaPK() {
+        return cirujiaPK;
+    }
+
+    public void setCirujiaPK(CirujiaPK cirujiaPK) {
+        this.cirujiaPK = cirujiaPK;
     }
 
     public Date getFecha() {
@@ -135,6 +179,22 @@ public class Cirujia {
         this.anestesista = anestesista;
     }
 
+    public String getInstrumentista() {
+        return instrumentista;
+    }
+
+    public void setInstrumentista(String instrumentista) {
+        this.instrumentista = instrumentista;
+    }
+
+    public String getCircular() {
+        return circular;
+    }
+
+    public void setCircular(String circular) {
+        this.circular = circular;
+    }
+
     public int getEmergencia() {
         return emergencia;
     }
@@ -149,6 +209,30 @@ public class Cirujia {
 
     public void setRealizada(int realizada) {
         this.realizada = realizada;
+    }
+
+    public String getAnestesiologo() {
+        return anestesiologo;
+    }
+
+    public void setAnestesiologo(String anestesiologo) {
+        this.anestesiologo = anestesiologo;
+    }
+
+    public Date getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Date inicio) {
+        this.inicio = inicio;
+    }
+
+    public Date getFinalizacion() {
+        return finalizacion;
+    }
+
+    public void setFinalizacion(Date finalizacion) {
+        this.finalizacion = finalizacion;
     }
 
     public Suspenciones getFkSuspencion() {
@@ -167,42 +251,43 @@ public class Cirujia {
         this.fkRiesgo = fkRiesgo;
     }
 
-    public Quirofano getFkQuirofano() {
-        return fkQuirofano;
+    public Quirofano getQuirofano() {
+        return quirofano;
     }
 
-    public void setFkQuirofano(Quirofano fkQuirofano) {
-        this.fkQuirofano = fkQuirofano;
+    public void setQuirofano(Quirofano quirofano) {
+        this.quirofano = quirofano;
     }
 
-    public Paciente getFkPaciente() {
-        return fkPaciente;
+    public Paciente getPaciente() {
+        return paciente;
     }
 
-    public void setFkPaciente(Paciente fkPaciente) {
-        this.fkPaciente = fkPaciente;
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
     }
 
-    public Cie9 getFkCie9() {
-        return fkCie9;
+    public Cie9 getCie9() {
+        return cie9;
     }
 
-    public void setFkCie9(Cie9 fkCie9) {
-        this.fkCie9 = fkCie9;
+    public void setCie9(Cie9 cie9) {
+        this.cie9 = cie9;
     }
 
-    public Cirujano getFkCirujano() {
-        return fkCirujano;
+    @XmlTransient
+    public List<CirujanoCirujia> getCirujanoCirujiaList() {
+        return cirujanoCirujiaList;
     }
 
-    public void setFkCirujano(Cirujano fkCirujano) {
-        this.fkCirujano = fkCirujano;
+    public void setCirujanoCirujiaList(List<CirujanoCirujia> cirujanoCirujiaList) {
+        this.cirujanoCirujiaList = cirujanoCirujiaList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idCirujia != null ? idCirujia.hashCode() : 0);
+        hash += (cirujiaPK != null ? cirujiaPK.hashCode() : 0);
         return hash;
     }
 
@@ -213,7 +298,7 @@ public class Cirujia {
             return false;
         }
         Cirujia other = (Cirujia) object;
-        if ((this.idCirujia == null && other.idCirujia != null) || (this.idCirujia != null && !this.idCirujia.equals(other.idCirujia))) {
+        if ((this.cirujiaPK == null && other.cirujiaPK != null) || (this.cirujiaPK != null && !this.cirujiaPK.equals(other.cirujiaPK))) {
             return false;
         }
         return true;
@@ -221,6 +306,7 @@ public class Cirujia {
 
     @Override
     public String toString() {
-        return "persistencia.Cirujia[ idCirujia=" + idCirujia + " ]";
+        return "com.persistencia.Cirujia[ cirujiaPK=" + cirujiaPK + " ]";
     }
+
 }

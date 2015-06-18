@@ -4,10 +4,12 @@ import com.persistencia.Cie9JpaController;
 import com.persistencia.Cirujia;
 import com.persistencia.CirujiaJpaController;
 import com.persistencia.exceptions.Coasa;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -19,6 +21,7 @@ import java.util.List;
 public class HelloController {
 
     EntityManagerFactory emf = CreadorEntityManager.crearEMF();
+    Graficos g = new Graficos();
 
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -62,6 +65,18 @@ public class HelloController {
     public String registros_informacion(ModelMap model){
         model.addAttribute("asdf","asdf");
         return "Registros-informacion";
+    }
+
+    @RequestMapping(value = "/estadisticas", method = RequestMethod.GET)
+    public String estadisticas (ModelMap modelo){
+        String graf = g.dibujarBarrasMensual(TipoGraficos.MAYOR_ELECTIVA,Meses.NOVIEMBRE);
+        modelo.addAttribute("grafico",graf);
+        return "estadisticas";
+    }
+
+    @RequestMapping(value = "estadisticas/graficos", method = RequestMethod.GET)
+    public String dibujarGrafico(ModelMap model, @RequestParam String id){
+        return "grafico";
     }
 
 }

@@ -11,7 +11,6 @@
 <html>
 <head>
   <link type="text/css" rel="stylesheet" href="/css/register_style.css" />
-
   <title></title>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script>
@@ -19,11 +18,8 @@
       $("#toggle-login").click(function(){
         $("#login").toggle();
       });
-
 //      document.getElementById('login').style.display='none';
     });
-
-
   </script>
 </head>
 <body>

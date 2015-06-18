@@ -5,20 +5,18 @@
  */
 package com.persistencia;
 
+import com.persistencia.exceptions.IllegalOrphanException;
 import com.persistencia.exceptions.NonexistentEntityException;
-
-import java.beans.Expression;
+import com.persistencia.exceptions.PreexistingEntityException;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Properties;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -35,7 +33,16 @@ public class CirujiaJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Cirujia cirujia) {
+    public void create(Cirujia cirujia) throws PreexistingEntityException, Exception {
+        if (cirujia.getCirujiaPK() == null) {
+            cirujia.setCirujiaPK(new CirujiaPK());
+        }
+        if (cirujia.getCirujanoCirujiaList() == null) {
+            cirujia.setCirujanoCirujiaList(new ArrayList<CirujanoCirujia>());
+        }
+        cirujia.getCirujiaPK().setFkCie9(cirujia.getCie9().getIdProcedimiento());
+        cirujia.getCirujiaPK().setFkPaciente(cirujia.getPaciente().getIdPaciente());
+        cirujia.getCirujiaPK().setFkQuirofano(cirujia.getQuirofano().getIdQuirofano());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -50,26 +57,27 @@ public class CirujiaJpaController implements Serializable {
                 fkRiesgo = em.getReference(fkRiesgo.getClass(), fkRiesgo.getIdRiesgo());
                 cirujia.setFkRiesgo(fkRiesgo);
             }
-            Quirofano fkQuirofano = cirujia.getFkQuirofano();
-            if (fkQuirofano != null) {
-                fkQuirofano = em.getReference(fkQuirofano.getClass(), fkQuirofano.getIdQuirofano());
-                cirujia.setFkQuirofano(fkQuirofano);
+            Quirofano quirofano = cirujia.getQuirofano();
+            if (quirofano != null) {
+                quirofano = em.getReference(quirofano.getClass(), quirofano.getIdQuirofano());
+                cirujia.setQuirofano(quirofano);
             }
-            Paciente fkPaciente = cirujia.getFkPaciente();
-            if (fkPaciente != null) {
-                fkPaciente = em.getReference(fkPaciente.getClass(), fkPaciente.getIdPaciente());
-                cirujia.setFkPaciente(fkPaciente);
+            Paciente paciente = cirujia.getPaciente();
+            if (paciente != null) {
+                paciente = em.getReference(paciente.getClass(), paciente.getIdPaciente());
+                cirujia.setPaciente(paciente);
             }
-            Cie9 fkCie9 = cirujia.getFkCie9();
-            if (fkCie9 != null) {
-                fkCie9 = em.getReference(fkCie9.getClass(), fkCie9.getIdProcedimiento());
-                cirujia.setFkCie9(fkCie9);
+            Cie9 cie9 = cirujia.getCie9();
+            if (cie9 != null) {
+                cie9 = em.getReference(cie9.getClass(), cie9.getIdProcedimiento());
+                cirujia.setCie9(cie9);
             }
-            Cirujano fkCirujano = cirujia.getFkCirujano();
-            if (fkCirujano != null) {
-                fkCirujano = em.getReference(fkCirujano.getClass(), fkCirujano.getIdCirujano());
-                cirujia.setFkCirujano(fkCirujano);
+            List<CirujanoCirujia> attachedCirujanoCirujiaList = new ArrayList<CirujanoCirujia>();
+            for (CirujanoCirujia cirujanoCirujiaListCirujanoCirujiaToAttach : cirujia.getCirujanoCirujiaList()) {
+                cirujanoCirujiaListCirujanoCirujiaToAttach = em.getReference(cirujanoCirujiaListCirujanoCirujiaToAttach.getClass(), cirujanoCirujiaListCirujanoCirujiaToAttach.getCirujanoCirujiaPK());
+                attachedCirujanoCirujiaList.add(cirujanoCirujiaListCirujanoCirujiaToAttach);
             }
+            cirujia.setCirujanoCirujiaList(attachedCirujanoCirujiaList);
             em.persist(cirujia);
             if (fkSuspencion != null) {
                 fkSuspencion.getCirujiaList().add(cirujia);
@@ -79,23 +87,33 @@ public class CirujiaJpaController implements Serializable {
                 fkRiesgo.getCirujiaList().add(cirujia);
                 fkRiesgo = em.merge(fkRiesgo);
             }
-            if (fkQuirofano != null) {
-                fkQuirofano.getCirujiaList().add(cirujia);
-                fkQuirofano = em.merge(fkQuirofano);
+            if (quirofano != null) {
+                quirofano.getCirujiaList().add(cirujia);
+                quirofano = em.merge(quirofano);
             }
-            if (fkPaciente != null) {
-                fkPaciente.getCirujiaList().add(cirujia);
-                fkPaciente = em.merge(fkPaciente);
+            if (paciente != null) {
+                paciente.getCirujiaList().add(cirujia);
+                paciente = em.merge(paciente);
             }
-            if (fkCie9 != null) {
-                fkCie9.getCirujiaList().add(cirujia);
-                fkCie9 = em.merge(fkCie9);
+            if (cie9 != null) {
+                cie9.getCirujiaList().add(cirujia);
+                cie9 = em.merge(cie9);
             }
-            if (fkCirujano != null) {
-                fkCirujano.getCirujiaList().add(cirujia);
-                fkCirujano = em.merge(fkCirujano);
+            for (CirujanoCirujia cirujanoCirujiaListCirujanoCirujia : cirujia.getCirujanoCirujiaList()) {
+                Cirujia oldCirujiaOfCirujanoCirujiaListCirujanoCirujia = cirujanoCirujiaListCirujanoCirujia.getCirujia();
+                cirujanoCirujiaListCirujanoCirujia.setCirujia(cirujia);
+                cirujanoCirujiaListCirujanoCirujia = em.merge(cirujanoCirujiaListCirujanoCirujia);
+                if (oldCirujiaOfCirujanoCirujiaListCirujanoCirujia != null) {
+                    oldCirujiaOfCirujanoCirujiaListCirujanoCirujia.getCirujanoCirujiaList().remove(cirujanoCirujiaListCirujanoCirujia);
+                    oldCirujiaOfCirujanoCirujiaListCirujanoCirujia = em.merge(oldCirujiaOfCirujanoCirujiaListCirujanoCirujia);
+                }
             }
             em.getTransaction().commit();
+        } catch (Exception ex) {
+            if (findCirujia(cirujia.getCirujiaPK()) != null) {
+                throw new PreexistingEntityException("Cirujia " + cirujia + " already exists.", ex);
+            }
+            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -103,24 +121,39 @@ public class CirujiaJpaController implements Serializable {
         }
     }
 
-    public void edit(Cirujia cirujia) throws NonexistentEntityException, Exception {
+    public void edit(Cirujia cirujia) throws IllegalOrphanException, NonexistentEntityException, Exception {
+        cirujia.getCirujiaPK().setFkCie9(cirujia.getCie9().getIdProcedimiento());
+        cirujia.getCirujiaPK().setFkPaciente(cirujia.getPaciente().getIdPaciente());
+        cirujia.getCirujiaPK().setFkQuirofano(cirujia.getQuirofano().getIdQuirofano());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
-            Cirujia persistentCirujia = em.find(Cirujia.class, cirujia.getIdCirujia());
+            Cirujia persistentCirujia = em.find(Cirujia.class, cirujia.getCirujiaPK());
             Suspenciones fkSuspencionOld = persistentCirujia.getFkSuspencion();
             Suspenciones fkSuspencionNew = cirujia.getFkSuspencion();
             Riesgo fkRiesgoOld = persistentCirujia.getFkRiesgo();
             Riesgo fkRiesgoNew = cirujia.getFkRiesgo();
-            Quirofano fkQuirofanoOld = persistentCirujia.getFkQuirofano();
-            Quirofano fkQuirofanoNew = cirujia.getFkQuirofano();
-            Paciente fkPacienteOld = persistentCirujia.getFkPaciente();
-            Paciente fkPacienteNew = cirujia.getFkPaciente();
-            Cie9 fkCie9Old = persistentCirujia.getFkCie9();
-            Cie9 fkCie9New = cirujia.getFkCie9();
-            Cirujano fkCirujanoOld = persistentCirujia.getFkCirujano();
-            Cirujano fkCirujanoNew = cirujia.getFkCirujano();
+            Quirofano quirofanoOld = persistentCirujia.getQuirofano();
+            Quirofano quirofanoNew = cirujia.getQuirofano();
+            Paciente pacienteOld = persistentCirujia.getPaciente();
+            Paciente pacienteNew = cirujia.getPaciente();
+            Cie9 cie9Old = persistentCirujia.getCie9();
+            Cie9 cie9New = cirujia.getCie9();
+            List<CirujanoCirujia> cirujanoCirujiaListOld = persistentCirujia.getCirujanoCirujiaList();
+            List<CirujanoCirujia> cirujanoCirujiaListNew = cirujia.getCirujanoCirujiaList();
+            List<String> illegalOrphanMessages = null;
+            for (CirujanoCirujia cirujanoCirujiaListOldCirujanoCirujia : cirujanoCirujiaListOld) {
+                if (!cirujanoCirujiaListNew.contains(cirujanoCirujiaListOldCirujanoCirujia)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain CirujanoCirujia " + cirujanoCirujiaListOldCirujanoCirujia + " since its cirujia field is not nullable.");
+                }
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
+            }
             if (fkSuspencionNew != null) {
                 fkSuspencionNew = em.getReference(fkSuspencionNew.getClass(), fkSuspencionNew.getIdSuspenciones());
                 cirujia.setFkSuspencion(fkSuspencionNew);
@@ -129,22 +162,25 @@ public class CirujiaJpaController implements Serializable {
                 fkRiesgoNew = em.getReference(fkRiesgoNew.getClass(), fkRiesgoNew.getIdRiesgo());
                 cirujia.setFkRiesgo(fkRiesgoNew);
             }
-            if (fkQuirofanoNew != null) {
-                fkQuirofanoNew = em.getReference(fkQuirofanoNew.getClass(), fkQuirofanoNew.getIdQuirofano());
-                cirujia.setFkQuirofano(fkQuirofanoNew);
+            if (quirofanoNew != null) {
+                quirofanoNew = em.getReference(quirofanoNew.getClass(), quirofanoNew.getIdQuirofano());
+                cirujia.setQuirofano(quirofanoNew);
             }
-            if (fkPacienteNew != null) {
-                fkPacienteNew = em.getReference(fkPacienteNew.getClass(), fkPacienteNew.getIdPaciente());
-                cirujia.setFkPaciente(fkPacienteNew);
+            if (pacienteNew != null) {
+                pacienteNew = em.getReference(pacienteNew.getClass(), pacienteNew.getIdPaciente());
+                cirujia.setPaciente(pacienteNew);
             }
-            if (fkCie9New != null) {
-                fkCie9New = em.getReference(fkCie9New.getClass(), fkCie9New.getIdProcedimiento());
-                cirujia.setFkCie9(fkCie9New);
+            if (cie9New != null) {
+                cie9New = em.getReference(cie9New.getClass(), cie9New.getIdProcedimiento());
+                cirujia.setCie9(cie9New);
             }
-            if (fkCirujanoNew != null) {
-                fkCirujanoNew = em.getReference(fkCirujanoNew.getClass(), fkCirujanoNew.getIdCirujano());
-                cirujia.setFkCirujano(fkCirujanoNew);
+            List<CirujanoCirujia> attachedCirujanoCirujiaListNew = new ArrayList<CirujanoCirujia>();
+            for (CirujanoCirujia cirujanoCirujiaListNewCirujanoCirujiaToAttach : cirujanoCirujiaListNew) {
+                cirujanoCirujiaListNewCirujanoCirujiaToAttach = em.getReference(cirujanoCirujiaListNewCirujanoCirujiaToAttach.getClass(), cirujanoCirujiaListNewCirujanoCirujiaToAttach.getCirujanoCirujiaPK());
+                attachedCirujanoCirujiaListNew.add(cirujanoCirujiaListNewCirujanoCirujiaToAttach);
             }
+            cirujanoCirujiaListNew = attachedCirujanoCirujiaListNew;
+            cirujia.setCirujanoCirujiaList(cirujanoCirujiaListNew);
             cirujia = em.merge(cirujia);
             if (fkSuspencionOld != null && !fkSuspencionOld.equals(fkSuspencionNew)) {
                 fkSuspencionOld.getCirujiaList().remove(cirujia);
@@ -162,43 +198,46 @@ public class CirujiaJpaController implements Serializable {
                 fkRiesgoNew.getCirujiaList().add(cirujia);
                 fkRiesgoNew = em.merge(fkRiesgoNew);
             }
-            if (fkQuirofanoOld != null && !fkQuirofanoOld.equals(fkQuirofanoNew)) {
-                fkQuirofanoOld.getCirujiaList().remove(cirujia);
-                fkQuirofanoOld = em.merge(fkQuirofanoOld);
+            if (quirofanoOld != null && !quirofanoOld.equals(quirofanoNew)) {
+                quirofanoOld.getCirujiaList().remove(cirujia);
+                quirofanoOld = em.merge(quirofanoOld);
             }
-            if (fkQuirofanoNew != null && !fkQuirofanoNew.equals(fkQuirofanoOld)) {
-                fkQuirofanoNew.getCirujiaList().add(cirujia);
-                fkQuirofanoNew = em.merge(fkQuirofanoNew);
+            if (quirofanoNew != null && !quirofanoNew.equals(quirofanoOld)) {
+                quirofanoNew.getCirujiaList().add(cirujia);
+                quirofanoNew = em.merge(quirofanoNew);
             }
-            if (fkPacienteOld != null && !fkPacienteOld.equals(fkPacienteNew)) {
-                fkPacienteOld.getCirujiaList().remove(cirujia);
-                fkPacienteOld = em.merge(fkPacienteOld);
+            if (pacienteOld != null && !pacienteOld.equals(pacienteNew)) {
+                pacienteOld.getCirujiaList().remove(cirujia);
+                pacienteOld = em.merge(pacienteOld);
             }
-            if (fkPacienteNew != null && !fkPacienteNew.equals(fkPacienteOld)) {
-                fkPacienteNew.getCirujiaList().add(cirujia);
-                fkPacienteNew = em.merge(fkPacienteNew);
+            if (pacienteNew != null && !pacienteNew.equals(pacienteOld)) {
+                pacienteNew.getCirujiaList().add(cirujia);
+                pacienteNew = em.merge(pacienteNew);
             }
-            if (fkCie9Old != null && !fkCie9Old.equals(fkCie9New)) {
-                fkCie9Old.getCirujiaList().remove(cirujia);
-                fkCie9Old = em.merge(fkCie9Old);
+            if (cie9Old != null && !cie9Old.equals(cie9New)) {
+                cie9Old.getCirujiaList().remove(cirujia);
+                cie9Old = em.merge(cie9Old);
             }
-            if (fkCie9New != null && !fkCie9New.equals(fkCie9Old)) {
-                fkCie9New.getCirujiaList().add(cirujia);
-                fkCie9New = em.merge(fkCie9New);
+            if (cie9New != null && !cie9New.equals(cie9Old)) {
+                cie9New.getCirujiaList().add(cirujia);
+                cie9New = em.merge(cie9New);
             }
-            if (fkCirujanoOld != null && !fkCirujanoOld.equals(fkCirujanoNew)) {
-                fkCirujanoOld.getCirujiaList().remove(cirujia);
-                fkCirujanoOld = em.merge(fkCirujanoOld);
-            }
-            if (fkCirujanoNew != null && !fkCirujanoNew.equals(fkCirujanoOld)) {
-                fkCirujanoNew.getCirujiaList().add(cirujia);
-                fkCirujanoNew = em.merge(fkCirujanoNew);
+            for (CirujanoCirujia cirujanoCirujiaListNewCirujanoCirujia : cirujanoCirujiaListNew) {
+                if (!cirujanoCirujiaListOld.contains(cirujanoCirujiaListNewCirujanoCirujia)) {
+                    Cirujia oldCirujiaOfCirujanoCirujiaListNewCirujanoCirujia = cirujanoCirujiaListNewCirujanoCirujia.getCirujia();
+                    cirujanoCirujiaListNewCirujanoCirujia.setCirujia(cirujia);
+                    cirujanoCirujiaListNewCirujanoCirujia = em.merge(cirujanoCirujiaListNewCirujanoCirujia);
+                    if (oldCirujiaOfCirujanoCirujiaListNewCirujanoCirujia != null && !oldCirujiaOfCirujanoCirujiaListNewCirujanoCirujia.equals(cirujia)) {
+                        oldCirujiaOfCirujanoCirujiaListNewCirujanoCirujia.getCirujanoCirujiaList().remove(cirujanoCirujiaListNewCirujanoCirujia);
+                        oldCirujiaOfCirujanoCirujiaListNewCirujanoCirujia = em.merge(oldCirujiaOfCirujanoCirujiaListNewCirujanoCirujia);
+                    }
+                }
             }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Integer id = cirujia.getIdCirujia();
+                CirujiaPK id = cirujia.getCirujiaPK();
                 if (findCirujia(id) == null) {
                     throw new NonexistentEntityException("The cirujia with id " + id + " no longer exists.");
                 }
@@ -211,7 +250,7 @@ public class CirujiaJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws NonexistentEntityException {
+    public void destroy(CirujiaPK id) throws IllegalOrphanException, NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -219,9 +258,20 @@ public class CirujiaJpaController implements Serializable {
             Cirujia cirujia;
             try {
                 cirujia = em.getReference(Cirujia.class, id);
-                cirujia.getIdCirujia();
+                cirujia.getCirujiaPK();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The cirujia with id " + id + " no longer exists.", enfe);
+            }
+            List<String> illegalOrphanMessages = null;
+            List<CirujanoCirujia> cirujanoCirujiaListOrphanCheck = cirujia.getCirujanoCirujiaList();
+            for (CirujanoCirujia cirujanoCirujiaListOrphanCheckCirujanoCirujia : cirujanoCirujiaListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Cirujia (" + cirujia + ") cannot be destroyed since the CirujanoCirujia " + cirujanoCirujiaListOrphanCheckCirujanoCirujia + " in its cirujanoCirujiaList field has a non-nullable cirujia field.");
+            }
+            if (illegalOrphanMessages != null) {
+                throw new IllegalOrphanException(illegalOrphanMessages);
             }
             Suspenciones fkSuspencion = cirujia.getFkSuspencion();
             if (fkSuspencion != null) {
@@ -233,25 +283,20 @@ public class CirujiaJpaController implements Serializable {
                 fkRiesgo.getCirujiaList().remove(cirujia);
                 fkRiesgo = em.merge(fkRiesgo);
             }
-            Quirofano fkQuirofano = cirujia.getFkQuirofano();
-            if (fkQuirofano != null) {
-                fkQuirofano.getCirujiaList().remove(cirujia);
-                fkQuirofano = em.merge(fkQuirofano);
+            Quirofano quirofano = cirujia.getQuirofano();
+            if (quirofano != null) {
+                quirofano.getCirujiaList().remove(cirujia);
+                quirofano = em.merge(quirofano);
             }
-            Paciente fkPaciente = cirujia.getFkPaciente();
-            if (fkPaciente != null) {
-                fkPaciente.getCirujiaList().remove(cirujia);
-                fkPaciente = em.merge(fkPaciente);
+            Paciente paciente = cirujia.getPaciente();
+            if (paciente != null) {
+                paciente.getCirujiaList().remove(cirujia);
+                paciente = em.merge(paciente);
             }
-            Cie9 fkCie9 = cirujia.getFkCie9();
-            if (fkCie9 != null) {
-                fkCie9.getCirujiaList().remove(cirujia);
-                fkCie9 = em.merge(fkCie9);
-            }
-            Cirujano fkCirujano = cirujia.getFkCirujano();
-            if (fkCirujano != null) {
-                fkCirujano.getCirujiaList().remove(cirujia);
-                fkCirujano = em.merge(fkCirujano);
+            Cie9 cie9 = cirujia.getCie9();
+            if (cie9 != null) {
+                cie9.getCirujiaList().remove(cirujia);
+                cie9 = em.merge(cie9);
             }
             em.remove(cirujia);
             em.getTransaction().commit();
@@ -286,7 +331,7 @@ public class CirujiaJpaController implements Serializable {
         }
     }
 
-    public Cirujia findCirujia(Integer id) {
+    public Cirujia findCirujia(CirujiaPK id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Cirujia.class, id);

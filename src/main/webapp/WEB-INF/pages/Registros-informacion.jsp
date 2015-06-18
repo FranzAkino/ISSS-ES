@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: zaldana
@@ -10,7 +11,8 @@
 <head>
   <link type="text/css" rel="stylesheet" href="/css/register_info_style.css" />
   <title></title>
-  <script src="/css/http_ajax.googleapis.com_ajax_libs_jquery_1.11.2_jquery.js"></script>
+  <%--<script src="${pageContext.request.contextPath}/css/http_ajax.googleapis.com_ajax_libs_jquery_1.11.2_jquery.js"></script>--%>
+  <script src="<c:url value="/css/http_ajax.googleapis.com_ajax_libs_jquery_1.7.1_jquery.js"/>"></script>
   <script>
     $(document).ready(function(){
 

@@ -6,16 +6,17 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>com.persistencia.Cie9</class>
         <class>com.persistencia.Cirujano</class>
+        <class>com.persistencia.CirujanoPK</class>
         <class>com.persistencia.Cirujia</class>
+        <class>com.persistencia.CirujiaPK</class>
         <class>com.persistencia.Especialidad</class>
         <class>com.persistencia.Horario</class>
         <class>com.persistencia.Metas</class>
+        <class>com.persistencia.MetasPK</class>
         <class>com.persistencia.Paciente</class>
         <class>com.persistencia.Quirofano</class>
         <class>com.persistencia.Riesgo</class>
         <class>com.persistencia.Suspenciones</class>
-        <class>com.persistencia.CirujanoEspecialidad</class>
-        <class>com.persistencia.CirujanoEspecialidadPK</class>
         <properties>
             <property name="eclipselink.jdbc.url" value="jdbc:mysql://localhost:3306/ISSS"/>
             <property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver"/>

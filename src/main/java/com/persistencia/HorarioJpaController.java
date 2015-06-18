@@ -42,7 +42,7 @@ public class HorarioJpaController implements Serializable {
             em.getTransaction().begin();
             List<Cirujano> attachedCirujanoList = new ArrayList<Cirujano>();
             for (Cirujano cirujanoListCirujanoToAttach : horario.getCirujanoList()) {
-                cirujanoListCirujanoToAttach = em.getReference(cirujanoListCirujanoToAttach.getClass(), cirujanoListCirujanoToAttach.getIdCirujano());
+                cirujanoListCirujanoToAttach = em.getReference(cirujanoListCirujanoToAttach.getClass(), cirujanoListCirujanoToAttach.getCirujanoPK());
                 attachedCirujanoList.add(cirujanoListCirujanoToAttach);
             }
             horario.setCirujanoList(attachedCirujanoList);
@@ -86,7 +86,7 @@ public class HorarioJpaController implements Serializable {
             }
             List<Cirujano> attachedCirujanoListNew = new ArrayList<Cirujano>();
             for (Cirujano cirujanoListNewCirujanoToAttach : cirujanoListNew) {
-                cirujanoListNewCirujanoToAttach = em.getReference(cirujanoListNewCirujanoToAttach.getClass(), cirujanoListNewCirujanoToAttach.getIdCirujano());
+                cirujanoListNewCirujanoToAttach = em.getReference(cirujanoListNewCirujanoToAttach.getClass(), cirujanoListNewCirujanoToAttach.getCirujanoPK());
                 attachedCirujanoListNew.add(cirujanoListNewCirujanoToAttach);
             }
             cirujanoListNew = attachedCirujanoListNew;
@@ -197,5 +197,5 @@ public class HorarioJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

@@ -1,8 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.persistencia;
 
-/**
- * Created by akino on 06-09-15.
- */
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -87,7 +89,7 @@ public class MetasPK implements Serializable {
 
     @Override
     public String toString() {
-        return "persistencia.MetasPK[ idCirujanofk=" + idCirujanofk + ", mes=" + mes + ", anio=" + anio + " ]";
+        return "com.persistencia.MetasPK[ idCirujanofk=" + idCirujanofk + ", mes=" + mes + ", anio=" + anio + " ]";
     }
 
 }

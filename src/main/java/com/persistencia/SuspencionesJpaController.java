@@ -1,8 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.persistencia;
 
-/**
- * Created by akino on 06-09-15.
- */
+import com.persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -12,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import com.persistencia.exceptions.NonexistentEntityException;
-import com.persistencia.exceptions.PreexistingEntityException;
 
 /**
  *
@@ -30,7 +31,7 @@ public class SuspencionesJpaController implements Serializable {
         return emf.createEntityManager();
     }
 
-    public void create(Suspenciones suspenciones) throws PreexistingEntityException, Exception {
+    public void create(Suspenciones suspenciones) {
         if (suspenciones.getCirujiaList() == null) {
             suspenciones.setCirujiaList(new ArrayList<Cirujia>());
         }
@@ -40,7 +41,7 @@ public class SuspencionesJpaController implements Serializable {
             em.getTransaction().begin();
             List<Cirujia> attachedCirujiaList = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListCirujiaToAttach : suspenciones.getCirujiaList()) {
-                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getIdCirujia());
+                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getCirujiaPK());
                 attachedCirujiaList.add(cirujiaListCirujiaToAttach);
             }
             suspenciones.setCirujiaList(attachedCirujiaList);
@@ -55,11 +56,6 @@ public class SuspencionesJpaController implements Serializable {
                 }
             }
             em.getTransaction().commit();
-        } catch (Exception ex) {
-            if (findSuspenciones(suspenciones.getIdSuspenciones()) != null) {
-                throw new PreexistingEntityException("Suspenciones " + suspenciones + " already exists.", ex);
-            }
-            throw ex;
         } finally {
             if (em != null) {
                 em.close();
@@ -77,7 +73,7 @@ public class SuspencionesJpaController implements Serializable {
             List<Cirujia> cirujiaListNew = suspenciones.getCirujiaList();
             List<Cirujia> attachedCirujiaListNew = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListNewCirujiaToAttach : cirujiaListNew) {
-                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getIdCirujia());
+                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getCirujiaPK());
                 attachedCirujiaListNew.add(cirujiaListNewCirujiaToAttach);
             }
             cirujiaListNew = attachedCirujiaListNew;

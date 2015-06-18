@@ -43,18 +43,18 @@ public class PacienteJpaController implements Serializable {
             em.getTransaction().begin();
             List<Cirujia> attachedCirujiaList = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListCirujiaToAttach : paciente.getCirujiaList()) {
-                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getIdCirujia());
+                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getCirujiaPK());
                 attachedCirujiaList.add(cirujiaListCirujiaToAttach);
             }
             paciente.setCirujiaList(attachedCirujiaList);
             em.persist(paciente);
             for (Cirujia cirujiaListCirujia : paciente.getCirujiaList()) {
-                Paciente oldFkPacienteOfCirujiaListCirujia = cirujiaListCirujia.getFkPaciente();
-                cirujiaListCirujia.setFkPaciente(paciente);
+                Paciente oldPacienteOfCirujiaListCirujia = cirujiaListCirujia.getPaciente();
+                cirujiaListCirujia.setPaciente(paciente);
                 cirujiaListCirujia = em.merge(cirujiaListCirujia);
-                if (oldFkPacienteOfCirujiaListCirujia != null) {
-                    oldFkPacienteOfCirujiaListCirujia.getCirujiaList().remove(cirujiaListCirujia);
-                    oldFkPacienteOfCirujiaListCirujia = em.merge(oldFkPacienteOfCirujiaListCirujia);
+                if (oldPacienteOfCirujiaListCirujia != null) {
+                    oldPacienteOfCirujiaListCirujia.getCirujiaList().remove(cirujiaListCirujia);
+                    oldPacienteOfCirujiaListCirujia = em.merge(oldPacienteOfCirujiaListCirujia);
                 }
             }
             em.getTransaction().commit();
@@ -84,7 +84,7 @@ public class PacienteJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Cirujia " + cirujiaListOldCirujia + " since its fkPaciente field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Cirujia " + cirujiaListOldCirujia + " since its paciente field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -92,7 +92,7 @@ public class PacienteJpaController implements Serializable {
             }
             List<Cirujia> attachedCirujiaListNew = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListNewCirujiaToAttach : cirujiaListNew) {
-                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getIdCirujia());
+                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getCirujiaPK());
                 attachedCirujiaListNew.add(cirujiaListNewCirujiaToAttach);
             }
             cirujiaListNew = attachedCirujiaListNew;
@@ -100,12 +100,12 @@ public class PacienteJpaController implements Serializable {
             paciente = em.merge(paciente);
             for (Cirujia cirujiaListNewCirujia : cirujiaListNew) {
                 if (!cirujiaListOld.contains(cirujiaListNewCirujia)) {
-                    Paciente oldFkPacienteOfCirujiaListNewCirujia = cirujiaListNewCirujia.getFkPaciente();
-                    cirujiaListNewCirujia.setFkPaciente(paciente);
+                    Paciente oldPacienteOfCirujiaListNewCirujia = cirujiaListNewCirujia.getPaciente();
+                    cirujiaListNewCirujia.setPaciente(paciente);
                     cirujiaListNewCirujia = em.merge(cirujiaListNewCirujia);
-                    if (oldFkPacienteOfCirujiaListNewCirujia != null && !oldFkPacienteOfCirujiaListNewCirujia.equals(paciente)) {
-                        oldFkPacienteOfCirujiaListNewCirujia.getCirujiaList().remove(cirujiaListNewCirujia);
-                        oldFkPacienteOfCirujiaListNewCirujia = em.merge(oldFkPacienteOfCirujiaListNewCirujia);
+                    if (oldPacienteOfCirujiaListNewCirujia != null && !oldPacienteOfCirujiaListNewCirujia.equals(paciente)) {
+                        oldPacienteOfCirujiaListNewCirujia.getCirujiaList().remove(cirujiaListNewCirujia);
+                        oldPacienteOfCirujiaListNewCirujia = em.merge(oldPacienteOfCirujiaListNewCirujia);
                     }
                 }
             }
@@ -144,7 +144,7 @@ public class PacienteJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Paciente (" + paciente + ") cannot be destroyed since the Cirujia " + cirujiaListOrphanCheckCirujia + " in its cirujiaList field has a non-nullable fkPaciente field.");
+                illegalOrphanMessages.add("This Paciente (" + paciente + ") cannot be destroyed since the Cirujia " + cirujiaListOrphanCheckCirujia + " in its cirujiaList field has a non-nullable paciente field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

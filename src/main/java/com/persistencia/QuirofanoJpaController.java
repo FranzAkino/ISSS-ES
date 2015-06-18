@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.persistencia;
 
 import com.persistencia.exceptions.IllegalOrphanException;
@@ -17,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-
 /**
  *
  * @author akino
@@ -43,18 +37,18 @@ public class QuirofanoJpaController implements Serializable {
             em.getTransaction().begin();
             List<Cirujia> attachedCirujiaList = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListCirujiaToAttach : quirofano.getCirujiaList()) {
-                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getIdCirujia());
+                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getCirujiaPK());
                 attachedCirujiaList.add(cirujiaListCirujiaToAttach);
             }
             quirofano.setCirujiaList(attachedCirujiaList);
             em.persist(quirofano);
             for (Cirujia cirujiaListCirujia : quirofano.getCirujiaList()) {
-                Quirofano oldFkQuirofanoOfCirujiaListCirujia = cirujiaListCirujia.getFkQuirofano();
-                cirujiaListCirujia.setFkQuirofano(quirofano);
+                Quirofano oldQuirofanoOfCirujiaListCirujia = cirujiaListCirujia.getQuirofano();
+                cirujiaListCirujia.setQuirofano(quirofano);
                 cirujiaListCirujia = em.merge(cirujiaListCirujia);
-                if (oldFkQuirofanoOfCirujiaListCirujia != null) {
-                    oldFkQuirofanoOfCirujiaListCirujia.getCirujiaList().remove(cirujiaListCirujia);
-                    oldFkQuirofanoOfCirujiaListCirujia = em.merge(oldFkQuirofanoOfCirujiaListCirujia);
+                if (oldQuirofanoOfCirujiaListCirujia != null) {
+                    oldQuirofanoOfCirujiaListCirujia.getCirujiaList().remove(cirujiaListCirujia);
+                    oldQuirofanoOfCirujiaListCirujia = em.merge(oldQuirofanoOfCirujiaListCirujia);
                 }
             }
             em.getTransaction().commit();
@@ -84,7 +78,7 @@ public class QuirofanoJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Cirujia " + cirujiaListOldCirujia + " since its fkQuirofano field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Cirujia " + cirujiaListOldCirujia + " since its quirofano field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -92,7 +86,7 @@ public class QuirofanoJpaController implements Serializable {
             }
             List<Cirujia> attachedCirujiaListNew = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListNewCirujiaToAttach : cirujiaListNew) {
-                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getIdCirujia());
+                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getCirujiaPK());
                 attachedCirujiaListNew.add(cirujiaListNewCirujiaToAttach);
             }
             cirujiaListNew = attachedCirujiaListNew;
@@ -100,12 +94,12 @@ public class QuirofanoJpaController implements Serializable {
             quirofano = em.merge(quirofano);
             for (Cirujia cirujiaListNewCirujia : cirujiaListNew) {
                 if (!cirujiaListOld.contains(cirujiaListNewCirujia)) {
-                    Quirofano oldFkQuirofanoOfCirujiaListNewCirujia = cirujiaListNewCirujia.getFkQuirofano();
-                    cirujiaListNewCirujia.setFkQuirofano(quirofano);
+                    Quirofano oldQuirofanoOfCirujiaListNewCirujia = cirujiaListNewCirujia.getQuirofano();
+                    cirujiaListNewCirujia.setQuirofano(quirofano);
                     cirujiaListNewCirujia = em.merge(cirujiaListNewCirujia);
-                    if (oldFkQuirofanoOfCirujiaListNewCirujia != null && !oldFkQuirofanoOfCirujiaListNewCirujia.equals(quirofano)) {
-                        oldFkQuirofanoOfCirujiaListNewCirujia.getCirujiaList().remove(cirujiaListNewCirujia);
-                        oldFkQuirofanoOfCirujiaListNewCirujia = em.merge(oldFkQuirofanoOfCirujiaListNewCirujia);
+                    if (oldQuirofanoOfCirujiaListNewCirujia != null && !oldQuirofanoOfCirujiaListNewCirujia.equals(quirofano)) {
+                        oldQuirofanoOfCirujiaListNewCirujia.getCirujiaList().remove(cirujiaListNewCirujia);
+                        oldQuirofanoOfCirujiaListNewCirujia = em.merge(oldQuirofanoOfCirujiaListNewCirujia);
                     }
                 }
             }
@@ -144,7 +138,7 @@ public class QuirofanoJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Quirofano (" + quirofano + ") cannot be destroyed since the Cirujia " + cirujiaListOrphanCheckCirujia + " in its cirujiaList field has a non-nullable fkQuirofano field.");
+                illegalOrphanMessages.add("This Quirofano (" + quirofano + ") cannot be destroyed since the Cirujia " + cirujiaListOrphanCheckCirujia + " in its cirujiaList field has a non-nullable quirofano field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

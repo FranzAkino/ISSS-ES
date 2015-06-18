@@ -201,3 +201,33 @@ input[type="submit"]:hover {
     background: #2288bb;
 }
 
+@font-face {
+    font-family: "Maven";
+    src: url("Fonts/MavenProLight-100.otf");
+
+}
+
+.button-right {
+    float: inherit;
+
+    width: 100px;
+    background: #8cc7cc;
+    display: block;
+    /*margin: 0 auto;*/
+    margin-left: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    transition: background .3s;
+    -webkit-transition: background .3s;
+}
+
+h1,h2,h3 {
+    font-family: Maven;
+    text-align: center;
+    color: white;
+}

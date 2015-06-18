@@ -7,7 +7,6 @@ package com.persistencia;
 
 import com.persistencia.exceptions.NonexistentEntityException;
 import com.persistencia.exceptions.PreexistingEntityException;
-
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -36,14 +35,14 @@ public class MetasJpaController implements Serializable {
         if (metas.getMetasPK() == null) {
             metas.setMetasPK(new MetasPK());
         }
-        metas.getMetasPK().setIdCirujanofk(metas.getCirujano().getIdCirujano());
+        metas.getMetasPK().setIdCirujanofk(metas.getCirujano().getCirujanoPK().getIdCirujano());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Cirujano cirujano = metas.getCirujano();
             if (cirujano != null) {
-                cirujano = em.getReference(cirujano.getClass(), cirujano.getIdCirujano());
+                cirujano = em.getReference(cirujano.getClass(), cirujano.getCirujanoPK());
                 metas.setCirujano(cirujano);
             }
             em.persist(metas);
@@ -65,7 +64,7 @@ public class MetasJpaController implements Serializable {
     }
 
     public void edit(Metas metas) throws NonexistentEntityException, Exception {
-        metas.getMetasPK().setIdCirujanofk(metas.getCirujano().getIdCirujano());
+        metas.getMetasPK().setIdCirujanofk(metas.getCirujano().getCirujanoPK().getIdCirujano());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -74,7 +73,7 @@ public class MetasJpaController implements Serializable {
             Cirujano cirujanoOld = persistentMetas.getCirujano();
             Cirujano cirujanoNew = metas.getCirujano();
             if (cirujanoNew != null) {
-                cirujanoNew = em.getReference(cirujanoNew.getClass(), cirujanoNew.getIdCirujano());
+                cirujanoNew = em.getReference(cirujanoNew.getClass(), cirujanoNew.getCirujanoPK());
                 metas.setCirujano(cirujanoNew);
             }
             metas = em.merge(metas);

@@ -1,13 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.persistencia;
 
-/**
- * Created by akino on 06-09-15.
- */
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -31,6 +35,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Suspenciones implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Basic(optional = false)
     @Column(name = "idSuspenciones")
     private Integer idSuspenciones;
@@ -111,7 +116,7 @@ public class Suspenciones implements Serializable {
 
     @Override
     public String toString() {
-        return "persistencia.Suspenciones[ idSuspenciones=" + idSuspenciones + " ]";
+        return "com.persistencia.Suspenciones[ idSuspenciones=" + idSuspenciones + " ]";
     }
 
 }

@@ -1,14 +1,27 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.persistencia;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
 
 /**
- * Created by akino on 05-15-15.
+ *
+ * @author akino
  */
 @Entity
 @Table(name = "Paciente")
@@ -41,12 +54,12 @@ public class Paciente implements Serializable {
     @Column(name = "Sexo")
     private Character sexo;
     @Basic(optional = false)
-    @Column(name = "EstadoCivil")
+    @Column(name = "Estado Civil")
     private Character estadoCivil;
     @Basic(optional = false)
-    @Column(name = "CalidadAsegurado")
+    @Column(name = "Calidad Asegurado")
     private String calidadAsegurado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPaciente")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente")
     private List<Cirujia> cirujiaList;
 
     public Paciente() {
@@ -153,7 +166,7 @@ public class Paciente implements Serializable {
 
     @Override
     public String toString() {
-        return "persistencia.Paciente[ idPaciente=" + idPaciente + " ]";
+        return "com.persistencia.Paciente[ idPaciente=" + idPaciente + " ]";
     }
 
 }

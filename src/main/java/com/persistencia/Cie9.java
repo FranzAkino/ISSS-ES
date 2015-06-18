@@ -3,11 +3,12 @@ package com.persistencia;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.util.Collection;
+import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by akino on 05-15-15.
+ *
+ * @author akino
  */
 @Entity
 @Table(name = "CIE9")
@@ -17,7 +18,7 @@ import java.util.List;
         @NamedQuery(name = "Cie9.findByIdProcedimiento", query = "SELECT c FROM Cie9 c WHERE c.idProcedimiento = :idProcedimiento"),
         @NamedQuery(name = "Cie9.findByNombre", query = "SELECT c FROM Cie9 c WHERE c.nombre = :nombre"),
         @NamedQuery(name = "Cie9.findByDescripcion", query = "SELECT c FROM Cie9 c WHERE c.descripcion = :descripcion")})
-public class Cie9 {
+public class Cie9 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
 //    @Basic(optional = false)
@@ -28,7 +29,7 @@ public class Cie9 {
     private String nombre;
     @Column(name = "Descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkCie9")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cie9")
     private List<Cirujia> cirujiaList;
 
     public Cie9() {
@@ -98,7 +99,7 @@ public class Cie9 {
 
     @Override
     public String toString() {
-        return "persistencia.Cie9[ idProcedimiento=" + idProcedimiento + " ]";
+        return "com.persistencia.Cie9[ idProcedimiento=" + idProcedimiento + " ]";
     }
 
 }

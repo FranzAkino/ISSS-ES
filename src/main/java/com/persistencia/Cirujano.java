@@ -3,29 +3,29 @@ package com.persistencia;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by akino on 05-15-15.
+ *
+ * @author akino
  */
 @Entity
 @Table(name = "Cirujano")
 @XmlRootElement
 @NamedQueries({
         @NamedQuery(name = "Cirujano.findAll", query = "SELECT c FROM Cirujano c"),
-        @NamedQuery(name = "Cirujano.findByIdCirujano", query = "SELECT c FROM Cirujano c WHERE c.idCirujano = :idCirujano"),
+        @NamedQuery(name = "Cirujano.findByIdCirujano", query = "SELECT c FROM Cirujano c WHERE c.cirujanoPK.idCirujano = :idCirujano"),
         @NamedQuery(name = "Cirujano.findByNombres", query = "SELECT c FROM Cirujano c WHERE c.nombres = :nombres"),
         @NamedQuery(name = "Cirujano.findByApellidos", query = "SELECT c FROM Cirujano c WHERE c.apellidos = :apellidos"),
-        @NamedQuery(name = "Cirujano.findByActivo", query = "SELECT c FROM Cirujano c WHERE c.activo = :activo")})
-public class Cirujano {
+        @NamedQuery(name = "Cirujano.findByActivo", query = "SELECT c FROM Cirujano c WHERE c.activo = :activo"),
+        @NamedQuery(name = "Cirujano.findByFkidEspecialidad", query = "SELECT c FROM Cirujano c WHERE c.cirujanoPK.fkidEspecialidad = :fkidEspecialidad")})
+public class Cirujano implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EmbeddedId
+    protected CirujanoPK cirujanoPK;
 //    @Basic(optional = false)
-    @Column(name = "idCirujano")
-    private Integer idCirujano;
-    @Basic(optional = false)
     @Column(name = "Nombres")
     private String nombres;
     @Basic(optional = false)
@@ -34,10 +34,11 @@ public class Cirujano {
     @Basic(optional = false)
     @Column(name = "Activo")
     private int activo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkCirujano")
-    private List<Cirujia> cirujiaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cirujano")
-    private List<CirujanoEspecialidad> cirujanoEspecialidadList;
+    private List<CirujanoCirujia> cirujanoCirujiaList;
+    @JoinColumn(name = "fk_idEspecialidad", referencedColumnName = "idEspecialidad", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Especialidad especialidad;
     @JoinColumn(name = "fk_Horarios", referencedColumnName = "idHorario")
     @ManyToOne(optional = false)
     private Horario fkHorarios;
@@ -47,23 +48,27 @@ public class Cirujano {
     public Cirujano() {
     }
 
-    public Cirujano(Integer idCirujano) {
-        this.idCirujano = idCirujano;
+    public Cirujano(CirujanoPK cirujanoPK) {
+        this.cirujanoPK = cirujanoPK;
     }
 
-    public Cirujano(Integer idCirujano, String nombres, String apellidos, int activo) {
-        this.idCirujano = idCirujano;
+    public Cirujano(CirujanoPK cirujanoPK, String nombres, String apellidos, int activo) {
+        this.cirujanoPK = cirujanoPK;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.activo = activo;
     }
 
-    public Integer getIdCirujano() {
-        return idCirujano;
+    public Cirujano(int idCirujano, int fkidEspecialidad) {
+        this.cirujanoPK = new CirujanoPK(idCirujano, fkidEspecialidad);
     }
 
-    public void setIdCirujano(Integer idCirujano) {
-        this.idCirujano = idCirujano;
+    public CirujanoPK getCirujanoPK() {
+        return cirujanoPK;
+    }
+
+    public void setCirujanoPK(CirujanoPK cirujanoPK) {
+        this.cirujanoPK = cirujanoPK;
     }
 
     public String getNombres() {
@@ -91,21 +96,20 @@ public class Cirujano {
     }
 
     @XmlTransient
-    public List<Cirujia> getCirujiaList() {
-        return cirujiaList;
+    public List<CirujanoCirujia> getCirujanoCirujiaList() {
+        return cirujanoCirujiaList;
     }
 
-    public void setCirujiaList(List<Cirujia> cirujiaList) {
-        this.cirujiaList = cirujiaList;
+    public void setCirujanoCirujiaList(List<CirujanoCirujia> cirujanoCirujiaList) {
+        this.cirujanoCirujiaList = cirujanoCirujiaList;
     }
 
-    @XmlTransient
-    public List<CirujanoEspecialidad> getCirujanoEspecialidadList() {
-        return cirujanoEspecialidadList;
+    public Especialidad getEspecialidad() {
+        return especialidad;
     }
 
-    public void setCirujanoEspecialidadList(List<CirujanoEspecialidad> cirujanoEspecialidadList) {
-        this.cirujanoEspecialidadList = cirujanoEspecialidadList;
+    public void setEspecialidad(Especialidad especialidad) {
+        this.especialidad = especialidad;
     }
 
     public Horario getFkHorarios() {
@@ -128,7 +132,7 @@ public class Cirujano {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idCirujano != null ? idCirujano.hashCode() : 0);
+        hash += (cirujanoPK != null ? cirujanoPK.hashCode() : 0);
         return hash;
     }
 
@@ -139,7 +143,7 @@ public class Cirujano {
             return false;
         }
         Cirujano other = (Cirujano) object;
-        if ((this.idCirujano == null && other.idCirujano != null) || (this.idCirujano != null && !this.idCirujano.equals(other.idCirujano))) {
+        if ((this.cirujanoPK == null && other.cirujanoPK != null) || (this.cirujanoPK != null && !this.cirujanoPK.equals(other.cirujanoPK))) {
             return false;
         }
         return true;
@@ -147,7 +151,7 @@ public class Cirujano {
 
     @Override
     public String toString() {
-        return "persistencia.Cirujano[ idCirujano=" + idCirujano + " ]";
+        return "com.persistencia.Cirujano[ cirujanoPK=" + cirujanoPK + " ]";
     }
 
 }

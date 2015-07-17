@@ -41,7 +41,7 @@ public class Especialidad implements Serializable {
     private Integer idEspecialidad;
     @Column(name = "Especialidad")
     private String especialidad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "especialidad")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkidEspecialidad")
     private List<Cirujano> cirujanoList;
 
     public Especialidad() {

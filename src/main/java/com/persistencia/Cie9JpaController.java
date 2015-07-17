@@ -1,18 +1,22 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.persistencia;
 
 import com.persistencia.exceptions.IllegalOrphanException;
 import com.persistencia.exceptions.NonexistentEntityException;
 import com.persistencia.exceptions.PreexistingEntityException;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityNotFoundException;
+import java.io.Serializable;
 import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -39,18 +43,18 @@ public class Cie9JpaController implements Serializable {
             em.getTransaction().begin();
             List<Cirujia> attachedCirujiaList = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListCirujiaToAttach : cie9.getCirujiaList()) {
-                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getCirujiaPK());
+                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getIdCirujia());
                 attachedCirujiaList.add(cirujiaListCirujiaToAttach);
             }
             cie9.setCirujiaList(attachedCirujiaList);
             em.persist(cie9);
             for (Cirujia cirujiaListCirujia : cie9.getCirujiaList()) {
-                Cie9 oldCie9OfCirujiaListCirujia = cirujiaListCirujia.getCie9();
-                cirujiaListCirujia.setCie9(cie9);
+                Cie9 oldFkCie9OfCirujiaListCirujia = cirujiaListCirujia.getFkCie9();
+                cirujiaListCirujia.setFkCie9(cie9);
                 cirujiaListCirujia = em.merge(cirujiaListCirujia);
-                if (oldCie9OfCirujiaListCirujia != null) {
-                    oldCie9OfCirujiaListCirujia.getCirujiaList().remove(cirujiaListCirujia);
-                    oldCie9OfCirujiaListCirujia = em.merge(oldCie9OfCirujiaListCirujia);
+                if (oldFkCie9OfCirujiaListCirujia != null) {
+                    oldFkCie9OfCirujiaListCirujia.getCirujiaList().remove(cirujiaListCirujia);
+                    oldFkCie9OfCirujiaListCirujia = em.merge(oldFkCie9OfCirujiaListCirujia);
                 }
             }
             em.getTransaction().commit();
@@ -80,7 +84,7 @@ public class Cie9JpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Cirujia " + cirujiaListOldCirujia + " since its cie9 field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Cirujia " + cirujiaListOldCirujia + " since its fkCie9 field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -88,7 +92,7 @@ public class Cie9JpaController implements Serializable {
             }
             List<Cirujia> attachedCirujiaListNew = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListNewCirujiaToAttach : cirujiaListNew) {
-                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getCirujiaPK());
+                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getIdCirujia());
                 attachedCirujiaListNew.add(cirujiaListNewCirujiaToAttach);
             }
             cirujiaListNew = attachedCirujiaListNew;
@@ -96,12 +100,12 @@ public class Cie9JpaController implements Serializable {
             cie9 = em.merge(cie9);
             for (Cirujia cirujiaListNewCirujia : cirujiaListNew) {
                 if (!cirujiaListOld.contains(cirujiaListNewCirujia)) {
-                    Cie9 oldCie9OfCirujiaListNewCirujia = cirujiaListNewCirujia.getCie9();
-                    cirujiaListNewCirujia.setCie9(cie9);
+                    Cie9 oldFkCie9OfCirujiaListNewCirujia = cirujiaListNewCirujia.getFkCie9();
+                    cirujiaListNewCirujia.setFkCie9(cie9);
                     cirujiaListNewCirujia = em.merge(cirujiaListNewCirujia);
-                    if (oldCie9OfCirujiaListNewCirujia != null && !oldCie9OfCirujiaListNewCirujia.equals(cie9)) {
-                        oldCie9OfCirujiaListNewCirujia.getCirujiaList().remove(cirujiaListNewCirujia);
-                        oldCie9OfCirujiaListNewCirujia = em.merge(oldCie9OfCirujiaListNewCirujia);
+                    if (oldFkCie9OfCirujiaListNewCirujia != null && !oldFkCie9OfCirujiaListNewCirujia.equals(cie9)) {
+                        oldFkCie9OfCirujiaListNewCirujia.getCirujiaList().remove(cirujiaListNewCirujia);
+                        oldFkCie9OfCirujiaListNewCirujia = em.merge(oldFkCie9OfCirujiaListNewCirujia);
                     }
                 }
             }
@@ -140,7 +144,7 @@ public class Cie9JpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Cie9 (" + cie9 + ") cannot be destroyed since the Cirujia " + cirujiaListOrphanCheckCirujia + " in its cirujiaList field has a non-nullable cie9 field.");
+                illegalOrphanMessages.add("This Cie9 (" + cie9 + ") cannot be destroyed since the Cirujia " + cirujiaListOrphanCheckCirujia + " in its cirujiaList field has a non-nullable fkCie9 field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);

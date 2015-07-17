@@ -38,7 +38,7 @@ public class Quirofano implements Serializable {
     private Integer idQuirofano;
     @Column(name = "Descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quirofano")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkQuirofano")
     private List<Cirujia> cirujiaList;
 
     public Quirofano() {

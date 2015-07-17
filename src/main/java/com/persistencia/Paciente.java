@@ -59,7 +59,7 @@ public class Paciente implements Serializable {
     @Basic(optional = false)
     @Column(name = "Calidad Asegurado")
     private String calidadAsegurado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paciente")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPaciente")
     private List<Cirujia> cirujiaList;
 
     public Paciente() {

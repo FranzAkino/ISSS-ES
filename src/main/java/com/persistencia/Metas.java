@@ -36,7 +36,7 @@ public class Metas implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected MetasPK metasPK;
-    @Basic(optional = false)
+//    @Basic(optional = false)
     @Column(name = "Meta")
     private int meta;
     @Column(name = "Realizadas")

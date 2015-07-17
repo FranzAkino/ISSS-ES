@@ -35,14 +35,14 @@ public class MetasJpaController implements Serializable {
         if (metas.getMetasPK() == null) {
             metas.setMetasPK(new MetasPK());
         }
-        metas.getMetasPK().setIdCirujanofk(metas.getCirujano().getCirujanoPK().getIdCirujano());
+        metas.getMetasPK().setIdCirujanofk(metas.getCirujano().getIdCirujano());
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
             Cirujano cirujano = metas.getCirujano();
             if (cirujano != null) {
-                cirujano = em.getReference(cirujano.getClass(), cirujano.getCirujanoPK());
+                cirujano = em.getReference(cirujano.getClass(), cirujano.getIdCirujano());
                 metas.setCirujano(cirujano);
             }
             em.persist(metas);
@@ -64,7 +64,7 @@ public class MetasJpaController implements Serializable {
     }
 
     public void edit(Metas metas) throws NonexistentEntityException, Exception {
-        metas.getMetasPK().setIdCirujanofk(metas.getCirujano().getCirujanoPK().getIdCirujano());
+        metas.getMetasPK().setIdCirujanofk(metas.getCirujano().getIdCirujano());
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -73,7 +73,7 @@ public class MetasJpaController implements Serializable {
             Cirujano cirujanoOld = persistentMetas.getCirujano();
             Cirujano cirujanoNew = metas.getCirujano();
             if (cirujanoNew != null) {
-                cirujanoNew = em.getReference(cirujanoNew.getClass(), cirujanoNew.getCirujanoPK());
+                cirujanoNew = em.getReference(cirujanoNew.getClass(), cirujanoNew.getIdCirujano());
                 metas.setCirujano(cirujanoNew);
             }
             metas = em.merge(metas);

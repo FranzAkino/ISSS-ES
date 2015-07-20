@@ -34,20 +34,20 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Cirujia")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Cirujia.findAll", query = "SELECT c FROM Cirujia c"),
-        @NamedQuery(name = "Cirujia.findByIdCirujia", query = "SELECT c FROM Cirujia c WHERE c.idCirujia = :idCirujia"),
-        @NamedQuery(name = "Cirujia.findByFecha", query = "SELECT c FROM Cirujia c WHERE c.fecha = :fecha"),
-        @NamedQuery(name = "Cirujia.findByDiagnosticoPostoperatorio", query = "SELECT c FROM Cirujia c WHERE c.diagnosticoPostoperatorio = :diagnosticoPostoperatorio"),
-        @NamedQuery(name = "Cirujia.findByRegion", query = "SELECT c FROM Cirujia c WHERE c.region = :region"),
-        @NamedQuery(name = "Cirujia.findByTipoAnestecia", query = "SELECT c FROM Cirujia c WHERE c.tipoAnestecia = :tipoAnestecia"),
-        @NamedQuery(name = "Cirujia.findByAnestesista", query = "SELECT c FROM Cirujia c WHERE c.anestesista = :anestesista"),
-        @NamedQuery(name = "Cirujia.findByInstrumentista", query = "SELECT c FROM Cirujia c WHERE c.instrumentista = :instrumentista"),
-        @NamedQuery(name = "Cirujia.findByCircular", query = "SELECT c FROM Cirujia c WHERE c.circular = :circular"),
-        @NamedQuery(name = "Cirujia.findByEmergencia", query = "SELECT c FROM Cirujia c WHERE c.emergencia = :emergencia"),
-        @NamedQuery(name = "Cirujia.findByRealizada", query = "SELECT c FROM Cirujia c WHERE c.realizada = :realizada"),
-        @NamedQuery(name = "Cirujia.findByAnestesiologo", query = "SELECT c FROM Cirujia c WHERE c.anestesiologo = :anestesiologo"),
-        @NamedQuery(name = "Cirujia.findByInicio", query = "SELECT c FROM Cirujia c WHERE c.inicio = :inicio"),
-        @NamedQuery(name = "Cirujia.findByFinalizacion", query = "SELECT c FROM Cirujia c WHERE c.finalizacion = :finalizacion")})
+    @NamedQuery(name = "Cirujia.findAll", query = "SELECT c FROM Cirujia c"),
+    @NamedQuery(name = "Cirujia.findByIdCirujia", query = "SELECT c FROM Cirujia c WHERE c.idCirujia = :idCirujia"),
+    @NamedQuery(name = "Cirujia.findByFecha", query = "SELECT c FROM Cirujia c WHERE c.fecha = :fecha"),
+    @NamedQuery(name = "Cirujia.findByDiagnosticoPostoperatorio", query = "SELECT c FROM Cirujia c WHERE c.diagnosticoPostoperatorio = :diagnosticoPostoperatorio"),
+    @NamedQuery(name = "Cirujia.findByRegion", query = "SELECT c FROM Cirujia c WHERE c.region = :region"),
+    @NamedQuery(name = "Cirujia.findByTipoAnestecia", query = "SELECT c FROM Cirujia c WHERE c.tipoAnestecia = :tipoAnestecia"),
+    @NamedQuery(name = "Cirujia.findByAnestesista", query = "SELECT c FROM Cirujia c WHERE c.anestesista = :anestesista"),
+    @NamedQuery(name = "Cirujia.findByInstrumentista", query = "SELECT c FROM Cirujia c WHERE c.instrumentista = :instrumentista"),
+    @NamedQuery(name = "Cirujia.findByCircular", query = "SELECT c FROM Cirujia c WHERE c.circular = :circular"),
+    @NamedQuery(name = "Cirujia.findByEmergencia", query = "SELECT c FROM Cirujia c WHERE c.emergencia = :emergencia"),
+    @NamedQuery(name = "Cirujia.findByRealizada", query = "SELECT c FROM Cirujia c WHERE c.realizada = :realizada"),
+    @NamedQuery(name = "Cirujia.findByAnestesiologo", query = "SELECT c FROM Cirujia c WHERE c.anestesiologo = :anestesiologo"),
+    @NamedQuery(name = "Cirujia.findByInicio", query = "SELECT c FROM Cirujia c WHERE c.inicio = :inicio"),
+    @NamedQuery(name = "Cirujia.findByFinalizacion", query = "SELECT c FROM Cirujia c WHERE c.finalizacion = :finalizacion")})
 public class Cirujia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -306,5 +306,5 @@ public class Cirujia implements Serializable {
     public String toString() {
         return "com.persistencia.Cirujia[ idCirujia=" + idCirujia + " ]";
     }
-
+    
 }

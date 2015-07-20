@@ -25,18 +25,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "Metas")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Metas.findAll", query = "SELECT m FROM Metas m"),
-        @NamedQuery(name = "Metas.findByIdCirujanofk", query = "SELECT m FROM Metas m WHERE m.metasPK.idCirujanofk = :idCirujanofk"),
-        @NamedQuery(name = "Metas.findByMes", query = "SELECT m FROM Metas m WHERE m.metasPK.mes = :mes"),
-        @NamedQuery(name = "Metas.findByAnio", query = "SELECT m FROM Metas m WHERE m.metasPK.anio = :anio"),
-        @NamedQuery(name = "Metas.findByMeta", query = "SELECT m FROM Metas m WHERE m.meta = :meta"),
-        @NamedQuery(name = "Metas.findByRealizadas", query = "SELECT m FROM Metas m WHERE m.realizadas = :realizadas"),
-        @NamedQuery(name = "Metas.findBySuspendidas", query = "SELECT m FROM Metas m WHERE m.suspendidas = :suspendidas")})
+    @NamedQuery(name = "Metas.findAll", query = "SELECT m FROM Metas m"),
+    @NamedQuery(name = "Metas.findByIdCirujanofk", query = "SELECT m FROM Metas m WHERE m.metasPK.idCirujanofk = :idCirujanofk"),
+    @NamedQuery(name = "Metas.findByMes", query = "SELECT m FROM Metas m WHERE m.metasPK.mes = :mes"),
+    @NamedQuery(name = "Metas.findByAnio", query = "SELECT m FROM Metas m WHERE m.metasPK.anio = :anio"),
+    @NamedQuery(name = "Metas.findByMeta", query = "SELECT m FROM Metas m WHERE m.meta = :meta"),
+    @NamedQuery(name = "Metas.findByRealizadas", query = "SELECT m FROM Metas m WHERE m.realizadas = :realizadas"),
+    @NamedQuery(name = "Metas.findBySuspendidas", query = "SELECT m FROM Metas m WHERE m.suspendidas = :suspendidas")})
 public class Metas implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected MetasPK metasPK;
-//    @Basic(optional = false)
+    @Basic(optional = false)
     @Column(name = "Meta")
     private int meta;
     @Column(name = "Realizadas")
@@ -127,5 +127,5 @@ public class Metas implements Serializable {
     public String toString() {
         return "com.persistencia.Metas[ metasPK=" + metasPK + " ]";
     }
-
+    
 }

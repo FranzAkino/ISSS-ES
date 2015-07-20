@@ -27,14 +27,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Paciente")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Paciente.findAll", query = "SELECT p FROM Paciente p"),
-        @NamedQuery(name = "Paciente.findByIdPaciente", query = "SELECT p FROM Paciente p WHERE p.idPaciente = :idPaciente"),
-        @NamedQuery(name = "Paciente.findByNombres", query = "SELECT p FROM Paciente p WHERE p.nombres = :nombres"),
-        @NamedQuery(name = "Paciente.findByApellidos", query = "SELECT p FROM Paciente p WHERE p.apellidos = :apellidos"),
-        @NamedQuery(name = "Paciente.findByEdad", query = "SELECT p FROM Paciente p WHERE p.edad = :edad"),
-        @NamedQuery(name = "Paciente.findBySexo", query = "SELECT p FROM Paciente p WHERE p.sexo = :sexo"),
-        @NamedQuery(name = "Paciente.findByEstadoCivil", query = "SELECT p FROM Paciente p WHERE p.estadoCivil = :estadoCivil"),
-        @NamedQuery(name = "Paciente.findByCalidadAsegurado", query = "SELECT p FROM Paciente p WHERE p.calidadAsegurado = :calidadAsegurado")})
+    @NamedQuery(name = "Paciente.findAll", query = "SELECT p FROM Paciente p"),
+    @NamedQuery(name = "Paciente.findByIdPaciente", query = "SELECT p FROM Paciente p WHERE p.idPaciente = :idPaciente"),
+    @NamedQuery(name = "Paciente.findByNombres", query = "SELECT p FROM Paciente p WHERE p.nombres = :nombres"),
+    @NamedQuery(name = "Paciente.findByApellidos", query = "SELECT p FROM Paciente p WHERE p.apellidos = :apellidos"),
+    @NamedQuery(name = "Paciente.findByEdad", query = "SELECT p FROM Paciente p WHERE p.edad = :edad"),
+    @NamedQuery(name = "Paciente.findBySexo", query = "SELECT p FROM Paciente p WHERE p.sexo = :sexo"),
+    @NamedQuery(name = "Paciente.findByEstadoCivil", query = "SELECT p FROM Paciente p WHERE p.estadoCivil = :estadoCivil"),
+    @NamedQuery(name = "Paciente.findByCalidadAsegurado", query = "SELECT p FROM Paciente p WHERE p.calidadAsegurado = :calidadAsegurado")})
 public class Paciente implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,10 +54,10 @@ public class Paciente implements Serializable {
     @Column(name = "Sexo")
     private Character sexo;
     @Basic(optional = false)
-    @Column(name = "Estado Civil")
+    @Column(name = "EstadoCivil")
     private Character estadoCivil;
     @Basic(optional = false)
-    @Column(name = "Calidad Asegurado")
+    @Column(name = "CalidadAsegurado")
     private String calidadAsegurado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkPaciente")
     private List<Cirujia> cirujiaList;
@@ -168,5 +168,5 @@ public class Paciente implements Serializable {
     public String toString() {
         return "com.persistencia.Paciente[ idPaciente=" + idPaciente + " ]";
     }
-
+    
 }

@@ -306,5 +306,5 @@ public class CirujanoJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

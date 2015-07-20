@@ -31,11 +31,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Cirujano")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Cirujano.findAll", query = "SELECT c FROM Cirujano c"),
-        @NamedQuery(name = "Cirujano.findByIdCirujano", query = "SELECT c FROM Cirujano c WHERE c.idCirujano = :idCirujano"),
-        @NamedQuery(name = "Cirujano.findByNombres", query = "SELECT c FROM Cirujano c WHERE c.nombres = :nombres"),
-        @NamedQuery(name = "Cirujano.findByApellidos", query = "SELECT c FROM Cirujano c WHERE c.apellidos = :apellidos"),
-        @NamedQuery(name = "Cirujano.findByActivo", query = "SELECT c FROM Cirujano c WHERE c.activo = :activo")})
+    @NamedQuery(name = "Cirujano.findAll", query = "SELECT c FROM Cirujano c"),
+    @NamedQuery(name = "Cirujano.findByIdCirujano", query = "SELECT c FROM Cirujano c WHERE c.idCirujano = :idCirujano"),
+    @NamedQuery(name = "Cirujano.findByNombres", query = "SELECT c FROM Cirujano c WHERE c.nombres = :nombres"),
+    @NamedQuery(name = "Cirujano.findByApellidos", query = "SELECT c FROM Cirujano c WHERE c.apellidos = :apellidos"),
+    @NamedQuery(name = "Cirujano.findByActivo", query = "SELECT c FROM Cirujano c WHERE c.activo = :activo")})
 public class Cirujano implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -167,5 +167,5 @@ public class Cirujano implements Serializable {
     public String toString() {
         return "com.persistencia.Cirujano[ idCirujano=" + idCirujano + " ]";
     }
-
+    
 }

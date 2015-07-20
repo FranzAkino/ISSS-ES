@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "CIE9")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Cie9.findAll", query = "SELECT c FROM Cie9 c"),
-        @NamedQuery(name = "Cie9.findByIdProcedimiento", query = "SELECT c FROM Cie9 c WHERE c.idProcedimiento = :idProcedimiento"),
-        @NamedQuery(name = "Cie9.findByNombre", query = "SELECT c FROM Cie9 c WHERE c.nombre = :nombre"),
-        @NamedQuery(name = "Cie9.findByDescripcion", query = "SELECT c FROM Cie9 c WHERE c.descripcion = :descripcion")})
+    @NamedQuery(name = "Cie9.findAll", query = "SELECT c FROM Cie9 c"),
+    @NamedQuery(name = "Cie9.findByIdProcedimiento", query = "SELECT c FROM Cie9 c WHERE c.idProcedimiento = :idProcedimiento"),
+    @NamedQuery(name = "Cie9.findByNombre", query = "SELECT c FROM Cie9 c WHERE c.nombre = :nombre"),
+    @NamedQuery(name = "Cie9.findByDescripcion", query = "SELECT c FROM Cie9 c WHERE c.descripcion = :descripcion")})
 public class Cie9 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -114,5 +114,5 @@ public class Cie9 implements Serializable {
     public String toString() {
         return "com.persistencia.Cie9[ idProcedimiento=" + idProcedimiento + " ]";
     }
-
+    
 }

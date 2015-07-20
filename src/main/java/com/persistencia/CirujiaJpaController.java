@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -337,5 +338,27 @@ public class CirujiaJpaController implements Serializable {
             em.close();
         }
     }
-
+    
+    
+    public List<Cirujia> tipoCirujia(String tipoCirujia){    
+        EntityManager em = getEntityManager();
+        try{        
+            TypedQuery<Cirujia> queryMayorMenor = em.createNamedQuery("Cirujia.findByTipoAnestecia", Cirujia.class);
+            queryMayorMenor.setParameter("tipoAnestecia", tipoCirujia);
+            return queryMayorMenor.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Cirujia> getSuspendidas(){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createNamedQuery("Cirujia.findByRealizada", Cirujia.class);
+            query.setParameter("realizada", 0);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }            
+    }        
 }

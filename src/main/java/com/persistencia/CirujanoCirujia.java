@@ -27,9 +27,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "CirujanoCirujia")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "CirujanoCirujia.findAll", query = "SELECT c FROM CirujanoCirujia c"),
-        @NamedQuery(name = "CirujanoCirujia.findByIdCirujanoCirujia", query = "SELECT c FROM CirujanoCirujia c WHERE c.idCirujanoCirujia = :idCirujanoCirujia"),
-        @NamedQuery(name = "CirujanoCirujia.findByTitular", query = "SELECT c FROM CirujanoCirujia c WHERE c.titular = :titular")})
+    @NamedQuery(name = "CirujanoCirujia.findAll", query = "SELECT c FROM CirujanoCirujia c"),
+    @NamedQuery(name = "CirujanoCirujia.findByIdCirujanoCirujia", query = "SELECT c FROM CirujanoCirujia c WHERE c.idCirujanoCirujia = :idCirujanoCirujia"),
+    @NamedQuery(name = "CirujanoCirujia.findByTitular", query = "SELECT c FROM CirujanoCirujia c WHERE c.titular = :titular")})
 public class CirujanoCirujia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -115,5 +115,5 @@ public class CirujanoCirujia implements Serializable {
     public String toString() {
         return "com.persistencia.CirujanoCirujia[ idCirujanoCirujia=" + idCirujanoCirujia + " ]";
     }
-
+    
 }

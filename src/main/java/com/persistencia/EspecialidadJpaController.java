@@ -42,18 +42,18 @@ public class EspecialidadJpaController implements Serializable {
             em.getTransaction().begin();
             List<Cirujano> attachedCirujanoList = new ArrayList<Cirujano>();
             for (Cirujano cirujanoListCirujanoToAttach : especialidad.getCirujanoList()) {
-                cirujanoListCirujanoToAttach = em.getReference(cirujanoListCirujanoToAttach.getClass(), cirujanoListCirujanoToAttach.getCirujanoPK());
+                cirujanoListCirujanoToAttach = em.getReference(cirujanoListCirujanoToAttach.getClass(), cirujanoListCirujanoToAttach.getIdCirujano());
                 attachedCirujanoList.add(cirujanoListCirujanoToAttach);
             }
             especialidad.setCirujanoList(attachedCirujanoList);
             em.persist(especialidad);
             for (Cirujano cirujanoListCirujano : especialidad.getCirujanoList()) {
-                Especialidad oldEspecialidadOfCirujanoListCirujano = cirujanoListCirujano.getEspecialidad();
-                cirujanoListCirujano.setEspecialidad(especialidad);
+                Especialidad oldFkidEspecialidadOfCirujanoListCirujano = cirujanoListCirujano.getFkidEspecialidad();
+                cirujanoListCirujano.setFkidEspecialidad(especialidad);
                 cirujanoListCirujano = em.merge(cirujanoListCirujano);
-                if (oldEspecialidadOfCirujanoListCirujano != null) {
-                    oldEspecialidadOfCirujanoListCirujano.getCirujanoList().remove(cirujanoListCirujano);
-                    oldEspecialidadOfCirujanoListCirujano = em.merge(oldEspecialidadOfCirujanoListCirujano);
+                if (oldFkidEspecialidadOfCirujanoListCirujano != null) {
+                    oldFkidEspecialidadOfCirujanoListCirujano.getCirujanoList().remove(cirujanoListCirujano);
+                    oldFkidEspecialidadOfCirujanoListCirujano = em.merge(oldFkidEspecialidadOfCirujanoListCirujano);
                 }
             }
             em.getTransaction().commit();
@@ -78,7 +78,7 @@ public class EspecialidadJpaController implements Serializable {
                     if (illegalOrphanMessages == null) {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
-                    illegalOrphanMessages.add("You must retain Cirujano " + cirujanoListOldCirujano + " since its especialidad field is not nullable.");
+                    illegalOrphanMessages.add("You must retain Cirujano " + cirujanoListOldCirujano + " since its fkidEspecialidad field is not nullable.");
                 }
             }
             if (illegalOrphanMessages != null) {
@@ -86,7 +86,7 @@ public class EspecialidadJpaController implements Serializable {
             }
             List<Cirujano> attachedCirujanoListNew = new ArrayList<Cirujano>();
             for (Cirujano cirujanoListNewCirujanoToAttach : cirujanoListNew) {
-                cirujanoListNewCirujanoToAttach = em.getReference(cirujanoListNewCirujanoToAttach.getClass(), cirujanoListNewCirujanoToAttach.getCirujanoPK());
+                cirujanoListNewCirujanoToAttach = em.getReference(cirujanoListNewCirujanoToAttach.getClass(), cirujanoListNewCirujanoToAttach.getIdCirujano());
                 attachedCirujanoListNew.add(cirujanoListNewCirujanoToAttach);
             }
             cirujanoListNew = attachedCirujanoListNew;
@@ -94,12 +94,12 @@ public class EspecialidadJpaController implements Serializable {
             especialidad = em.merge(especialidad);
             for (Cirujano cirujanoListNewCirujano : cirujanoListNew) {
                 if (!cirujanoListOld.contains(cirujanoListNewCirujano)) {
-                    Especialidad oldEspecialidadOfCirujanoListNewCirujano = cirujanoListNewCirujano.getEspecialidad();
-                    cirujanoListNewCirujano.setEspecialidad(especialidad);
+                    Especialidad oldFkidEspecialidadOfCirujanoListNewCirujano = cirujanoListNewCirujano.getFkidEspecialidad();
+                    cirujanoListNewCirujano.setFkidEspecialidad(especialidad);
                     cirujanoListNewCirujano = em.merge(cirujanoListNewCirujano);
-                    if (oldEspecialidadOfCirujanoListNewCirujano != null && !oldEspecialidadOfCirujanoListNewCirujano.equals(especialidad)) {
-                        oldEspecialidadOfCirujanoListNewCirujano.getCirujanoList().remove(cirujanoListNewCirujano);
-                        oldEspecialidadOfCirujanoListNewCirujano = em.merge(oldEspecialidadOfCirujanoListNewCirujano);
+                    if (oldFkidEspecialidadOfCirujanoListNewCirujano != null && !oldFkidEspecialidadOfCirujanoListNewCirujano.equals(especialidad)) {
+                        oldFkidEspecialidadOfCirujanoListNewCirujano.getCirujanoList().remove(cirujanoListNewCirujano);
+                        oldFkidEspecialidadOfCirujanoListNewCirujano = em.merge(oldFkidEspecialidadOfCirujanoListNewCirujano);
                     }
                 }
             }
@@ -138,7 +138,7 @@ public class EspecialidadJpaController implements Serializable {
                 if (illegalOrphanMessages == null) {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
-                illegalOrphanMessages.add("This Especialidad (" + especialidad + ") cannot be destroyed since the Cirujano " + cirujanoListOrphanCheckCirujano + " in its cirujanoList field has a non-nullable especialidad field.");
+                illegalOrphanMessages.add("This Especialidad (" + especialidad + ") cannot be destroyed since the Cirujano " + cirujanoListOrphanCheckCirujano + " in its cirujanoList field has a non-nullable fkidEspecialidad field.");
             }
             if (illegalOrphanMessages != null) {
                 throw new IllegalOrphanException(illegalOrphanMessages);
@@ -197,5 +197,5 @@ public class EspecialidadJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

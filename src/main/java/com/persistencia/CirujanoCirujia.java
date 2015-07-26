@@ -1,9 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.persistencia;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -19,47 +27,44 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "CirujanoCirujia")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "CirujanoCirujia.findAll", query = "SELECT c FROM CirujanoCirujia c"),
-        @NamedQuery(name = "CirujanoCirujia.findByIdCirujanoCirujia", query = "SELECT c FROM CirujanoCirujia c WHERE c.cirujanoCirujiaPK.idCirujanoCirujia = :idCirujanoCirujia"),
-        @NamedQuery(name = "CirujanoCirujia.findByFkidCirujia", query = "SELECT c FROM CirujanoCirujia c WHERE c.cirujanoCirujiaPK.fkidCirujia = :fkidCirujia"),
-        @NamedQuery(name = "CirujanoCirujia.findByFkidCirujano", query = "SELECT c FROM CirujanoCirujia c WHERE c.cirujanoCirujiaPK.fkidCirujano = :fkidCirujano"),
-        @NamedQuery(name = "CirujanoCirujia.findByTitular", query = "SELECT c FROM CirujanoCirujia c WHERE c.titular = :titular")})
+    @NamedQuery(name = "CirujanoCirujia.findAll", query = "SELECT c FROM CirujanoCirujia c"),
+    @NamedQuery(name = "CirujanoCirujia.findByIdCirujanoCirujia", query = "SELECT c FROM CirujanoCirujia c WHERE c.idCirujanoCirujia = :idCirujanoCirujia"),
+    @NamedQuery(name = "CirujanoCirujia.findByTitular", query = "SELECT c FROM CirujanoCirujia c WHERE c.titular = :titular")})
 public class CirujanoCirujia implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected CirujanoCirujiaPK cirujanoCirujiaPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Basic(optional = false)
+    @Column(name = "idCirujanoCirujia")
+    private Integer idCirujanoCirujia;
+    @Basic(optional = false)
     @Column(name = "Titular")
     private int titular;
-    @JoinColumn(name = "fk_idCirujia", referencedColumnName = "idCirujia", insertable = false, updatable = false)
+    @JoinColumn(name = "fk_idCirujia", referencedColumnName = "idCirujia")
     @ManyToOne(optional = false)
-    private Cirujia cirujia;
-    @JoinColumn(name = "fk_idCirujano", referencedColumnName = "idCirujano", insertable = false, updatable = false)
+    private Cirujia fkidCirujia;
+    @JoinColumn(name = "fk_idCirujano", referencedColumnName = "idCirujano")
     @ManyToOne(optional = false)
-    private Cirujano cirujano;
+    private Cirujano fkidCirujano;
 
     public CirujanoCirujia() {
     }
 
-    public CirujanoCirujia(CirujanoCirujiaPK cirujanoCirujiaPK) {
-        this.cirujanoCirujiaPK = cirujanoCirujiaPK;
+    public CirujanoCirujia(Integer idCirujanoCirujia) {
+        this.idCirujanoCirujia = idCirujanoCirujia;
     }
 
-    public CirujanoCirujia(CirujanoCirujiaPK cirujanoCirujiaPK, int titular) {
-        this.cirujanoCirujiaPK = cirujanoCirujiaPK;
+    public CirujanoCirujia(Integer idCirujanoCirujia, int titular) {
+        this.idCirujanoCirujia = idCirujanoCirujia;
         this.titular = titular;
     }
 
-    public CirujanoCirujia(int idCirujanoCirujia, int fkidCirujia, int fkidCirujano) {
-        this.cirujanoCirujiaPK = new CirujanoCirujiaPK(idCirujanoCirujia, fkidCirujia, fkidCirujano);
+    public Integer getIdCirujanoCirujia() {
+        return idCirujanoCirujia;
     }
 
-    public CirujanoCirujiaPK getCirujanoCirujiaPK() {
-        return cirujanoCirujiaPK;
-    }
-
-    public void setCirujanoCirujiaPK(CirujanoCirujiaPK cirujanoCirujiaPK) {
-        this.cirujanoCirujiaPK = cirujanoCirujiaPK;
+    public void setIdCirujanoCirujia(Integer idCirujanoCirujia) {
+        this.idCirujanoCirujia = idCirujanoCirujia;
     }
 
     public int getTitular() {
@@ -70,26 +75,26 @@ public class CirujanoCirujia implements Serializable {
         this.titular = titular;
     }
 
-    public Cirujia getCirujia() {
-        return cirujia;
+    public Cirujia getFkidCirujia() {
+        return fkidCirujia;
     }
 
-    public void setCirujia(Cirujia cirujia) {
-        this.cirujia = cirujia;
+    public void setFkidCirujia(Cirujia fkidCirujia) {
+        this.fkidCirujia = fkidCirujia;
     }
 
-    public Cirujano getCirujano() {
-        return cirujano;
+    public Cirujano getFkidCirujano() {
+        return fkidCirujano;
     }
 
-    public void setCirujano(Cirujano cirujano) {
-        this.cirujano = cirujano;
+    public void setFkidCirujano(Cirujano fkidCirujano) {
+        this.fkidCirujano = fkidCirujano;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cirujanoCirujiaPK != null ? cirujanoCirujiaPK.hashCode() : 0);
+        hash += (idCirujanoCirujia != null ? idCirujanoCirujia.hashCode() : 0);
         return hash;
     }
 
@@ -100,7 +105,7 @@ public class CirujanoCirujia implements Serializable {
             return false;
         }
         CirujanoCirujia other = (CirujanoCirujia) object;
-        if ((this.cirujanoCirujiaPK == null && other.cirujanoCirujiaPK != null) || (this.cirujanoCirujiaPK != null && !this.cirujanoCirujiaPK.equals(other.cirujanoCirujiaPK))) {
+        if ((this.idCirujanoCirujia == null && other.idCirujanoCirujia != null) || (this.idCirujanoCirujia != null && !this.idCirujanoCirujia.equals(other.idCirujanoCirujia))) {
             return false;
         }
         return true;
@@ -108,7 +113,7 @@ public class CirujanoCirujia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.persistencia.CirujanoCirujia[ cirujanoCirujiaPK=" + cirujanoCirujiaPK + " ]";
+        return "com.persistencia.CirujanoCirujia[ idCirujanoCirujia=" + idCirujanoCirujia + " ]";
     }
-
+    
 }

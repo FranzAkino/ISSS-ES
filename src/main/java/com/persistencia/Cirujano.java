@@ -1,11 +1,27 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.persistencia;
 
-import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
 
 /**
  *
@@ -15,17 +31,19 @@ import java.util.List;
 @Table(name = "Cirujano")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Cirujano.findAll", query = "SELECT c FROM Cirujano c"),
-        @NamedQuery(name = "Cirujano.findByIdCirujano", query = "SELECT c FROM Cirujano c WHERE c.cirujanoPK.idCirujano = :idCirujano"),
-        @NamedQuery(name = "Cirujano.findByNombres", query = "SELECT c FROM Cirujano c WHERE c.nombres = :nombres"),
-        @NamedQuery(name = "Cirujano.findByApellidos", query = "SELECT c FROM Cirujano c WHERE c.apellidos = :apellidos"),
-        @NamedQuery(name = "Cirujano.findByActivo", query = "SELECT c FROM Cirujano c WHERE c.activo = :activo"),
-        @NamedQuery(name = "Cirujano.findByFkidEspecialidad", query = "SELECT c FROM Cirujano c WHERE c.cirujanoPK.fkidEspecialidad = :fkidEspecialidad")})
+    @NamedQuery(name = "Cirujano.findAll", query = "SELECT c FROM Cirujano c"),
+    @NamedQuery(name = "Cirujano.findByIdCirujano", query = "SELECT c FROM Cirujano c WHERE c.idCirujano = :idCirujano"),
+    @NamedQuery(name = "Cirujano.findByNombres", query = "SELECT c FROM Cirujano c WHERE c.nombres = :nombres"),
+    @NamedQuery(name = "Cirujano.findByApellidos", query = "SELECT c FROM Cirujano c WHERE c.apellidos = :apellidos"),
+    @NamedQuery(name = "Cirujano.findByActivo", query = "SELECT c FROM Cirujano c WHERE c.activo = :activo")})
 public class Cirujano implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected CirujanoPK cirujanoPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Basic(optional = false)
+    @Column(name = "idCirujano")
+    private Integer idCirujano;
+    @Basic(optional = false)
     @Column(name = "Nombres")
     private String nombres;
     @Basic(optional = false)
@@ -34,11 +52,11 @@ public class Cirujano implements Serializable {
     @Basic(optional = false)
     @Column(name = "Activo")
     private int activo;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cirujano")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkidCirujano")
     private List<CirujanoCirujia> cirujanoCirujiaList;
-    @JoinColumn(name = "fk_idEspecialidad", referencedColumnName = "idEspecialidad", insertable = false, updatable = false)
+    @JoinColumn(name = "fk_idEspecialidad", referencedColumnName = "idEspecialidad")
     @ManyToOne(optional = false)
-    private Especialidad especialidad;
+    private Especialidad fkidEspecialidad;
     @JoinColumn(name = "fk_Horarios", referencedColumnName = "idHorario")
     @ManyToOne(optional = false)
     private Horario fkHorarios;
@@ -48,27 +66,23 @@ public class Cirujano implements Serializable {
     public Cirujano() {
     }
 
-    public Cirujano(CirujanoPK cirujanoPK) {
-        this.cirujanoPK = cirujanoPK;
+    public Cirujano(Integer idCirujano) {
+        this.idCirujano = idCirujano;
     }
 
-    public Cirujano(CirujanoPK cirujanoPK, String nombres, String apellidos, int activo) {
-        this.cirujanoPK = cirujanoPK;
+    public Cirujano(Integer idCirujano, String nombres, String apellidos, int activo) {
+        this.idCirujano = idCirujano;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.activo = activo;
     }
 
-    public Cirujano(int idCirujano, int fkidEspecialidad) {
-        this.cirujanoPK = new CirujanoPK(idCirujano, fkidEspecialidad);
+    public Integer getIdCirujano() {
+        return idCirujano;
     }
 
-    public CirujanoPK getCirujanoPK() {
-        return cirujanoPK;
-    }
-
-    public void setCirujanoPK(CirujanoPK cirujanoPK) {
-        this.cirujanoPK = cirujanoPK;
+    public void setIdCirujano(Integer idCirujano) {
+        this.idCirujano = idCirujano;
     }
 
     public String getNombres() {
@@ -104,12 +118,12 @@ public class Cirujano implements Serializable {
         this.cirujanoCirujiaList = cirujanoCirujiaList;
     }
 
-    public Especialidad getEspecialidad() {
-        return especialidad;
+    public Especialidad getFkidEspecialidad() {
+        return fkidEspecialidad;
     }
 
-    public void setEspecialidad(Especialidad especialidad) {
-        this.especialidad = especialidad;
+    public void setFkidEspecialidad(Especialidad fkidEspecialidad) {
+        this.fkidEspecialidad = fkidEspecialidad;
     }
 
     public Horario getFkHorarios() {
@@ -132,7 +146,7 @@ public class Cirujano implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cirujanoPK != null ? cirujanoPK.hashCode() : 0);
+        hash += (idCirujano != null ? idCirujano.hashCode() : 0);
         return hash;
     }
 
@@ -143,7 +157,7 @@ public class Cirujano implements Serializable {
             return false;
         }
         Cirujano other = (Cirujano) object;
-        if ((this.cirujanoPK == null && other.cirujanoPK != null) || (this.cirujanoPK != null && !this.cirujanoPK.equals(other.cirujanoPK))) {
+        if ((this.idCirujano == null && other.idCirujano != null) || (this.idCirujano != null && !this.idCirujano.equals(other.idCirujano))) {
             return false;
         }
         return true;
@@ -151,7 +165,7 @@ public class Cirujano implements Serializable {
 
     @Override
     public String toString() {
-        return "com.persistencia.Cirujano[ cirujanoPK=" + cirujanoPK + " ]";
+        return "com.persistencia.Cirujano[ idCirujano=" + idCirujano + " ]";
     }
-
+    
 }

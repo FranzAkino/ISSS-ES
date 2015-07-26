@@ -41,7 +41,7 @@ public class SuspencionesJpaController implements Serializable {
             em.getTransaction().begin();
             List<Cirujia> attachedCirujiaList = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListCirujiaToAttach : suspenciones.getCirujiaList()) {
-                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getCirujiaPK());
+                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getIdCirujia());
                 attachedCirujiaList.add(cirujiaListCirujiaToAttach);
             }
             suspenciones.setCirujiaList(attachedCirujiaList);
@@ -73,7 +73,7 @@ public class SuspencionesJpaController implements Serializable {
             List<Cirujia> cirujiaListNew = suspenciones.getCirujiaList();
             List<Cirujia> attachedCirujiaListNew = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListNewCirujiaToAttach : cirujiaListNew) {
-                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getCirujiaPK());
+                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getIdCirujia());
                 attachedCirujiaListNew.add(cirujiaListNewCirujiaToAttach);
             }
             cirujiaListNew = attachedCirujiaListNew;
@@ -184,5 +184,5 @@ public class SuspencionesJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

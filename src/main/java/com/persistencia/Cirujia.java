@@ -11,8 +11,10 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -32,28 +34,28 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Cirujia")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Cirujia.findAll", query = "SELECT c FROM Cirujia c"),
-        @NamedQuery(name = "Cirujia.findByIdCirujia", query = "SELECT c FROM Cirujia c WHERE c.cirujiaPK.idCirujia = :idCirujia"),
-        @NamedQuery(name = "Cirujia.findByFecha", query = "SELECT c FROM Cirujia c WHERE c.fecha = :fecha"),
-        @NamedQuery(name = "Cirujia.findByFkPaciente", query = "SELECT c FROM Cirujia c WHERE c.cirujiaPK.fkPaciente = :fkPaciente"),
-        @NamedQuery(name = "Cirujia.findByFkCie9", query = "SELECT c FROM Cirujia c WHERE c.cirujiaPK.fkCie9 = :fkCie9"),
-        @NamedQuery(name = "Cirujia.findByDiagnosticoPostoperatorio", query = "SELECT c FROM Cirujia c WHERE c.diagnosticoPostoperatorio = :diagnosticoPostoperatorio"),
-        @NamedQuery(name = "Cirujia.findByRegion", query = "SELECT c FROM Cirujia c WHERE c.region = :region"),
-        @NamedQuery(name = "Cirujia.findByTipoAnestecia", query = "SELECT c FROM Cirujia c WHERE c.tipoAnestecia = :tipoAnestecia"),
-        @NamedQuery(name = "Cirujia.findByFkQuirofano", query = "SELECT c FROM Cirujia c WHERE c.cirujiaPK.fkQuirofano = :fkQuirofano"),
-        @NamedQuery(name = "Cirujia.findByAnestesista", query = "SELECT c FROM Cirujia c WHERE c.anestesista = :anestesista"),
-        @NamedQuery(name = "Cirujia.findByInstrumentista", query = "SELECT c FROM Cirujia c WHERE c.instrumentista = :instrumentista"),
-        @NamedQuery(name = "Cirujia.findByCircular", query = "SELECT c FROM Cirujia c WHERE c.circular = :circular"),
-        @NamedQuery(name = "Cirujia.findByEmergencia", query = "SELECT c FROM Cirujia c WHERE c.emergencia = :emergencia"),
-        @NamedQuery(name = "Cirujia.findByRealizada", query = "SELECT c FROM Cirujia c WHERE c.realizada = :realizada"),
-        @NamedQuery(name = "Cirujia.findByAnestesiologo", query = "SELECT c FROM Cirujia c WHERE c.anestesiologo = :anestesiologo"),
-        @NamedQuery(name = "Cirujia.findByInicio", query = "SELECT c FROM Cirujia c WHERE c.inicio = :inicio"),
-        @NamedQuery(name = "Cirujia.findByFinalizacion", query = "SELECT c FROM Cirujia c WHERE c.finalizacion = :finalizacion")})
+    @NamedQuery(name = "Cirujia.findAll", query = "SELECT c FROM Cirujia c"),
+    @NamedQuery(name = "Cirujia.findByIdCirujia", query = "SELECT c FROM Cirujia c WHERE c.idCirujia = :idCirujia"),
+    @NamedQuery(name = "Cirujia.findByFecha", query = "SELECT c FROM Cirujia c WHERE c.fecha = :fecha"),
+    @NamedQuery(name = "Cirujia.findByDiagnosticoPostoperatorio", query = "SELECT c FROM Cirujia c WHERE c.diagnosticoPostoperatorio = :diagnosticoPostoperatorio"),
+    @NamedQuery(name = "Cirujia.findByRegion", query = "SELECT c FROM Cirujia c WHERE c.region = :region"),
+    @NamedQuery(name = "Cirujia.findByTipoAnestecia", query = "SELECT c FROM Cirujia c WHERE c.tipoAnestecia = :tipoAnestecia"),
+    @NamedQuery(name = "Cirujia.findByAnestesista", query = "SELECT c FROM Cirujia c WHERE c.anestesista = :anestesista"),
+    @NamedQuery(name = "Cirujia.findByInstrumentista", query = "SELECT c FROM Cirujia c WHERE c.instrumentista = :instrumentista"),
+    @NamedQuery(name = "Cirujia.findByCircular", query = "SELECT c FROM Cirujia c WHERE c.circular = :circular"),
+    @NamedQuery(name = "Cirujia.findByEmergencia", query = "SELECT c FROM Cirujia c WHERE c.emergencia = :emergencia"),
+    @NamedQuery(name = "Cirujia.findByRealizada", query = "SELECT c FROM Cirujia c WHERE c.realizada = :realizada"),
+    @NamedQuery(name = "Cirujia.findByAnestesiologo", query = "SELECT c FROM Cirujia c WHERE c.anestesiologo = :anestesiologo"),
+    @NamedQuery(name = "Cirujia.findByInicio", query = "SELECT c FROM Cirujia c WHERE c.inicio = :inicio"),
+    @NamedQuery(name = "Cirujia.findByFinalizacion", query = "SELECT c FROM Cirujia c WHERE c.finalizacion = :finalizacion")})
 public class Cirujia implements Serializable {
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected CirujiaPK cirujiaPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 //    @Basic(optional = false)
+    @Column(name = "idCirujia")
+    private Integer idCirujia;
+    @Basic(optional = false)
     @Column(name = "Fecha")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
@@ -95,27 +97,27 @@ public class Cirujia implements Serializable {
     @JoinColumn(name = "fk_Riesgo", referencedColumnName = "idRiesgo")
     @ManyToOne(optional = false)
     private Riesgo fkRiesgo;
-    @JoinColumn(name = "fk_Quirofano", referencedColumnName = "idQuirofano", insertable = false, updatable = false)
+    @JoinColumn(name = "fk_Quirofano", referencedColumnName = "idQuirofano")
     @ManyToOne(optional = false)
-    private Quirofano quirofano;
-    @JoinColumn(name = "fk_Paciente", referencedColumnName = "idPaciente", insertable = false, updatable = false)
+    private Quirofano fkQuirofano;
+    @JoinColumn(name = "fk_Paciente", referencedColumnName = "idPaciente")
     @ManyToOne(optional = false)
-    private Paciente paciente;
-    @JoinColumn(name = "fk_Cie9", referencedColumnName = "idProcedimiento", insertable = false, updatable = false)
+    private Paciente fkPaciente;
+    @JoinColumn(name = "fk_Cie9", referencedColumnName = "idProcedimiento")
     @ManyToOne(optional = false)
-    private Cie9 cie9;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cirujia")
+    private Cie9 fkCie9;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkidCirujia")
     private List<CirujanoCirujia> cirujanoCirujiaList;
 
     public Cirujia() {
     }
 
-    public Cirujia(CirujiaPK cirujiaPK) {
-        this.cirujiaPK = cirujiaPK;
+    public Cirujia(Integer idCirujia) {
+        this.idCirujia = idCirujia;
     }
 
-    public Cirujia(CirujiaPK cirujiaPK, Date fecha, String diagnosticoPostoperatorio, String region, String tipoAnestecia, String anestesista, String instrumentista, String circular, int emergencia, int realizada) {
-        this.cirujiaPK = cirujiaPK;
+    public Cirujia(Integer idCirujia, Date fecha, String diagnosticoPostoperatorio, String region, String tipoAnestecia, String anestesista, String instrumentista, String circular, int emergencia, int realizada) {
+        this.idCirujia = idCirujia;
         this.fecha = fecha;
         this.diagnosticoPostoperatorio = diagnosticoPostoperatorio;
         this.region = region;
@@ -127,16 +129,12 @@ public class Cirujia implements Serializable {
         this.realizada = realizada;
     }
 
-    public Cirujia(int idCirujia, int fkPaciente, int fkCie9, int fkQuirofano) {
-        this.cirujiaPK = new CirujiaPK(idCirujia, fkPaciente, fkCie9, fkQuirofano);
+    public Integer getIdCirujia() {
+        return idCirujia;
     }
 
-    public CirujiaPK getCirujiaPK() {
-        return cirujiaPK;
-    }
-
-    public void setCirujiaPK(CirujiaPK cirujiaPK) {
-        this.cirujiaPK = cirujiaPK;
+    public void setIdCirujia(Integer idCirujia) {
+        this.idCirujia = idCirujia;
     }
 
     public Date getFecha() {
@@ -251,28 +249,28 @@ public class Cirujia implements Serializable {
         this.fkRiesgo = fkRiesgo;
     }
 
-    public Quirofano getQuirofano() {
-        return quirofano;
+    public Quirofano getFkQuirofano() {
+        return fkQuirofano;
     }
 
-    public void setQuirofano(Quirofano quirofano) {
-        this.quirofano = quirofano;
+    public void setFkQuirofano(Quirofano fkQuirofano) {
+        this.fkQuirofano = fkQuirofano;
     }
 
-    public Paciente getPaciente() {
-        return paciente;
+    public Paciente getFkPaciente() {
+        return fkPaciente;
     }
 
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
+    public void setFkPaciente(Paciente fkPaciente) {
+        this.fkPaciente = fkPaciente;
     }
 
-    public Cie9 getCie9() {
-        return cie9;
+    public Cie9 getFkCie9() {
+        return fkCie9;
     }
 
-    public void setCie9(Cie9 cie9) {
-        this.cie9 = cie9;
+    public void setFkCie9(Cie9 fkCie9) {
+        this.fkCie9 = fkCie9;
     }
 
     @XmlTransient
@@ -287,7 +285,7 @@ public class Cirujia implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cirujiaPK != null ? cirujiaPK.hashCode() : 0);
+        hash += (idCirujia != null ? idCirujia.hashCode() : 0);
         return hash;
     }
 
@@ -298,7 +296,7 @@ public class Cirujia implements Serializable {
             return false;
         }
         Cirujia other = (Cirujia) object;
-        if ((this.cirujiaPK == null && other.cirujiaPK != null) || (this.cirujiaPK != null && !this.cirujiaPK.equals(other.cirujiaPK))) {
+        if ((this.idCirujia == null && other.idCirujia != null) || (this.idCirujia != null && !this.idCirujia.equals(other.idCirujia))) {
             return false;
         }
         return true;
@@ -306,7 +304,7 @@ public class Cirujia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.persistencia.Cirujia[ cirujiaPK=" + cirujiaPK + " ]";
+        return "com.persistencia.Cirujia[ idCirujia=" + idCirujia + " ]";
     }
-
+    
 }

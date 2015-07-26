@@ -29,9 +29,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Especialidad")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Especialidad.findAll", query = "SELECT e FROM Especialidad e"),
-        @NamedQuery(name = "Especialidad.findByIdEspecialidad", query = "SELECT e FROM Especialidad e WHERE e.idEspecialidad = :idEspecialidad"),
-        @NamedQuery(name = "Especialidad.findByEspecialidad", query = "SELECT e FROM Especialidad e WHERE e.especialidad = :especialidad")})
+    @NamedQuery(name = "Especialidad.findAll", query = "SELECT e FROM Especialidad e"),
+    @NamedQuery(name = "Especialidad.findByIdEspecialidad", query = "SELECT e FROM Especialidad e WHERE e.idEspecialidad = :idEspecialidad"),
+    @NamedQuery(name = "Especialidad.findByEspecialidad", query = "SELECT e FROM Especialidad e WHERE e.especialidad = :especialidad")})
 public class Especialidad implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,7 +41,7 @@ public class Especialidad implements Serializable {
     private Integer idEspecialidad;
     @Column(name = "Especialidad")
     private String especialidad;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "especialidad")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkidEspecialidad")
     private List<Cirujano> cirujanoList;
 
     public Especialidad() {
@@ -100,5 +100,5 @@ public class Especialidad implements Serializable {
     public String toString() {
         return "com.persistencia.Especialidad[ idEspecialidad=" + idEspecialidad + " ]";
     }
-
+    
 }

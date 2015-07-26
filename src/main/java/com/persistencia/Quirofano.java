@@ -27,9 +27,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Quirofano")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Quirofano.findAll", query = "SELECT q FROM Quirofano q"),
-        @NamedQuery(name = "Quirofano.findByIdQuirofano", query = "SELECT q FROM Quirofano q WHERE q.idQuirofano = :idQuirofano"),
-        @NamedQuery(name = "Quirofano.findByDescripcion", query = "SELECT q FROM Quirofano q WHERE q.descripcion = :descripcion")})
+    @NamedQuery(name = "Quirofano.findAll", query = "SELECT q FROM Quirofano q"),
+    @NamedQuery(name = "Quirofano.findByIdQuirofano", query = "SELECT q FROM Quirofano q WHERE q.idQuirofano = :idQuirofano"),
+    @NamedQuery(name = "Quirofano.findByDescripcion", query = "SELECT q FROM Quirofano q WHERE q.descripcion = :descripcion")})
 public class Quirofano implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,7 +38,7 @@ public class Quirofano implements Serializable {
     private Integer idQuirofano;
     @Column(name = "Descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quirofano")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkQuirofano")
     private List<Cirujia> cirujiaList;
 
     public Quirofano() {
@@ -97,5 +97,5 @@ public class Quirofano implements Serializable {
     public String toString() {
         return "com.persistencia.Quirofano[ idQuirofano=" + idQuirofano + " ]";
     }
-
+    
 }

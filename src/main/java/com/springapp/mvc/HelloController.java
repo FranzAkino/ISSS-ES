@@ -69,8 +69,8 @@ public class HelloController {
 
     @RequestMapping(value = "/estadisticas", method = RequestMethod.GET)
     public String estadisticas (ModelMap modelo){
-        String graf = g.dibujarBarrasMensual(TipoGraficos.MAYOR_ELECTIVA,Meses.NOVIEMBRE);
-        modelo.addAttribute("grafico",graf);
+        /*String graf = g.dibujarBarrasMensual(TipoGraficos.MAYOR_ELECTIVA,Meses.NOVIEMBRE);
+        modelo.addAttribute("grafico",graf);*/
         return "estadisticas";
     }
 

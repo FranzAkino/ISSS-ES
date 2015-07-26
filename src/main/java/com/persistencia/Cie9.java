@@ -1,10 +1,23 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.persistencia;
 
-import javax.persistence.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -14,10 +27,10 @@ import java.util.List;
 @Table(name = "CIE9")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Cie9.findAll", query = "SELECT c FROM Cie9 c"),
-        @NamedQuery(name = "Cie9.findByIdProcedimiento", query = "SELECT c FROM Cie9 c WHERE c.idProcedimiento = :idProcedimiento"),
-        @NamedQuery(name = "Cie9.findByNombre", query = "SELECT c FROM Cie9 c WHERE c.nombre = :nombre"),
-        @NamedQuery(name = "Cie9.findByDescripcion", query = "SELECT c FROM Cie9 c WHERE c.descripcion = :descripcion")})
+    @NamedQuery(name = "Cie9.findAll", query = "SELECT c FROM Cie9 c"),
+    @NamedQuery(name = "Cie9.findByIdProcedimiento", query = "SELECT c FROM Cie9 c WHERE c.idProcedimiento = :idProcedimiento"),
+    @NamedQuery(name = "Cie9.findByNombre", query = "SELECT c FROM Cie9 c WHERE c.nombre = :nombre"),
+    @NamedQuery(name = "Cie9.findByDescripcion", query = "SELECT c FROM Cie9 c WHERE c.descripcion = :descripcion")})
 public class Cie9 implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -29,7 +42,7 @@ public class Cie9 implements Serializable {
     private String nombre;
     @Column(name = "Descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cie9")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkCie9")
     private List<Cirujia> cirujiaList;
 
     public Cie9() {
@@ -101,5 +114,5 @@ public class Cie9 implements Serializable {
     public String toString() {
         return "com.persistencia.Cie9[ idProcedimiento=" + idProcedimiento + " ]";
     }
-
+    
 }

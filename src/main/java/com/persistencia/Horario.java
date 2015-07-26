@@ -32,10 +32,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "Horario")
 @XmlRootElement
 @NamedQueries({
-        @NamedQuery(name = "Horario.findAll", query = "SELECT h FROM Horario h"),
-        @NamedQuery(name = "Horario.findByIdHorario", query = "SELECT h FROM Horario h WHERE h.idHorario = :idHorario"),
-        @NamedQuery(name = "Horario.findByEntrada", query = "SELECT h FROM Horario h WHERE h.entrada = :entrada"),
-        @NamedQuery(name = "Horario.findBySalida", query = "SELECT h FROM Horario h WHERE h.salida = :salida")})
+    @NamedQuery(name = "Horario.findAll", query = "SELECT h FROM Horario h"),
+    @NamedQuery(name = "Horario.findByIdHorario", query = "SELECT h FROM Horario h WHERE h.idHorario = :idHorario"),
+    @NamedQuery(name = "Horario.findByEntrada", query = "SELECT h FROM Horario h WHERE h.entrada = :entrada"),
+    @NamedQuery(name = "Horario.findBySalida", query = "SELECT h FROM Horario h WHERE h.salida = :salida")})
 public class Horario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -124,5 +124,5 @@ public class Horario implements Serializable {
     public String toString() {
         return "com.persistencia.Horario[ idHorario=" + idHorario + " ]";
     }
-
+    
 }

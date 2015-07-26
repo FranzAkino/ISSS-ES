@@ -42,7 +42,7 @@ public class RiesgoJpaController implements Serializable {
             em.getTransaction().begin();
             List<Cirujia> attachedCirujiaList = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListCirujiaToAttach : riesgo.getCirujiaList()) {
-                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getCirujiaPK());
+                cirujiaListCirujiaToAttach = em.getReference(cirujiaListCirujiaToAttach.getClass(), cirujiaListCirujiaToAttach.getIdCirujia());
                 attachedCirujiaList.add(cirujiaListCirujiaToAttach);
             }
             riesgo.setCirujiaList(attachedCirujiaList);
@@ -86,7 +86,7 @@ public class RiesgoJpaController implements Serializable {
             }
             List<Cirujia> attachedCirujiaListNew = new ArrayList<Cirujia>();
             for (Cirujia cirujiaListNewCirujiaToAttach : cirujiaListNew) {
-                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getCirujiaPK());
+                cirujiaListNewCirujiaToAttach = em.getReference(cirujiaListNewCirujiaToAttach.getClass(), cirujiaListNewCirujiaToAttach.getIdCirujia());
                 attachedCirujiaListNew.add(cirujiaListNewCirujiaToAttach);
             }
             cirujiaListNew = attachedCirujiaListNew;
@@ -197,5 +197,5 @@ public class RiesgoJpaController implements Serializable {
             em.close();
         }
     }
-
+    
 }

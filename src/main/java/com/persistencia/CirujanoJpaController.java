@@ -8,14 +8,11 @@ package com.persistencia;
 import com.persistencia.exceptions.IllegalOrphanException;
 import com.persistencia.exceptions.NonexistentEntityException;
 import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -306,5 +303,17 @@ public class CirujanoJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public List<Cirujano> getActivos(){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujano> query = em.createNamedQuery("Cirujano.findByActivo", Cirujano.class);
+            query.setParameter("activo", 1);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }
+    }
 }
+    
+

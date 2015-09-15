@@ -1,3 +1,6 @@
+<%@ page import="com.persistencia.Cirujano" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
@@ -58,6 +61,13 @@
 </head>
 
 <body>
+<%
+  List<Cirujano> lista1= (List<Cirujano>)request.getAttribute("cirujanos");
+  int num=lista1.size();
+  Iterator<Cirujano> it=lista1.iterator();
+  Cirujano lista;
+
+%>
 
 <div id="content-main">
 
@@ -67,7 +77,7 @@
 
   <div id="cirujano">
     <div id="triangle2"></div>
-    <h1>Log in</h1>
+    <h1>Cirujano</h1>
     <form>
       <input type="text" placeholder="Nombre" />
       <input type="text" placeholder="Apellido" />
@@ -83,11 +93,11 @@
   </div>
 
   <%--Seccion de CIE9--%>
-  <span href="#" class="button3" id="toggle-login3">CIE9</span>
+  <span href="#" class="button3" id="toggle-login3">Procedimientos</span>
 
   <div id="CIE9">
     <div id="triangle3"></div>
-    <h1>CIE9</h1>
+    <h1>Procedimientos Frecuentes</h1>
     <form>
       <input type="text" placeholder="Nombre" />
       <input type="text" placeholder="Descripcion" />
@@ -113,7 +123,7 @@
 
   <div id="horario">
     <div id="triangle5"></div>
-    <h1>HORARIO</h1>
+    <h1>Horario Quirurjico</h1>
     <form>
       <input type="time" placeholder="Hora de Entrada" />
       <input type="time" placeholder="Hora de Salida" />
@@ -126,11 +136,22 @@
 
   <div id="metas">
     <div id="triangle6"></div>
-    <h1>METAS</h1>
-    <form>
-      <input type="month" placeholder="MES" />
-      <input type="number" placeholder="Meta" min="1" />
-      <input type="text" placeholder="Cirujano" />
+    <h1>Metas Mensuales</h1>
+    <form action="respuestas-informacion" method="get">
+      <input type="month" name="MES" id="MES" />
+      <input type="number" placeholder="Meta" min="1" id="meta" name="meta"/>
+      <span>Cirujanos:</span>
+      <%--<input type="text" placeholder="Cirujano" />--%>
+      <select id="list_cirujanos" size=6 autofocus name="cirujanos">
+
+        <%
+          while(it.hasNext()) {
+            lista = it.next();
+        %>
+        <option value="<%= lista.getIdCirujano()%>"><%= lista.getNombres()%> <%= lista.getApellidos()%></option>
+        <%}%>
+      </select>
+
       <input type="submit" id="GMeta" value="Guardar" />
     </form>
   </div>

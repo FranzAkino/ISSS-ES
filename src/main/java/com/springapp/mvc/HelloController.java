@@ -1,8 +1,6 @@
 package com.springapp.mvc;
 
-import com.persistencia.Cie9JpaController;
-import com.persistencia.Cirujia;
-import com.persistencia.CirujiaJpaController;
+import com.persistencia.*;
 import com.persistencia.exceptions.Coasa;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 
@@ -50,7 +49,31 @@ public class HelloController {
     @RequestMapping(value = "/Registro", method = RequestMethod.GET)
     public String registro(ModelMap model){
 
-        model.addAttribute("asdf","asdf");
+        CirujanoJpaController cirujanoJpaController= new CirujanoJpaController(emf);
+//        TypedQuery<Cirujano> query=emf.
+        List<Cirujano> lista_cirujanos= cirujanoJpaController.getActivos();
+        List<Cirujano> lista_cirujanos1= cirujanoJpaController.getActivos();
+        List<Cirujano> lista_cirujanos2= cirujanoJpaController.getActivos();
+        model.addAttribute("cirujanos",lista_cirujanos);
+        model.addAttribute("1ayudante",lista_cirujanos1);
+        model.addAttribute("2ayudante",lista_cirujanos2);
+
+        Cie9JpaController cie9JpaController = new Cie9JpaController(emf);
+        List<Cie9> lista_cie9 = cie9JpaController.findCie9Entities();
+        model.addAttribute("cie9",lista_cie9);
+
+        QuirofanoJpaController quirofanoJpaController = new QuirofanoJpaController(emf);
+        List<Quirofano> lista_quirofano = quirofanoJpaController.findQuirofanoEntities();
+        model.addAttribute("quirofanos",lista_quirofano);
+
+        RiesgoJpaController riesgoJpaController = new RiesgoJpaController(emf);
+        List<Riesgo> lista_riesgo = riesgoJpaController.findRiesgoEntities();
+        model.addAttribute("riesgo",lista_riesgo);
+
+        SuspencionesJpaController suspencionesJpaController = new SuspencionesJpaController(emf);
+        List<Suspenciones> lista_suspensiones = suspencionesJpaController.findSuspencionesEntities(16,1);
+        model.addAttribute("suspenciones",lista_suspensiones);
+
         return "Registro";
     }
 
@@ -63,14 +86,25 @@ public class HelloController {
 
     @RequestMapping(value = "/Registros-informacion", method = RequestMethod.GET)
     public String registros_informacion(ModelMap model){
-        model.addAttribute("asdf","asdf");
-        return "Registros-informacion";
+
+        CirujanoJpaController cirujanoJpaController= new CirujanoJpaController(emf);
+        List<Cirujano> lista_cirujanos= cirujanoJpaController.getActivos();
+        model.addAttribute("cirujanos",lista_cirujanos);
+
+         return "Registros-informacion";
+    }
+
+    @RequestMapping(value = "/respuestas-informacion", method = RequestMethod.GET)
+    public String respuestas_informacion(ModelMap model){
+
+        model.addAttribute("asxx","asxx");
+        return "respuesta-informacion";
     }
 
     @RequestMapping(value = "/estadisticas", method = RequestMethod.GET)
     public String estadisticas (ModelMap modelo){
-        /*String graf = g.dibujarBarrasMensual(TipoGraficos.MAYOR_ELECTIVA,Meses.NOVIEMBRE);
-        modelo.addAttribute("grafico",graf);*/
+//        String graf = g.dibujarBarrasMensual(TipoGraficos.MAYOR_ELECTIVA,Meses.NOVIEMBRE);
+        modelo.addAttribute("grafico","graf");
         return "estadisticas";
     }
 

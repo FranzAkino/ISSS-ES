@@ -35,6 +35,9 @@ public class MetasPK implements Serializable {
         this.anio = anio;
     }
 
+
+
+
     public int getIdCirujanofk() {
         return idCirujanofk;
     }

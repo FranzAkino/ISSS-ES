@@ -22,23 +22,38 @@
 
   // Grab the variables from the form.
 
-  SimpleDateFormat formato= new SimpleDateFormat("MM");
-  SimpleDateFormat formato2= new SimpleDateFormat("YYYY");
+   String fecha= request.getParameter("MES");
+  String[] parts = fecha.split("-");
+  String anyo = parts[0];
+  String mes = parts[1];
 
-  Date mes = formato.parse(request.getParameter("MES")) ;
-  Date anyo = formato2.parse(request.getParameter("MES")) ;
+
+
   int meta =Integer.parseInt(request.getParameter("meta"));
   int cirujano =Integer.parseInt(request.getParameter("cirujanos")) ;
+  int n_mes= Integer.parseInt(mes);
+  int n_anyo= Integer.parseInt(anyo);
+
+  Cirujano doc = new Cirujano(cirujano);
+
+  EntityManagerFactory emf= CreadorEntityManager.crearEMF();
+  MetasPK n_metaspk = new MetasPK(cirujano, n_mes, n_anyo);
+  Metas n_meta2 = new Metas(cirujano, n_mes, n_anyo);
+  n_meta2.setCirujano(doc);
+  n_meta2.setMeta(meta);
+  MetasJpaController nueva= new MetasJpaController(emf);
+  nueva.create(n_meta2);
+
 
 
 %>
 <%-- Paciente --%>
-
+Metas <%= meta%>, ID del doctor <%= n_meta2.getCirujano().getIdCirujano()%> Fecha <%= n_mes%> <%= n_anyo%>
+<%--<%response.sendRedirect("Registros-informacion"); %>--%>
 
 
 
 </body>
-Metas <%= meta%>, ID del doctor<%= cirujano%> Fecha <%= mes%> <%= anyo%>
-<%--<%response.sendRedirect("Registros-informacion"); %>--%>
+
 
 </html>

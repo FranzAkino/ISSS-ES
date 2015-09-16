@@ -97,8 +97,8 @@ public class HelloController {
     @RequestMapping(value = "/respuestas-informacion", method = RequestMethod.GET)
     public String respuestas_informacion(ModelMap model){
 
-        model.addAttribute("asxx","asxx");
-        return "respuesta-informacion";
+        model.addAttribute("add","add");
+        return "respuestas-informacion";
     }
 
     @RequestMapping(value = "/estadisticas", method = RequestMethod.GET)

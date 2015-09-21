@@ -57,6 +57,11 @@ public class Cie9 implements Serializable {
         this.nombre = nombre;
     }
 
+    public Cie9(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
     public Integer getIdProcedimiento() {
         return idProcedimiento;
     }

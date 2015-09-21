@@ -156,10 +156,10 @@
 <%-- Paciente --%>
 
 
-
-
-</body>
 Numero de cirujano <%= cirujano%>,<%= ayudante1%>, <%= ayudante2%>
 <%response.sendRedirect("Registro"); %>
+
+</body>
+
 
 </html>

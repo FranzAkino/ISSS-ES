@@ -91,7 +91,17 @@ public class HelloController {
         List<Cirujano> lista_cirujanos= cirujanoJpaController.getActivos();
         model.addAttribute("cirujanos",lista_cirujanos);
 
-         return "Registros-informacion";
+        EspecialidadJpaController especialidadJpaController= new EspecialidadJpaController(emf);
+        List<Especialidad> lista_especialidad= especialidadJpaController.findEspecialidadEntities();
+        model.addAttribute("especialidades",lista_especialidad);
+
+        HorarioJpaController horarioJpaController= new HorarioJpaController(emf);
+        List<Horario> lista_horarios= horarioJpaController.findHorarioEntities();
+        model.addAttribute("horarios",lista_horarios);
+
+
+
+        return "Registros-informacion";
     }
 
     @RequestMapping(value = "/respuestas-informacion", method = RequestMethod.GET)
@@ -99,6 +109,48 @@ public class HelloController {
 
         model.addAttribute("add","add");
         return "respuestas-informacion";
+    }
+
+    @RequestMapping(value = "/respuestas-cirujano", method = RequestMethod.GET)
+    public String respuestas_cirujano(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-cirujano";
+    }
+
+    @RequestMapping(value = "/respuestas-cie9", method = RequestMethod.GET)
+    public String respuestas_cie9(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-cie9";
+    }
+
+    @RequestMapping(value = "/respuestas-especialidad", method = RequestMethod.GET)
+    public String respuestas_especialidad(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-especialidad";
+    }
+
+    @RequestMapping(value = "/respuestas-horarios", method = RequestMethod.GET)
+    public String respuestas_horarios(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-horarios";
+    }
+
+    @RequestMapping(value = "/respuestas-quirofanos", method = RequestMethod.GET)
+    public String respuestas_quirofanos(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-quirofanos";
+    }
+
+    @RequestMapping(value = "/respuestas-riesgo", method = RequestMethod.GET)
+    public String respuestas_riesgo(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-riesgo";
     }
 
     @RequestMapping(value = "/estadisticas", method = RequestMethod.GET)

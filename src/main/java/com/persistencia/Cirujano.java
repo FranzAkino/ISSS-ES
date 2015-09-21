@@ -65,6 +65,14 @@ public class Cirujano implements Serializable {
         this.activo = activo;
     }
 
+    public Cirujano(String nombres, String apellidos, int activo) {
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.activo = activo;
+
+    }
+
+
     public Integer getIdCirujano() {
         return idCirujano;
     }

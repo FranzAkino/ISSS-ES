@@ -59,6 +59,12 @@ public class CirujanoCirujia implements Serializable {
         this.titular = titular;
     }
 
+    public CirujanoCirujia(Cirujia cirujia,Cirujano cirujano, int titular) {
+        this.fkidCirujia=cirujia;
+        this.fkidCirujano=cirujano;
+        this.titular = titular;
+    }
+
     public Integer getIdCirujanoCirujia() {
         return idCirujanoCirujia;
     }

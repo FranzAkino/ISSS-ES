@@ -131,6 +131,29 @@ public class Cirujia implements Serializable {
         this.realizada = realizada;
     }
 
+
+    public Cirujia(Integer idCirujia, Date fecha, Paciente fk_Paciente, Cie9 fk_Cie9,String diagnosticoPostoperatorio, String region, String tipoAnestecia, Quirofano fk_quirofano,String anestesista, String instrumentista,
+                   String circular, int emergencia,Riesgo fk_riesgo, int realizada, Suspenciones fk_suspencion, String anestesiologo, Date h_inicio, Date h_fin) {
+        this.idCirujia = idCirujia;
+        this.fecha = fecha;
+        this.fkPaciente= fk_Paciente;
+        this.fkCie9= fk_Cie9;
+        this.diagnosticoPostoperatorio = diagnosticoPostoperatorio;
+        this.region = region;
+        this.tipoAnestecia = tipoAnestecia;
+        this.fkQuirofano= fk_quirofano;
+        this.anestesista = anestesista;
+        this.instrumentista = instrumentista;
+        this.circular = circular;
+        this.emergencia = emergencia;
+        this.fkRiesgo= fk_riesgo;
+        this.realizada = realizada;
+        this.fkSuspencion=fk_suspencion;
+        this.anestesiologo= anestesiologo;
+        this.inicio= h_inicio;
+        this.finalizacion=h_fin;
+    }
+
     public Integer getIdCirujia() {
         return idCirujia;
     }

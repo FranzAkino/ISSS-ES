@@ -3,6 +3,8 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.persistencia.CirujanoCirujia" %>
+<%@ page import="java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: zaldana
@@ -14,6 +16,7 @@
 <html>
 <head>
   <link type="text/css" rel="stylesheet" href="/css/timeline_style.css" />
+  <link type="text/css" rel="stylesheet" href="/css/buscador-style.css" />
   <title></title>
 </head>
 <div class="container">
@@ -23,6 +26,29 @@
   <div id="ss-links" class="ss-links">
     <a href="${pageContext.request.contextPath}/">Inicio</a>
 
+  </div>
+
+  <div id="buscador">
+    <form>
+      <select id="busquedalista">
+        <option value="fecha">Fecha de Cirujia</option>
+        <option value="Paciente">Nombre del Paciente</option>
+        <option value="Numero">Num. de Afilacion</option>
+        <option value="Calidad">Calidad de Asegurado</option>
+        <option value="Intervencion">Clase de Intervencion</option>
+        <option value="Region">Region</option>
+        <option value="Riesgo">Riesgo</option>
+        <option value="Diagnostico">Diagnostico</option>
+        <option value="emergencia">Emergencia</option>
+        <option value="Anestesista">Paciente</option>
+        <option value="tipo_anestecia">Tipo de Anestecia</option>
+        <option value="Quirofano">Sala de Operacion</option>
+        <option value="cirujano">Cirujano</option>
+        <option value="Ayudante">Ayudante</option>
+      </select>
+      <input type="text" id="busquedacampo" value="Buscar..." onfocus="if (this.value == 'Buscar...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Buscar...';}" />
+      <input type="button" id="busquedaboton" value="Ir" />
+    </form>
   </div>
 
   <div id="ss-container" class="ss-container">
@@ -35,12 +61,16 @@
     Collections.reverse(lista1); //Para invertir el orden la lista primero el ultimo
     Iterator<Cirujia> it=lista1.iterator();
     Cirujia temp;
-    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-mm-yyyy HH:mm:SS");
+    SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-mm-yyyy");
+    SimpleDateFormat Horas_cirujia = new SimpleDateFormat("hh:mm");
+    int tamano;
+
 
   %>
        <%
       while(it.hasNext()){
         temp=it.next();
+        tamano=0;
         %>
     <div class="ss-row ss-medium">
       <div class="ss-left">
@@ -51,11 +81,12 @@
         <h3>
           <table>
             <tr>
-              <td><span><%= DATE_FORMAT.format(temp.getFecha())%></span></td>
-              <td></td>
+              <td><span>Fecha de Cirujia: <%= DATE_FORMAT.format(temp.getFecha())%></span></td>
+              <td><span>Hora de inicio: <%= Horas_cirujia.format(temp.getInicio())%> Hora de fin: <%= Horas_cirujia.format(temp.getFinalizacion())%></span></td>
+              <%--<td><span>Inicio: <%= temp.getInicio()%> Fin: <%= temp.getFinalizacion()%></span></td>--%>
             </tr>
             <tr>
-              <td> <span>Nombre: <%= temp.getFkPaciente().getNombres()%> <%= temp.getFkPaciente().getApellidos()%></span></td>
+              <td> <span>Paciente: <%= temp.getFkPaciente().getNombres()%> <%= temp.getFkPaciente().getApellidos()%></span></td>
               <td> <span>Numero de Afiliacion (DUI): <%=temp.getFkPaciente().getIdPaciente()%></span></td>
             </tr>
           </table>
@@ -80,22 +111,44 @@
               <%
                 }
               %>
-              <%--<td><span>Emergencia: <%= temp.getEmergencia()%></span></td>--%>
+
             </tr>
           </table>
           <hr>
           <table >
             <tr>
-              <td><span>Anestesista: <%= temp.getAnestesista()%></span>
+            <td><span>Anestesista: <%= temp.getAnestesista()%></span>
               <td><span>Tipo de anestecia: <%= temp.getTipoAnestecia()%></span></td>
             </tr>
             <tr>
-              <td><span>Sala de operaciones: <%=temp.getFkQuirofano().getDescripcion()%></span></td>
-              <td><span>Cirujano: <%=temp.getFkCirujano().getNombres()%> <%=temp.getFkCirujano().getApellidos()%></span></td>
+              <td><span>Instrumentista: <%= temp.getInstrumentista()%></span>
+              <td><span>Circular: <%= temp.getCircular()%></span></td>
             </tr>
             <tr>
-              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
-              <td></td>
+              <td><span>Sala de operaciones: <%=temp.getFkQuirofano().getIdQuirofano()%></span></td>
+              <% if(temp.getRealizada()==1){%>
+              <td><span>Estado: Realizada</span></td>
+            <%}else{%>
+              <td><span>Estado: Suspendidad - <%=temp.getFkSuspencion().getCausa()%></span></td>
+              <%}%>
+
+            </tr>
+
+            <tr>
+              <%
+                while(tamano<temp.getCirujanoCirujiaList().size()){
+                  if(tamano==0){ %>
+              <td><span>Cirujano: <%=temp.getCirujanoCirujiaList().get(tamano).getFkidCirujano().getNombres()%> <%=temp.getCirujanoCirujiaList().get(tamano).getFkidCirujano().getApellidos()%></span></td>
+            </tr>
+            <%} else
+            {%>
+            <tr>
+              <td><span>Ayudante: <%=temp.getCirujanoCirujiaList().get(tamano).getFkidCirujano().getNombres()%> <%=temp.getCirujanoCirujiaList().get(tamano).getFkidCirujano().getApellidos()%></span></td></td>
+              <%}
+                  tamano=tamano+1;
+                }
+              %>
+
             </tr>
           </table>
         </h3>
@@ -105,469 +158,7 @@
       }
     %>
 
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
 
-        <h3 class="" >1</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <table>
-            <tr>
-              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td> <span>Nombre: Juan Perez</span></td>
-              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
-            </tr>
-            </table>
-          <hr>
-            <table >
-            <tr>
-              <td><span>Calidad Asegurado: Beneficiado</span>
-              <td><span>Riesgo: Enfermedad Comun</span></td>
-            </tr>
-            <tr>
-              <td><span>Clase de intervencion: Apendicectomia</span></td>
-              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
-            </tr>
-            <tr>
-              <td><span>Region: Abdominal</span></td>
-              <td><span>Emergencia: NO</span></td>
-            </tr>
-            </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Anestesista: Sra de Gonzales</span>
-              <td><span>Tipo de anestecia: General</span></td>
-            </tr>
-            <tr>
-              <td><span>Sala de operaciones: 4</span></td>
-              <td><span>Cirujano: Dr. Anaya</span></td>
-            </tr>
-            <tr>
-              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
-              <td></td>
-            </tr>
-          </table>
-        </h3>
-      </div>
-    </div>
-
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3 class="">2</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <table>
-            <tr>
-              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td> <span>Nombre: Juan Perez</span></td>
-              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Calidad Asegurado: Beneficiado</span>
-              <td><span>Riesgo: Enfermedad Comun</span></td>
-            </tr>
-            <tr>
-              <td><span>Clase de intervencion: Apendicectomia</span></td>
-              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
-            </tr>
-            <tr>
-              <td><span>Region: Abdominal</span></td>
-              <td><span>Emergencia: NO</span></td></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Anestesista: Sra de Gonzales</span>
-              <td><span>Tipo de anestecia: General</span></td>
-            </tr>
-            <tr>
-              <td><span>Sala de operaciones: 4</span></td>
-              <td><span>Cirujano: Dr. Anaya</span></td>
-            </tr>
-            <tr>
-              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
-              <td></td>
-            </tr>
-          </table>
-        </h3>
-      </div>
-    </div>
-
-
-
-    <div class="ss-row ss-medium">
-
-      <div class="ss-left">
-        <h3 class="">3</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <table>
-            <tr>
-              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td> <span>Nombre: Juan Perez</span></td>
-              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Calidad Asegurado: Beneficiado</span>
-              <td><span>Riesgo: Enfermedad Comun</span></td>
-            </tr>
-            <tr>
-              <td><span>Clase de intervencion: Apendicectomia</span></td>
-              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
-            </tr>
-            <tr>
-              <td><span>Region: Abdominal</span></td>
-              <td><span>Emergencia: NO</span></td></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Anestesista: Sra de Gonzales</span>
-              <td><span>Tipo de anestecia: General</span></td>
-            </tr>
-            <tr>
-              <td><span>Sala de operaciones: 4</span></td>
-              <td><span>Cirujano: Dr. Anaya</span></td>
-            </tr>
-            <tr>
-              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
-              <td></td>
-            </tr>
-          </table>
-        </h3>
-      </div>
-    </div>
-
-
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>4</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <table>
-            <tr>
-              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td> <span>Nombre: Juan Perez</span></td>
-              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Calidad Asegurado: Beneficiado</span>
-              <td><span>Riesgo: Enfermedad Comun</span></td>
-            </tr>
-            <tr>
-              <td><span>Clase de intervencion: Apendicectomia</span></td>
-              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
-            </tr>
-            <tr>
-              <td><span>Region: Abdominal</span></td>
-              <td><span>Emergencia: NO</span></td></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Anestesista: Sra de Gonzales</span>
-              <td><span>Tipo de anestecia: General</span></td>
-            </tr>
-            <tr>
-              <td><span>Sala de operaciones: 4</span></td>
-              <td><span>Cirujano: Dr. Anaya</span></td>
-            </tr>
-            <tr>
-              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
-              <td></td>
-            </tr>
-          </table>
-        </h3>
-      </div>
-    </div>
-
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>5</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <table>
-            <tr>
-              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td> <span>Nombre: Juan Perez</span></td>
-              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Calidad Asegurado: Beneficiado</span>
-              <td><span>Riesgo: Enfermedad Comun</span></td>
-            </tr>
-            <tr>
-              <td><span>Clase de intervencion: Apendicectomia</span></td>
-              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
-            </tr>
-            <tr>
-              <td><span>Region: Abdominal</span></td>
-              <td><span>Emergencia: NO</span></td></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Anestesista: Sra de Gonzales</span>
-              <td><span>Tipo de anestecia: General</span></td>
-            </tr>
-            <tr>
-              <td><span>Sala de operaciones: 4</span></td>
-              <td><span>Cirujano: Dr. Anaya</span></td>
-            </tr>
-            <tr>
-              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
-              <td></td>
-            </tr>
-          </table>
-        </h3>
-      </div>
-    </div>
-
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>6</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <table>
-            <tr>
-              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td> <span>Nombre: Juan Perez</span></td>
-              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Calidad Asegurado: Beneficiado</span>
-              <td><span>Riesgo: Enfermedad Comun</span></td>
-            </tr>
-            <tr>
-              <td><span>Clase de intervencion: Apendicectomia</span></td>
-              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
-            </tr>
-            <tr>
-              <td><span>Region: Abdominal</span></td>
-              <td><span>Emergencia: NO</span></td></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Anestesista: Sra de Gonzales</span>
-              <td><span>Tipo de anestecia: General</span></td>
-            </tr>
-            <tr>
-              <td><span>Sala de operaciones: 4</span></td>
-              <td><span>Cirujano: Dr. Anaya</span></td>
-            </tr>
-            <tr>
-              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
-              <td></td>
-            </tr>
-          </table>
-        </h3>
-      </div>
-    </div>
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>7</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <table>
-            <tr>
-              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td> <span>Nombre: Juan Perez</span></td>
-              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Calidad Asegurado: Beneficiado</span>
-              <td><span>Riesgo: Enfermedad Comun</span></td>
-            </tr>
-            <tr>
-              <td><span>Clase de intervencion: Apendicectomia</span></td>
-              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
-            </tr>
-            <tr>
-              <td><span>Region: Abdominal</span></td>
-              <td><span>Emergencia: NO</span></td></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Anestesista: Sra de Gonzales</span>
-              <td><span>Tipo de anestecia: General</span></td>
-            </tr>
-            <tr>
-              <td><span>Sala de operaciones: 4</span></td>
-              <td><span>Cirujano: Dr. Anaya</span></td>
-            </tr>
-            <tr>
-              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
-              <td></td>
-            </tr>
-          </table>
-        </h3>
-      </div>
-    </div>
-
-    <div class="ss-row ss-medium">
-
-      <div class="ss-left">
-        <h3>8</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <table>
-            <tr>
-              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td> <span>Nombre: Juan Perez</span></td>
-              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Calidad Asegurado: Beneficiado</span>
-              <td><span>Riesgo: Enfermedad Comun</span></td>
-            </tr>
-            <tr>
-              <td><span>Clase de intervencion: Apendicectomia</span></td>
-              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
-            </tr>
-            <tr>
-              <td><span>Region: Abdominal</span></td>
-              <td><span>Emergencia: NO</span></td></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Anestesista: Sra de Gonzales</span>
-              <td><span>Tipo de anestecia: General</span></td>
-            </tr>
-            <tr>
-              <td><span>Sala de operaciones: 4</span></td>
-              <td><span>Cirujano: Dr. Anaya</span></td>
-            </tr>
-            <tr>
-              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
-              <td></td>
-            </tr>
-          </table>
-        </h3>
-      </div>
-    </div>
-
-
-
-
-
-    <div class="ss-row ss-medium">
-      <div class="ss-left">
-        <h3>9</h3>
-      </div>
-      <div class="ss-right">
-        <h3>
-          <table>
-            <tr>
-              <td><span>Noviembre 28, 2011 12:30 pm</span></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td> <span>Nombre: Juan Perez</span></td>
-              <td> <span>Numero de Afiliacion (DUI): 040501000-5</span></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Calidad Asegurado: Beneficiado</span>
-              <td><span>Riesgo: Enfermedad Comun</span></td>
-            </tr>
-            <tr>
-              <td><span>Clase de intervencion: Apendicectomia</span></td>
-              <td><span>Diagnostico post-operatorio: Apendicitis Aguda</span></td>
-            </tr>
-            <tr>
-              <td><span>Region: Abdominal</span></td>
-              <td><span>Emergencia: NO</span></td></td>
-            </tr>
-          </table>
-          <hr>
-          <table >
-            <tr>
-              <td><span>Anestesista: Sra de Gonzales</span>
-              <td><span>Tipo de anestecia: General</span></td>
-            </tr>
-            <tr>
-              <td><span>Sala de operaciones: 4</span></td>
-              <td><span>Cirujano: Dr. Anaya</span></td>
-            </tr>
-            <tr>
-              <td><span>Ayudante: Dra. Rodriguez</span></td></td>
-              <td></td>
-            </tr>
-          </table>
-        </h3>
-      </div>
-    </div>
 
     <div class="ss-row ss-medium">
       <div class="ss-left">

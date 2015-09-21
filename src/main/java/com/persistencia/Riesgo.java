@@ -57,6 +57,10 @@ public class Riesgo implements Serializable {
         this.nombre = nombre;
     }
 
+    public Riesgo(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Integer getIdRiesgo() {
         return idRiesgo;
     }

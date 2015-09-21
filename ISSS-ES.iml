@@ -69,5 +69,6 @@
     <orderEntry type="library" name="joda-time:joda-time:2.2" level="project" />
     <orderEntry type="library" name="org.springframework:spring-orm:4.1.1.RELEASE" level="project" />
     <orderEntry type="library" name="jasperreports:jasperreports:3.5.3" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.35-bin" level="project" />
   </component>
 </module>

@@ -1,8 +1,6 @@
 package com.springapp.mvc;
 
-import com.persistencia.Cie9JpaController;
-import com.persistencia.Cirujia;
-import com.persistencia.CirujiaJpaController;
+import com.persistencia.*;
 import com.persistencia.exceptions.Coasa;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 
@@ -48,23 +47,92 @@ public class HelloController {
     @RequestMapping(value = "/Registro", method = RequestMethod.GET)
     public String registro(ModelMap model){
 
+        CirujanoJpaController cirujanoJpaController= new CirujanoJpaController(emf);
+//        TypedQuery<Cirujano> query=emf.
+        List<Cirujano> lista_cirujanos= cirujanoJpaController.getActivos();
+        List<Cirujano> lista_cirujanos1= cirujanoJpaController.getActivos();
+        List<Cirujano> lista_cirujanos2= cirujanoJpaController.getActivos();
         model.addAttribute("asdf","asdf");
         return "Registro";
     }
 
+    @RequestMapping(value = "/respuesta", method = RequestMethod.GET)
+    public String respuesta(ModelMap model){
+
+        model.addAttribute("asxx","asxx");
+                return "respuesta";
+    }
+
     @RequestMapping(value = "/Registros-informacion", method = RequestMethod.GET)
     public String registros_informacion(ModelMap model){
-        model.addAttribute("asdf","asdf");
+
+        CirujanoJpaController cirujanoJpaController= new CirujanoJpaController(emf);
+        List<Cirujano> lista_cirujanos= cirujanoJpaController.getActivos();
+        model.addAttribute("cirujanos",lista_cirujanos);
+
+        EspecialidadJpaController especialidadJpaController= new EspecialidadJpaController(emf);
+        List<Especialidad> lista_especialidad= especialidadJpaController.findEspecialidadEntities();
+        model.addAttribute("especialidades",lista_especialidad);
+
+        HorarioJpaController horarioJpaController= new HorarioJpaController(emf);
+        List<Horario> lista_horarios= horarioJpaController.findHorarioEntities();
+        model.addAttribute("horarios",lista_horarios);
         return "Registros-informacion";
     }
 
-    @RequestMapping(value = "/estadisticas/graficos", method = RequestMethod.POST)
-    public String estadisticas (ModelMap modelo, @RequestParam int anio, @RequestParam int mes, @RequestParam int tipo){
-        String graf = "";
-        Graficos g = new Graficos();
+    @RequestMapping(value = "/respuestas-informacion", method = RequestMethod.GET)
+    public String respuestas_informacion(ModelMap model){
 
-        graf = g.dibujarBarras(tipo,mes,anio);
-        modelo.addAttribute("grafico",graf);
+        model.addAttribute("add","add");
+        return "respuestas-informacion";
+    }
+
+    @RequestMapping(value = "/respuestas-cirujano", method = RequestMethod.GET)
+    public String respuestas_cirujano(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-cirujano";
+    }
+
+    @RequestMapping(value = "/respuestas-cie9", method = RequestMethod.GET)
+    public String respuestas_cie9(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-cie9";
+    }
+
+    @RequestMapping(value = "/respuestas-especialidad", method = RequestMethod.GET)
+    public String respuestas_especialidad(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-especialidad";
+    }
+
+    @RequestMapping(value = "/respuestas-horarios", method = RequestMethod.GET)
+    public String respuestas_horarios(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-horarios";
+    }
+
+    @RequestMapping(value = "/respuestas-quirofanos", method = RequestMethod.GET)
+    public String respuestas_quirofanos(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-quirofanos";
+    }
+
+    @RequestMapping(value = "/respuestas-riesgo", method = RequestMethod.GET)
+    public String respuestas_riesgo(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "respuestas-riesgo";
+    }
+
+    @RequestMapping(value = "/estadisticas", method = RequestMethod.GET)
+    public String estadisticas (ModelMap modelo){
+//        String graf = g.dibujarBarrasMensual(TipoGraficos.MAYOR_ELECTIVA,Meses.NOVIEMBRE);
+        modelo.addAttribute("grafico","graf");
         return "estadisticas";
     }
 

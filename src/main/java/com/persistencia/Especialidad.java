@@ -51,6 +51,11 @@ public class Especialidad implements Serializable {
         this.idEspecialidad = idEspecialidad;
     }
 
+    public Especialidad(String nombre) {
+        this.especialidad = nombre;
+    }
+
+
     public Integer getIdEspecialidad() {
         return idEspecialidad;
     }

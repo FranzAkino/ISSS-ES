@@ -1,3 +1,9 @@
+<%@ page import="com.persistencia.Cirujano" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.persistencia.Especialidad" %>
+<%@ page import="com.persistencia.Horario" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ taglib prefix="c" uri="http://www.springframework.org/tags" %>
 <%--
   Created by IntelliJ IDEA.
@@ -58,6 +64,22 @@
 </head>
 
 <body>
+<%
+  List<Cirujano> lista1= (List<Cirujano>)request.getAttribute("cirujanos");
+  int num=lista1.size();
+  Iterator<Cirujano> it=lista1.iterator();
+  Cirujano lista;
+
+  List<Especialidad> lista_e= (List<Especialidad>)request.getAttribute("especialidades");
+  Iterator<Especialidad> it_e=lista_e.iterator();
+  Especialidad lista_especialidad;
+
+  List<Horario> lista_h= (List<Horario>)request.getAttribute("horarios");
+  Iterator<Horario> it_h=lista_h.iterator();
+  Horario lista_horario;
+
+
+%>
 
 <div id="content-main">
 
@@ -67,30 +89,49 @@
 
   <div id="cirujano">
     <div id="triangle2"></div>
-    <h1>Log in</h1>
-    <form>
-      <input type="text" placeholder="Nombre" />
-      <input type="text" placeholder="Apellido" />
-      <input type="text" placeholder="Especialidad" />
-      <input type="text" placeholder="Horario" />
-      <input type="number" id="metac" placeholder="Meta" min="1" />
-      <br>
-      <p>Estado:</p>
-      <input type="radio" id="est1" name="estado" value="A"><label for="est1" >Activo</label>
-      <input type="radio" id="est2" name="estado"  value="I"><label for="est2" >Inactivo</label>
+    <h1>Cirujano</h1>
+    <form action="respuestas-cirujano" method="get">
+      <input type="text" placeholder="Nombre" id="c_nombre" name="c_nombre" />
+      <input type="text" placeholder="Apellido" id="c_apellido" name="c_apellido" />
+      <%--<input type="text" placeholder="Especialidad" />--%>
+      <select id="list_especialidad" size=6 autofocus name="especialidades">
+
+        <%
+          while(it_e.hasNext()) {
+            lista_especialidad = it_e.next();
+        %>
+        <option value="<%= lista_especialidad.getIdEspecialidad()%>"><%= lista_especialidad.getEspecialidad()%></option>
+        <%}%>
+      </select>
+      <%--<input type="text" placeholder="Horario" />--%>
+      <select id="list_horario" size=6 autofocus name="horarios">
+
+        <%
+          SimpleDateFormat formato= new SimpleDateFormat("h:mm a");
+
+          while(it_h.hasNext()) {
+            lista_horario = it_h.next();
+        %>
+        <option value="<%= lista_horario.getIdHorario()%>"><%= formato.format(lista_horario.getEntrada())%> a <%= formato.format(lista_horario.getSalida()) %></option>
+        <%}%>
+      </select>
+       <br>
+      <span>Estado:</span>
+      <input type="radio" id="est1" name="estado" value="1"><label for="est1" >Activo</label>
+      <input type="radio" id="est2" name="estado"  value="0"><label for="est2" >Inactivo</label>
       <input type="submit" id="guargarc" value="Guardar" />
     </form>
   </div>
 
   <%--Seccion de CIE9--%>
-  <span href="#" class="button3" id="toggle-login3">CIE9</span>
+  <span href="#" class="button3" id="toggle-login3">Procedimientos</span>
 
   <div id="CIE9">
     <div id="triangle3"></div>
-    <h1>CIE9</h1>
-    <form>
-      <input type="text" placeholder="Nombre" />
-      <input type="text" placeholder="Descripcion" />
+    <h1>Procedimientos Frecuentes</h1>
+    <form action="respuestas-cie9" method="get">
+      <input type="text" placeholder="Nombre" name="c_nombre" id="c_nombre"/>
+      <input type="text" placeholder="Descripcion" name="c_descripcion" id="c_descripcion" />
       <input type="submit" id="gCIE9" value="Guardar" />
     </form>
   </div>
@@ -101,8 +142,8 @@
   <div id="especialidad">
     <div id="triangle4"></div>
     <h1>ESPECIALIDAD</h1>
-    <form>
-      <input type="text" placeholder="Nombre" />
+    <form action="respuestas-especialidad" method="get" >
+      <input type="text" placeholder="Nombre" name="nombre_e" id="nombre_e" />
       <input type="text" placeholder="Descripcion" />
       <input type="submit" id="Gespe" value="Guardar" />
     </form>
@@ -113,10 +154,10 @@
 
   <div id="horario">
     <div id="triangle5"></div>
-    <h1>HORARIO</h1>
-    <form>
-      <input type="time" placeholder="Hora de Entrada" />
-      <input type="time" placeholder="Hora de Salida" />
+    <h1>Horario Quirurjico</h1>
+    <form action="respuestas-horarios" method="get" >
+      <input type="time" placeholder="Hora de Entrada" name="entrada" id="entrada"/>
+      <input type="time" placeholder="Hora de Salida" name="salida" id="salida"/>
       <input type="submit" id="Ghorario" value="Guardar" />
     </form>
   </div>
@@ -126,11 +167,22 @@
 
   <div id="metas">
     <div id="triangle6"></div>
-    <h1>METAS</h1>
-    <form>
-      <input type="month" placeholder="MES" />
-      <input type="number" placeholder="Meta" min="1" />
-      <input type="text" placeholder="Cirujano" />
+    <h1>Metas Mensuales</h1>
+    <form action="respuestas-informacion" method="get">
+      <input type="month" name="MES" id="MES" />
+      <input type="number" placeholder="Meta" min="1" id="meta" name="meta"/>
+      <span>Cirujanos:</span>
+      <%--<input type="text" placeholder="Cirujano" />--%>
+      <select id="list_cirujanos" size=6 autofocus name="cirujanos">
+
+        <%
+          while(it.hasNext()) {
+            lista = it.next();
+        %>
+        <option value="<%= lista.getIdCirujano()%>"><%= lista.getNombres()%> <%= lista.getApellidos()%></option>
+        <%}%>
+      </select>
+
       <input type="submit" id="GMeta" value="Guardar" />
     </form>
   </div>
@@ -141,9 +193,9 @@
   <div id="quirofanos">
     <div id="triangle7"></div>
     <h1>QUIROFANOS</h1>
-    <form>
-      <input type="number" placeholder="Numero de Quirofano" min="1" />
-      <input type="text" placeholder="Descripcion" />
+    <form action="respuestas-quirofanos" method="get">
+      <input type="number" placeholder="Numero de Quirofano" min="1" name="numero" id="numero"/>
+      <input type="text" placeholder="Descripcion" name="descripcion" id="descripcion"/>
 
       <input type="submit" id="GQuirofano" value="Guardar" />
     </form>
@@ -155,9 +207,9 @@
   <div id="riesgo">
     <div id="triangle8"></div>
     <h1>RIESGO</h1>
-    <form>
+    <form  action="respuestas-riesgo" method="get">
 
-      <input type="text" placeholder="Tipo de Riesgo" />
+      <input type="text" placeholder="Tipo de Riesgo" id="nombre" name="nombre"/>
 
       <input type="submit" id="GRiesgo" value="Guardar" />
     </form>

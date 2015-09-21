@@ -21,7 +21,6 @@ import java.util.List;
 public class HelloController {
 
     EntityManagerFactory emf = CreadorEntityManager.crearEMF();
-    Graficos g = new Graficos();
 
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -29,7 +28,6 @@ public class HelloController {
 		model.addAttribute("message",asdf);
 		return "hello";
 	}
-
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap model){
@@ -60,16 +58,25 @@ public class HelloController {
         return "Registros-informacion";
     }
 
-    @RequestMapping(value = "/estadisticas", method = RequestMethod.GET)
-    public String estadisticas (ModelMap modelo){
-        /*String graf = g.dibujarBarrasMensual(TipoGraficos.MAYOR_ELECTIVA,Meses.NOVIEMBRE);
-        modelo.addAttribute("grafico",graf);*/
+    @RequestMapping(value = "/estadisticas/graficos", method = RequestMethod.POST)
+    public String estadisticas (ModelMap modelo, @RequestParam int anio, @RequestParam int mes, @RequestParam int tipo){
+        String graf = "";
+        Graficos g = new Graficos();
+
+        graf = g.dibujarBarras(tipo,mes,anio);
+        modelo.addAttribute("grafico",graf);
         return "estadisticas";
     }
 
-    @RequestMapping(value = "estadisticas/graficos", method = RequestMethod.GET)
-    public String dibujarGrafico(ModelMap model, @RequestParam String id){
-        return "grafico";
+    @RequestMapping(value="/estadisticas")
+    public String estadisticas (ModelMap modelo){
+        return "estadisticas";
     }
 
+    @RequestMapping(value = "/reportes", method = RequestMethod.GET)
+    public String reportes(ModelMap modelMap){
+        Reportes rep = new Reportes();
+        modelMap.put("lista",rep.findAll());
+        return "reporte";
+    }
 }

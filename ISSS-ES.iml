@@ -66,5 +66,8 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="com.googlecode.wicked-charts:wicked-charts-highcharts:1.5.0" level="project" />
+    <orderEntry type="library" name="joda-time:joda-time:2.2" level="project" />
+    <orderEntry type="library" name="org.springframework:spring-orm:4.1.1.RELEASE" level="project" />
+    <orderEntry type="library" name="jasperreports:jasperreports:3.5.3" level="project" />
   </component>
 </module>

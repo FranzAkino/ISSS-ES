@@ -21,6 +21,9 @@
           <element id="library" level="project" name="org.eclipse.persistence:eclipselink:2.6.0" />
           <element id="file-copy" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.34-bin.jar" />
           <element id="library" level="project" name="com.googlecode.wicked-charts:wicked-charts-highcharts:1.5.0" />
+          <element id="library" level="project" name="joda-time:joda-time:2.2" />
+          <element id="library" level="project" name="org.springframework:spring-orm:4.1.1.RELEASE" />
+          <element id="library" level="project" name="jasperreports:jasperreports:3.5.3" />
         </element>
       </element>
       <element id="directory" name="META-INF">

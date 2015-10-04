@@ -2,7 +2,6 @@ package com.springapp.mvc;
 
 import com.persistencia.*;
 import com.persistencia.exceptions.Coasa;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 
@@ -129,10 +126,13 @@ public class HelloController {
         return "respuestas-riesgo";
     }
 
-    @RequestMapping(value = "/estadisticas", method = RequestMethod.GET)
-    public String estadisticas (ModelMap modelo){
-//        String graf = g.dibujarBarrasMensual(TipoGraficos.MAYOR_ELECTIVA,Meses.NOVIEMBRE);
-        modelo.addAttribute("grafico","graf");
+    @RequestMapping(value = "/estadisticas/graficos", method = RequestMethod.POST)
+    public String estadisticas (ModelMap modelo, @RequestParam int anio, @RequestParam int mes, @RequestParam int tipo){
+        String graf = "";
+        Graficos g = new Graficos();
+
+        graf = g.dibujarBarras(tipo,mes,anio);
+        modelo.addAttribute("grafico",graf);
         return "estadisticas";
     }
 

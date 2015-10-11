@@ -2,7 +2,6 @@ package com.springapp.mvc;
 
 import com.persistencia.*;
 import com.persistencia.exceptions.Coasa;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 
@@ -20,7 +17,6 @@ import java.util.List;
 public class HelloController {
 
     EntityManagerFactory emf = CreadorEntityManager.crearEMF();
-    Graficos g = new Graficos();
 
 	@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
@@ -28,7 +24,6 @@ public class HelloController {
 		model.addAttribute("message",asdf);
 		return "hello";
 	}
-
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap model){
@@ -56,26 +51,7 @@ public class HelloController {
         List<Cirujano> lista_cirujanos= cirujanoJpaController.getActivos();
         List<Cirujano> lista_cirujanos1= cirujanoJpaController.getActivos();
         List<Cirujano> lista_cirujanos2= cirujanoJpaController.getActivos();
-        model.addAttribute("cirujanos",lista_cirujanos);
-        model.addAttribute("1ayudante",lista_cirujanos1);
-        model.addAttribute("2ayudante",lista_cirujanos2);
-
-        Cie9JpaController cie9JpaController = new Cie9JpaController(emf);
-        List<Cie9> lista_cie9 = cie9JpaController.findCie9Entities();
-        model.addAttribute("cie9",lista_cie9);
-
-        QuirofanoJpaController quirofanoJpaController = new QuirofanoJpaController(emf);
-        List<Quirofano> lista_quirofano = quirofanoJpaController.findQuirofanoEntities();
-        model.addAttribute("quirofanos",lista_quirofano);
-
-        RiesgoJpaController riesgoJpaController = new RiesgoJpaController(emf);
-        List<Riesgo> lista_riesgo = riesgoJpaController.findRiesgoEntities();
-        model.addAttribute("riesgo",lista_riesgo);
-
-        SuspencionesJpaController suspencionesJpaController = new SuspencionesJpaController(emf);
-        List<Suspenciones> lista_suspensiones = suspencionesJpaController.findSuspencionesEntities(16,1);
-        model.addAttribute("suspenciones",lista_suspensiones);
-
+        model.addAttribute("asdf","asdf");
         return "Registro";
     }
 
@@ -100,9 +76,6 @@ public class HelloController {
         HorarioJpaController horarioJpaController= new HorarioJpaController(emf);
         List<Horario> lista_horarios= horarioJpaController.findHorarioEntities();
         model.addAttribute("horarios",lista_horarios);
-
-
-
         return "Registros-informacion";
     }
 
@@ -155,16 +128,25 @@ public class HelloController {
         return "respuestas-riesgo";
     }
 
-    @RequestMapping(value = "/estadisticas", method = RequestMethod.GET)
-    public String estadisticas (ModelMap modelo){
-//        String graf = g.dibujarBarrasMensual(TipoGraficos.MAYOR_ELECTIVA,Meses.NOVIEMBRE);
-        modelo.addAttribute("grafico","graf");
+    @RequestMapping(value = "/estadisticas/graficos", method = RequestMethod.POST)
+    public String estadisticas (ModelMap modelo, @RequestParam int anio, @RequestParam int mes, @RequestParam int tipo){
+        String graf = "";
+        Graficos g = new Graficos();
+
+        graf = g.dibujarBarras(tipo,mes,anio);
+        modelo.addAttribute("grafico",graf);
         return "estadisticas";
     }
 
-    @RequestMapping(value = "estadisticas/graficos", method = RequestMethod.GET)
-    public String dibujarGrafico(ModelMap model, @RequestParam String id){
-        return "grafico";
+    @RequestMapping(value="/estadisticas")
+    public String estadisticas (ModelMap modelo){
+        return "estadisticas";
     }
 
+    @RequestMapping(value = "/reportes", method = RequestMethod.GET)
+    public String reportes(ModelMap modelMap){
+        Reportes rep = new Reportes();
+        modelMap.put("lista",rep.findAll());
+        return "reporte";
+    }
 }

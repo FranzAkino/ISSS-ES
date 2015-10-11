@@ -45,6 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Cirujia.findByCircular", query = "SELECT c FROM Cirujia c WHERE c.circular = :circular"),
     @NamedQuery(name = "Cirujia.findByEmergencia", query = "SELECT c FROM Cirujia c WHERE c.emergencia = :emergencia"),
     @NamedQuery(name = "Cirujia.findByRealizada", query = "SELECT c FROM Cirujia c WHERE c.realizada = :realizada"),
+    @NamedQuery(name = "Cirujia.findByRealizadaByYear", query = "SELECT c FROM Cirujia c WHERE c.realizada = :realizada and func('YEAR',c.fecha) = :year"),
+//    @NamedQuery(name = "Cirujia.findByRealizadaByYearAndMonth", query = "SELECT c FROM Cirujia c WHERE c.realizada = :realizada AND FUNC('MONTH',c.fecha) =: month AND FUNC('YEAR',c.fecha) = :year"),
     @NamedQuery(name = "Cirujia.findByAnestesiologo", query = "SELECT c FROM Cirujia c WHERE c.anestesiologo = :anestesiologo"),
     @NamedQuery(name = "Cirujia.findByInicio", query = "SELECT c FROM Cirujia c WHERE c.inicio = :inicio"),
     @NamedQuery(name = "Cirujia.findByFinalizacion", query = "SELECT c FROM Cirujia c WHERE c.finalizacion = :finalizacion")})

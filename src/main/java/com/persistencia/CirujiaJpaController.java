@@ -7,16 +7,15 @@ package com.persistencia;
 
 import com.persistencia.exceptions.IllegalOrphanException;
 import com.persistencia.exceptions.NonexistentEntityException;
-import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
+
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
+
+//import org.springframework.jdbc.object.SqlQuery;
 
 /**
  *
@@ -338,27 +337,267 @@ public class CirujiaJpaController implements Serializable {
             em.close();
         }
     }
-    
-    
+
     public List<Cirujia> tipoCirujia(String tipoCirujia){    
         EntityManager em = getEntityManager();
-        try{        
+        try{
+            List<Cirujia> cirujias = new ArrayList<Cirujia>();
             TypedQuery<Cirujia> queryMayorMenor = em.createNamedQuery("Cirujia.findByTipoAnestecia", Cirujia.class);
             queryMayorMenor.setParameter("tipoAnestecia", tipoCirujia);
-            return queryMayorMenor.getResultList();
+            cirujias = queryMayorMenor.getResultList();
+            return cirujias;
         } finally {
             em.close();
         }
     }
-    
-    public List<Cirujia> getSuspendidas(){
+
+    public List<Cirujia> getRealizadas(){
         EntityManager em = getEntityManager();
         try{
-            TypedQuery<Cirujia> query = em.createNamedQuery("Cirujia.findByRealizada", Cirujia.class);
+            TypedQuery<Cirujia> query = em.createNamedQuery("Cirujia.findByRealizada",Cirujia.class);
+            query.setParameter("realizada",1);
+            return query.getResultList();
+        }finally {
+            em.close();
+        }
+    }
+    public List<Cirujia> getRealizadasAnual(int anio){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c where c.realizada = :realizada " +
+                    "and function('YEAR',c.fecha) = :anio", Cirujia.class);
+            query.setParameter("realizada",1);
+            query.setParameter("anio",anio);
+            return query.getResultList();
+        }finally {
+            em.close();
+        }
+    }
+    public List<Cirujia> getRealizadasMensual(int anio, int mes){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c where c.realizada = :realizada " +
+                    "and function('YEAR',c.fecha) = :anio and function('MONTH',c.fecha) = :mes", Cirujia.class);
+            query.setParameter("realizada",1);
+            query.setParameter("anio",anio);
+            query.setParameter("mes", mes);
+            return query.getResultList();
+        }finally {
+            em.close();
+        }
+    }
+
+    public List<Cirujia> getSuspendidas(int year){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createNamedQuery("Cirujia.findByRealizadaByYear", Cirujia.class);
             query.setParameter("realizada", 0);
+            query.setParameter("year", year);
             return query.getResultList();
         }finally{
             em.close();
         }            
-    }        
+    }
+
+    public List<Cirujia> getSuspendidasPorMes(int year, int mes){
+        EntityManager em = getEntityManager();
+        try{
+            int i = 1;
+            TypedQuery<Cirujia> query = em.createQuery("SELECT c FROM Cirujia c WHERE c.realizada = :i " +
+                    "AND FUNCTION('YEAR',c.fecha) = :year AND FUNCTION('MONTH',c.fecha) = :mes", Cirujia.class);
+            query.setParameter("i", 0);
+            query.setParameter("mes", mes);
+            query.setParameter("year", year);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }
+    }
+
+    public List<Cirujia> getAnualesEspecialidad(int year){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c where " +
+                    "c.realizada = :i and function('YEAR',c.fecha) = :year", Cirujia.class);
+            query.setParameter("i",1);
+            query.setParameter("year", year);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }
+    }
+
+    //TODO: Graficar
+    public List<Cirujia> getMayorElectivaAnual(int anio){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery(
+                    "SELECT c FROM Cirujia c where FUNCTION('YEAR', c.fecha) = :anio and " +
+                            "c.realizada = :r and c.emergencia = :e",
+                    Cirujia.class);
+            query.setParameter("anio",anio);
+            query.setParameter("r",1);
+            query.setParameter("e",0);
+            return query.getResultList();
+        }finally {
+            em.close();
+        }
+    }
+
+    //TODO: Graficar
+    public List<Cirujia> getMayorElectivaMensual(int anio, int mes){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery(
+                    "SELECT c FROM Cirujia c where FUNCTION('YEAR', c.fecha) = :anio " +
+                            "and function('MONTH',c.fecha)= :m and c.realizada = :r and c.emergencia = :e " +
+                            "and c.tipoAnestecia=:tipo",
+                    Cirujia.class);
+            query.setParameter("anio",anio);
+            query.setParameter("r",1);
+            query.setParameter("e",0);
+            query.setParameter("m",mes);
+            query.setParameter("tipo","General");
+            return query.getResultList();
+        }finally {
+            em.close();
+        }
+    }
+
+
+    //TODO: Graficar
+    public List<Cirujia> getMayorEmergenciaAnual(int anio){
+     EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c where c.realizada = :real " +
+                    "and c.tipoAnestecia= :tipo and c.emergencia= :eme " +
+                    "and function('YEAR',c.fecha)=:year"
+                    ,Cirujia.class);
+            query.setParameter("real",1);
+            query.setParameter("tipo","General");
+            query.setParameter("eme",1);
+            query.setParameter("year",anio);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }
+    }
+
+    //TODO: Graficar
+    public List<Cirujia> getMayorEmergenciaMensual(int anio, int mes){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c where c.realizada = :real " +
+                    "and c.tipoAnestecia= :tipo and c.emergencia= :eme and function('YEAR',c.fecha)=:year " +
+                    "and function('MONTH',c.fecha)=:mes",Cirujia.class);
+            query.setParameter("real",1);
+            query.setParameter("tipo","General");
+            query.setParameter("eme",1);
+            query.setParameter("year",anio);
+            query.setParameter("mes",mes);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }
+    }
+
+    //TODO: Graficar
+    public List<Cirujia> getMenorElectivaAnual(int anio){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c where c.realizada = :real " +
+                    "and c.tipoAnestecia= :tipo and c.emergencia= :eme and function('YEAR',c.fecha)=:year",Cirujia.class);
+            query.setParameter("real",1);
+            query.setParameter("tipo","Local");
+            query.setParameter("eme",0);
+            query.setParameter("year",anio);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }
+    }
+
+    //TODO: Graficar
+    public List<Cirujia> getMenorElectivaMensual(int anio, int mes){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c where c.realizada = :real " +
+                    "and c.tipoAnestecia= :tipo and c.emergencia= :eme and function('YEAR',c.fecha)=:year " +
+                    "and function('MONTH',c.fecha)=:mes",Cirujia.class);
+            query.setParameter("real",1);
+            query.setParameter("tipo","Local");
+            query.setParameter("eme",0);
+            query.setParameter("year",anio);
+            query.setParameter("mes",mes);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }
+    }
+
+
+
+
+    //TODO: Graficar
+    public List<Cirujia> getMenorEmergenciaAnual(int anio){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c where c.realizada = :real " +
+                    "and c.tipoAnestecia= :tipo and c.emergencia= :eme and function('YEAR',c.fecha)=:year",Cirujia.class);
+            query.setParameter("real",1);
+            query.setParameter("tipo","Local");
+            query.setParameter("eme",1);
+            query.setParameter("year",anio);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }
+    }
+
+    //TODO: Graficar
+    public List<Cirujia> getMenorEmergenciaMensual(int anio, int mes){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c where c.realizada = :real " +
+                    "and c.tipoAnestecia= :tipo and c.emergencia= :eme and function('YEAR',c.fecha)=:year " +
+                    "and function('MONTH',c.fecha)=:mes",Cirujia.class);
+            query.setParameter("real",1);
+            query.setParameter("tipo","Local");
+            query.setParameter("eme",1);
+            query.setParameter("year",anio);
+            query.setParameter("mes",mes);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }
+    }
+
+    //TODO: Graficar
+    public List<Cirujia> suspendidasPorCausasInstitucional(int anio){
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c join c.fkSuspencion s " +
+                    "where c.realizada= :r and s.tipo= :tip order by s.idSuspenciones",Cirujia.class);
+            query.setParameter("r",1);
+            query.setParameter("tip","Institucional");
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    //TODO: Graficar
+    public List<Cirujia> suspendidasPorCausasNoInstitucional(int anio){
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c join c.fkSuspencion s " +
+                    "where c.realizada= :r and s.tipo= :tip order by s.idSuspenciones",Cirujia.class);
+            query.setParameter("r",1);
+            query.setParameter("tip","No Institucional");
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
 }

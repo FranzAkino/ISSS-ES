@@ -32,7 +32,7 @@
     CirujanoJpaController nuevo_cirujano = new CirujanoJpaController(emf);
     nuevo_cirujano.create(doc);
 
-response.sendRedirect("Registro-informacion");
+response.sendRedirect("Registros-informacion");
 
 %>
 <%-- Paciente --%>

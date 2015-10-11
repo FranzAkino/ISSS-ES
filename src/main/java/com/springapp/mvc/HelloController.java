@@ -51,7 +51,26 @@ public class HelloController {
         List<Cirujano> lista_cirujanos= cirujanoJpaController.getActivos();
         List<Cirujano> lista_cirujanos1= cirujanoJpaController.getActivos();
         List<Cirujano> lista_cirujanos2= cirujanoJpaController.getActivos();
-        model.addAttribute("asdf","asdf");
+        model.addAttribute("cirujanos",lista_cirujanos);
+        model.addAttribute("1ayudante",lista_cirujanos1);
+        model.addAttribute("2ayudante",lista_cirujanos2);
+
+        Cie9JpaController cie9JpaController = new Cie9JpaController(emf);
+        List<Cie9> lista_cie9 = cie9JpaController.findCie9Entities();
+        model.addAttribute("cie9",lista_cie9);
+
+        QuirofanoJpaController quirofanoJpaController = new QuirofanoJpaController(emf);
+        List<Quirofano> lista_quirofano = quirofanoJpaController.findQuirofanoEntities();
+        model.addAttribute("quirofanos",lista_quirofano);
+
+        RiesgoJpaController riesgoJpaController = new RiesgoJpaController(emf);
+        List<Riesgo> lista_riesgo = riesgoJpaController.findRiesgoEntities();
+        model.addAttribute("riesgo",lista_riesgo);
+
+        SuspencionesJpaController suspencionesJpaController = new SuspencionesJpaController(emf);
+        List<Suspenciones> lista_suspensiones = suspencionesJpaController.findSuspencionesEntities(16,1);
+        model.addAttribute("suspenciones",lista_suspensiones);
+
         return "Registro";
     }
 
@@ -76,6 +95,9 @@ public class HelloController {
         HorarioJpaController horarioJpaController= new HorarioJpaController(emf);
         List<Horario> lista_horarios= horarioJpaController.findHorarioEntities();
         model.addAttribute("horarios",lista_horarios);
+
+
+
         return "Registros-informacion";
     }
 

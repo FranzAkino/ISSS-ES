@@ -51,6 +51,7 @@ public class HelloController {
 
         CirujanoJpaController cirujanoJpaController= new CirujanoJpaController(emf);
 //        TypedQuery<Cirujano> query=emf.
+//        Aca se da el error a veces en el controller
         List<Cirujano> lista_cirujanos= cirujanoJpaController.getActivos();
         List<Cirujano> lista_cirujanos1= cirujanoJpaController.getActivos();
         List<Cirujano> lista_cirujanos2= cirujanoJpaController.getActivos();

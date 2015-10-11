@@ -34,7 +34,7 @@
             <a class="flask" href="${pageContext.request.contextPath}historial"><img src="css/media/folder.png" /></a>
             <a class="heartbeat" href="${pageContext.request.contextPath}Registro"><img src="css/media/menu.png" /></a>
             <a class="scissors" href="${pageContext.request.contextPath}Registros-informacion"><img src="css/media/usuarios.png" /></a>
-            <a class="scissors" href=""><img src="css/media/cafe.png" /></a>
+            <a class="scissors" href="${pageContext.request.contextPath}estadisticas"><img src="css/media/estadisticas.png" /></a>
 
         </div>
     </div>

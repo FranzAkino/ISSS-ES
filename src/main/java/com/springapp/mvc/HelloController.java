@@ -171,4 +171,45 @@ public class HelloController {
         modelMap.put("lista",rep.findAll());
         return "reporte";
     }
+
+    @RequestMapping(value = "/edicion", method = RequestMethod.GET)
+    public String edicion(ModelMap modelMap){
+
+        CirujanoJpaController cirujanoJpaController= new CirujanoJpaController(emf);
+        List<Cirujano> lista_cirujanos= cirujanoJpaController.findCirujanoEntities();
+        modelMap.addAttribute("cirujanos",lista_cirujanos);
+
+        Cie9JpaController cie9JpaController= new Cie9JpaController(emf);
+        List<Cie9> lista_cie9= cie9JpaController.findCie9Entities();
+        modelMap.addAttribute("procedimientos",lista_cie9);
+
+        EspecialidadJpaController especialidadJpaController= new EspecialidadJpaController(emf);
+        List<Especialidad> lista_especialidad= especialidadJpaController.findEspecialidadEntities();
+        modelMap.addAttribute("especialidad",lista_especialidad);
+
+        HorarioJpaController horarioJpaController= new HorarioJpaController(emf);
+        List<Horario> lista_horarios= horarioJpaController.findHorarioEntities();
+        modelMap.addAttribute("horarios", lista_horarios);
+
+        MetasJpaController metasJpaController= new MetasJpaController(emf);
+        List<Metas> lista_metas= metasJpaController.findMetasEntities();
+        modelMap.addAttribute("metas",lista_metas);
+
+        QuirofanoJpaController quirofanoJpaController= new QuirofanoJpaController(emf);
+        List<Quirofano> lista_quirofanos= quirofanoJpaController.findQuirofanoEntities();
+        modelMap.addAttribute("quirofanos", lista_quirofanos);
+
+        RiesgoJpaController riesgoJpaController= new RiesgoJpaController(emf);
+        List<Riesgo> lista_riesgos= riesgoJpaController.findRiesgoEntities();
+        modelMap.addAttribute("riesgos",lista_riesgos);
+
+        return "edicion";
+    }
+
+    @RequestMapping(value = "/edicion-eliminar", method = RequestMethod.GET)
+    public String edicion_cirujano(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "edicion-eliminar";
+    }
 }

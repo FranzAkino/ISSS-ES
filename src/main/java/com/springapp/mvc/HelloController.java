@@ -56,10 +56,31 @@ public class HelloController {
 
         CirujanoJpaController cirujanoJpaController= new CirujanoJpaController(emf);
 //        TypedQuery<Cirujano> query=emf.
+//        Aca se da el error a veces en el controller
+//        otro intentod
         List<Cirujano> lista_cirujanos= cirujanoJpaController.getActivos();
         List<Cirujano> lista_cirujanos1= cirujanoJpaController.getActivos();
         List<Cirujano> lista_cirujanos2= cirujanoJpaController.getActivos();
-        model.addAttribute("asdf","asdf");
+        model.addAttribute("cirujanos",lista_cirujanos);
+        model.addAttribute("1ayudante",lista_cirujanos1);
+        model.addAttribute("2ayudante",lista_cirujanos2);
+
+        Cie9JpaController cie9JpaController = new Cie9JpaController(emf);
+        List<Cie9> lista_cie9 = cie9JpaController.findCie9Entities();
+        model.addAttribute("cie9",lista_cie9);
+
+        QuirofanoJpaController quirofanoJpaController = new QuirofanoJpaController(emf);
+        List<Quirofano> lista_quirofano = quirofanoJpaController.findQuirofanoEntities();
+        model.addAttribute("quirofanos",lista_quirofano);
+
+        RiesgoJpaController riesgoJpaController = new RiesgoJpaController(emf);
+        List<Riesgo> lista_riesgo = riesgoJpaController.findRiesgoEntities();
+        model.addAttribute("riesgo",lista_riesgo);
+
+        SuspencionesJpaController suspencionesJpaController = new SuspencionesJpaController(emf);
+        List<Suspenciones> lista_suspensiones = suspencionesJpaController.findSuspencionesEntities(16,1);
+        model.addAttribute("suspenciones",lista_suspensiones);
+
         return "Registro";
     }
 
@@ -156,12 +177,63 @@ public class HelloController {
         return "reportes";
     }
 
+
+    @RequestMapping(value = "/edicion", method = RequestMethod.GET)
+    public String edicion(ModelMap modelMap){
+
+        CirujanoJpaController cirujanoJpaController= new CirujanoJpaController(emf);
+        List<Cirujano> lista_cirujanos= cirujanoJpaController.findCirujanoEntities();
+        modelMap.addAttribute("cirujanos",lista_cirujanos);
+
+        Cie9JpaController cie9JpaController= new Cie9JpaController(emf);
+        List<Cie9> lista_cie9= cie9JpaController.findCie9Entities();
+        modelMap.addAttribute("procedimientos",lista_cie9);
+
+        EspecialidadJpaController especialidadJpaController= new EspecialidadJpaController(emf);
+        List<Especialidad> lista_especialidad= especialidadJpaController.findEspecialidadEntities();
+        modelMap.addAttribute("especialidad",lista_especialidad);
+
+        HorarioJpaController horarioJpaController= new HorarioJpaController(emf);
+        List<Horario> lista_horarios= horarioJpaController.findHorarioEntities();
+        modelMap.addAttribute("horarios", lista_horarios);
+
+        MetasJpaController metasJpaController= new MetasJpaController(emf);
+        List<Metas> lista_metas= metasJpaController.findMetasEntities();
+        modelMap.addAttribute("metas",lista_metas);
+
+        QuirofanoJpaController quirofanoJpaController= new QuirofanoJpaController(emf);
+        List<Quirofano> lista_quirofanos= quirofanoJpaController.findQuirofanoEntities();
+        modelMap.addAttribute("quirofanos", lista_quirofanos);
+
+        RiesgoJpaController riesgoJpaController= new RiesgoJpaController(emf);
+        List<Riesgo> lista_riesgos= riesgoJpaController.findRiesgoEntities();
+        modelMap.addAttribute("riesgos",lista_riesgos);
+
+        return "edicion";
+    }
+
+    @RequestMapping(value = "/edicion-eliminar", method = RequestMethod.GET)
+    public String edicion_cirujano(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "edicion-eliminar";
+    }
+
+
+
+
+
+
+
+
+
+
     @RequestMapping(value = "/reportes/generar")
     public ModelAndView generar(ModelAndView modelAndView,
-                          @RequestParam (value = "reporte", defaultValue = "cg")String reporte,
-                          @RequestParam (value = "hora", defaultValue = "4")String hora,
-                          @RequestParam String tipo,
-                          @RequestParam int anio){
+                                @RequestParam (value = "reporte", defaultValue = "cg")String reporte,
+                                @RequestParam (value = "hora", defaultValue = "4")String hora,
+                                @RequestParam String tipo,
+                                @RequestParam int anio){
         Reportes rep = new Reportes();
         Map<String,Object> parameterMap = new HashMap<String,Object>();
         EspecialidadJpaController esjpac = new EspecialidadJpaController(CreadorEntityManager.crearEMF());
@@ -182,7 +254,9 @@ public class HelloController {
         }
 
 
-        if(reporte.equalsIgnoreCase("se")){
+
+
+    if(reporte.equalsIgnoreCase("se")){
             desc = "Subespecialidades";
             view = "ReportSubEsp";
 

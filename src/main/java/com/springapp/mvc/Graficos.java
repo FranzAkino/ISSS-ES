@@ -2,17 +2,15 @@ package com.springapp.mvc;
 
 import com.googlecode.wickedcharts.highcharts.jackson.JsonRenderer;
 import com.googlecode.wickedcharts.highcharts.options.*;
-import com.googlecode.wickedcharts.highcharts.options.series.Series;
-import com.googlecode.wickedcharts.highcharts.theme.DarkBlueTheme;
-import com.googlecode.wickedcharts.highcharts.theme.SkiesTheme;
 import com.googlecode.wickedcharts.highcharts.options.series.SimpleSeries;
 import com.persistencia.*;
 import com.sun.istack.internal.Nullable;
 import org.joda.time.DateTime;
-import org.springframework.format.datetime.joda.JodaTimeFormatterRegistrar;
 
 import javax.persistence.EntityManagerFactory;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by akino on 06-13-15.
@@ -197,8 +195,8 @@ public class Graficos {
         options = new Options();
         options.setChartOptions(new ChartOptions().setType(SeriesType.BAR).setRenderTo("grafico"));
         List<Cirujia> cirujias = cirujiaJpaController.getRealizadas();
-        HashMap<String,Number> año_Total = new HashMap<String, Number>(cirujias.size());
-        List<String> años = new ArrayList<String>();
+        HashMap<String,Number> año_Total = new HashMap<String, Number>();
+        List<String> años;
         DateTime dt;
         for(Cirujia c: cirujias){
             dt = new DateTime(c.getFecha());
@@ -210,11 +208,12 @@ public class Graficos {
                 i = (Number) j;
                 año_Total.put(año,i);
             }else{
-                año_Total.put(año,0);
-                años.add(año);
+                año_Total.put(año,1);
             }
         }
         List<Number> total = new ArrayList<Number>(año_Total.values());
+        años = new ArrayList<String>(año_Total.keySet());
+
 
         options.setxAxis(new Axis().setCategories(años));
 //        options.setTitle(new Title("Cirujías realizadas desde "+ arrayAnios[0] +" hasta "+ arrayAnios[arrayAnios.length]));

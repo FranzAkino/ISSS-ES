@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ISSS-ES:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="ISSS-ES.war">
+      <element id="artifact" artifact-name="ISSS-ES:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="org.eclipse.persistence:eclipselink:2.6.0" />
+          <element id="file-copy" path="$PROJECT_DIR$/lib/mysql-connector-java-5.1.34-bin.jar" />
+          <element id="library" level="project" name="com.googlecode.wicked-charts:wicked-charts-highcharts:1.5.0" />
+          <element id="library" level="project" name="joda-time:joda-time:2.2" />
+          <element id="library" level="project" name="org.springframework:spring-orm:4.1.1.RELEASE" />
+          <element id="library" level="project" name="org.springframework:spring-context-support:4.1.1.RELEASE" />
+          <element id="library" level="project" name="org.modelmapper:modelmapper:0.7.5" />
+          <element id="library" level="project" name="org.apache.poi:poi:3.12" />
+          <element id="library" level="project" name="net.sf.jasperreports:jasperreports:5.1.0" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

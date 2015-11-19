@@ -23,12 +23,14 @@
           <element id="library" level="project" name="com.googlecode.wicked-charts:wicked-charts-highcharts:1.5.0" />
           <element id="library" level="project" name="joda-time:joda-time:2.2" />
           <element id="library" level="project" name="org.springframework:spring-orm:4.1.1.RELEASE" />
-          <element id="library" level="project" name="jasperreports:jasperreports:3.5.3" />
-          <element id="library" level="project" name="mysql-connector-java-5.1.35-bin" />
+          <element id="library" level="project" name="org.springframework:spring-context-support:4.1.1.RELEASE" />
+          <element id="library" level="project" name="org.modelmapper:modelmapper:0.7.5" />
+          <element id="library" level="project" name="org.apache.poi:poi:3.12" />
+          <element id="library" level="project" name="net.sf.jasperreports:jasperreports:5.1.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/ISSS-ES/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="ISSS-ES/web/Web" />
     </root>

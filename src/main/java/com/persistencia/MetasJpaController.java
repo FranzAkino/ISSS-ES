@@ -7,14 +7,12 @@ package com.persistencia;
 
 import com.persistencia.exceptions.NonexistentEntityException;
 import com.persistencia.exceptions.PreexistingEntityException;
-import java.io.Serializable;
-import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
+
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -169,6 +167,51 @@ public class MetasJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Metas> getMetasByEspecialidadesAndAnio(int idEspecialidad, int anio, int idHorario){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Metas> query = em.createQuery("select m from Metas m " +
+                    "where m.metasPK.anio = :a " +
+                    "and m.cirujano.fkidEspecialidad.idEspecialidad = :e and m.cirujano.fkHorarios.idHorario = :h",Metas.class);
+
+            query.setParameter("a",anio);
+            query.setParameter("e",idEspecialidad);
+            query.setParameter("h",idHorario);
+
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Metas> getMetasByAnio(int anio){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Metas> query = em.createQuery("select m from Metas m where m.metasPK.anio = :anio",Metas.class);
+            query.setParameter("anio", anio);
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<Metas> getMetasBySubEspecialidadAndAnio(int anio, int horario){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Metas> query = em.createQuery("select m from Metas m " +
+                    "where m.metasPK.anio = :a " +
+                    "and m.cirujano.fkidEspecialidad.idEspecialidad != 1 " +
+                    "and m.cirujano.fkidEspecialidad.idEspecialidad !=2 " +
+                    "and m.cirujano.fkHorarios.idHorario = :h", Metas.class);
+            query.setParameter("a", anio);
+            query.setParameter("h", horario);
+
+            return query.getResultList();
         } finally {
             em.close();
         }

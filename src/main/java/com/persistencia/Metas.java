@@ -5,17 +5,9 @@
  */
 package com.persistencia;
 
-import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 /**
  *
@@ -36,13 +28,17 @@ public class Metas implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected MetasPK metasPK;
+
     @Basic(optional = false)
     @Column(name = "Meta")
     private int meta;
+
     @Column(name = "Realizadas")
     private Integer realizadas;
+
     @Column(name = "Suspendidas")
     private Integer suspendidas;
+
     @JoinColumn(name = "idCirujano_fk", referencedColumnName = "idCirujano", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Cirujano cirujano;

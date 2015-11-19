@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+       <bean id="pdfReport"
+             class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+             p:url="classpath:ElectivaCirujiaGeneral.jrxml"
+             p:reportDataKey="datasource"/>
+
+       <bean id="excelReport"
+             class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
+             p:url="classpath:ElectivaCirujiaGeneral.jrxml"
+             p:reportDataKey="datasource">
+
+       </bean>
+
+       <!--<bean id="htmlReport"
+             class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView"
+             p:exporterParameters="net.sf.jasperreports.engine.export.JRHtmlExporterParameter"
+             p:url="classpath:ElectivaCirujiaGeneral.jrxml"
+             p:reportDataKey="datasource"/>-->
+
+
+    <bean id="htmlReport"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView">
+        <property name="url" value="classpath:ElectivaCirujiaGeneral.jrxml"/>
+        <property name="reportDataKey" value="datasource"/>
+        <property name="exporterParameters">
+            <map>
+                <entry key="net.sf.jasperreports.engine.export.JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN" value="false">
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <!--Asistenciales-->
+    <bean id="pdfReportAsis"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:CGAsistencial.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="excelReportAsis"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
+          p:url="classpath:CGAsistencial.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="htmlReportAsis"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView">
+        <property name="url" value="classpath:ElectivaCirujiaGeneral.jrxml"/>
+        <property name="reportDataKey" value="datasource"/>
+        <property name="exporterParameters">
+            <map>
+                <entry key="net.sf.jasperreports.engine.export.JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN" value="false">
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+    <!--Detalle Cirujanos-->
+    <bean id="pdfReportDetalle"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:DetallesCirujano.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="excelReportDetalle"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
+          p:url="classpath:DetallesCirujano.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="htmlReportDetalle"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView">
+        <property name="url" value="classpath:DetallesCirujano.jrxml"/>
+        <property name="reportDataKey" value="datasource"/>
+        <property name="exporterParameters">
+            <map>
+                <entry key="net.sf.jasperreports.engine.export.JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN" value="false">
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+
+
+    <!--SubEspecialidades-->
+    <bean id="pdfReportSubEsp"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:Especialidades.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="excelReportSubEsp"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
+          p:url="classpath:Especialidades.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="htmlReportSubEsp"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView">
+        <property name="url" value="classpath:Especialidades.jrxml"/>
+        <property name="reportDataKey" value="datasource"/>
+        <property name="exporterParameters">
+            <map>
+                <entry key="net.sf.jasperreports.engine.export.JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN" value="false">
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+    <!--SubEspecialidades-->
+    <bean id="pdfReportAsisSE"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"
+          p:url="classpath:EspAsis.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="excelReportAsisSE"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
+          p:url="classpath:EspAsis.jrxml"
+          p:reportDataKey="datasource"/>
+
+    <bean id="htmlReportAsisSE"
+          class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView">
+        <property name="url" value="classpath:EspAsis.jrxml"/>
+        <property name="reportDataKey" value="datasource"/>
+        <property name="exporterParameters">
+            <map>
+                <entry key="net.sf.jasperreports.engine.export.JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN" value="false">
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+
+
+</beans>

@@ -427,6 +427,55 @@ public class CirujiaJpaController implements Serializable {
         }
     }
 
+    public int getRealizadarEspecialidadAnual(int year, int mes, int esp){
+        EntityManager em = getEntityManager();
+        try{
+
+            Query query = em.createQuery("select count(cc) from CirujanoCirujia cc join Cirujia c " +
+                    "on cc.fkidCirujia.idCirujia = c.idCirujia " +
+                    "where cc.titular = 1 " +
+                    "and c.realizada = 1 " +
+                    "and function('YEAR', c.fecha) = :year " +
+                    "and function('MONTH', c.fecha) = :mes " +
+                    "and cc.fkidCirujano.fkidEspecialidad.idEspecialidad = :esp");
+            query.setParameter("year", year);
+            query.setParameter("mes", mes);
+            query.setParameter("esp", esp);
+            int total = ((Number)query.getSingleResult()).intValue();
+            return total;
+
+            /*TypedQuery<Cirujia> query = em.createQuery("select count(cc) from CirujanoCirujia cc join Cirujia c " +
+                    "on cc.fkidCirujia.idCirujia = c.idCirujia " +
+                    "where cc.titular = 1 " +
+                    "and c.realizada = 1 " +
+                    "and function('YEAR', c.fecha) = :year " +
+                    "and function('MONTH', c.fecha) = :mes " +
+                    "and cc.fkidCirujano.fkidEspecialidad.idEspecialidad = :esp", Cirujia.class);
+            query.setParameter("year", year);
+            query.setParameter("mes", mes);
+            query.setParameter("esp", esp);
+            int total = ((Number)query.getSingleResult());*/
+
+        }finally{
+            em.close();
+        }
+    }
+
+    public List<Cirujia> getMensualesEspecialidad(int year, int mes){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c where " +
+                    "c.realizada = :i and function('YEAR',c.fecha) = :year and function('MONTH',c.fecha) = :mes", Cirujia.class);
+            query.setParameter("i",1);
+            query.setParameter("year", year);
+            query.setParameter("mes", mes);
+            return query.getResultList();
+        }finally{
+            em.close();
+        }
+    }
+
+
     //TODO: Graficar
     public List<Cirujia> getMayorElectivaAnual(int anio){
         EntityManager em = getEntityManager();
@@ -577,7 +626,7 @@ public class CirujiaJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c join c.fkSuspencion s " +
-                    "where c.realizada= :r and s.tipo= :tip order by s.idSuspenciones",Cirujia.class);
+                    "where c.realizada = :r and s.tipo = :tip order by s.idSuspenciones",Cirujia.class);
             query.setParameter("r",1);
             query.setParameter("tip","Institucional");
             return query.getResultList();
@@ -591,7 +640,7 @@ public class CirujiaJpaController implements Serializable {
         EntityManager em = getEntityManager();
         try {
             TypedQuery<Cirujia> query = em.createQuery("select c from Cirujia c join c.fkSuspencion s " +
-                    "where c.realizada= :r and s.tipo= :tip order by s.idSuspenciones",Cirujia.class);
+                    "where c.realizada = :r and s.tipo = :tip order by s.idSuspenciones",Cirujia.class);
             query.setParameter("r",1);
             query.setParameter("tip","No Institucional");
             return query.getResultList();

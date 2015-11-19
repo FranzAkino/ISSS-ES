@@ -1,15 +1,22 @@
 package com.springapp.mvc;
 
+import com.dtos.CirujanoMetasDTO;
 import com.persistencia.*;
-import com.persistencia.exceptions.Coasa;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.EntityManagerFactory;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -18,12 +25,15 @@ public class HelloController {
 
     EntityManagerFactory emf = CreadorEntityManager.crearEMF();
 
-	@RequestMapping(value = "/hello", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/hello", method = RequestMethod.GET)
 	public String printWelcome(ModelMap model) {
         Coasa asdf = new Coasa();
 		model.addAttribute("message",asdf);
 		return "hello";
-	}
+	}*/
+
+    @Autowired
+    private ApplicationContext appContext;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap model){
@@ -141,10 +151,121 @@ public class HelloController {
         return "estadisticas";
     }
 
-    @RequestMapping(value = "/reportes", method = RequestMethod.GET)
-    public String reportes(ModelMap modelMap){
+    @RequestMapping(value = "/reportes")
+    public String reportes (ModelMap model){
+        return "reportes";
+    }
+
+    @RequestMapping(value = "/reportes/generar")
+    public ModelAndView generar(ModelAndView modelAndView,
+                          @RequestParam (value = "reporte", defaultValue = "cg")String reporte,
+                          @RequestParam (value = "hora", defaultValue = "4")String hora,
+                          @RequestParam String tipo,
+                          @RequestParam int anio){
         Reportes rep = new Reportes();
-        modelMap.put("lista",rep.findAll());
-        return "reporte";
+        Map<String,Object> parameterMap = new HashMap<String,Object>();
+        EspecialidadJpaController esjpac = new EspecialidadJpaController(CreadorEntityManager.crearEMF());
+        List<CirujanoMetasDTO> cirujanos = null;
+        String desc = "";
+
+        int esp = 1;
+        String view = "";
+
+        if(reporte.equalsIgnoreCase("cg")){
+            esp = esjpac.getCirujiaGeneral().getIdEspecialidad();
+            desc = "Cirujía General";
+        }
+
+        if(reporte.equalsIgnoreCase("gyo")){
+            esp = esjpac.getGyO().getIdEspecialidad();
+            desc = "Ginecología y Obstetrícia";
+        }
+
+
+        if(reporte.equalsIgnoreCase("se")){
+            desc = "Subespecialidades";
+            view = "ReportSubEsp";
+
+        }
+
+        if(reporte.equalsIgnoreCase("dc")){
+            desc = "Detalle Cirujanos";
+            view = "ReportDetalle";
+            cirujanos = rep.detalleCirujanos(anio);
+        }
+
+        int h = Integer.valueOf(hora);
+
+        switch (h){
+            case 1:
+                desc = desc +" 7am a 3pm";
+                if(!reporte.equalsIgnoreCase("se")){
+                    cirujanos = rep.cirMetas(anio,esp,h,desc);
+                    view = "Report";
+                } else {
+                    cirujanos = rep.subEspecialidades(anio,h,desc);
+                }
+                break;
+            case 2:
+                desc = desc + " 3pm a 7pm";
+                if(!reporte.equalsIgnoreCase("se")){
+                    cirujanos = rep.cirMetas(anio,esp,h,desc);
+                    view = "Report";
+                }else {
+                    cirujanos = rep.subEspecialidades(anio,h,desc);
+                }
+                break;
+            case 0:
+                if(!reporte.equalsIgnoreCase("se")){
+                    desc = desc + " Medico Asistencial";
+                    cirujanos = rep.asisTotal(anio,esp,desc);
+                    view = "ReportAsis";
+                } else {
+                    desc = desc + " Medico Asistencial ";
+                    cirujanos = rep.asisSubEsp(anio, desc);
+                    view = "ReportAsisSE";
+                }
+                break;
+        }
+
+        JRDataSource jrDataSource = new JRBeanCollectionDataSource(cirujanos);
+        parameterMap.put("datasource",jrDataSource);
+        parameterMap.put("exporterParameter",false);
+
+        if(tipo.equalsIgnoreCase("pdf"))
+            modelAndView = new ModelAndView("pdf"+view, parameterMap);
+        if(tipo.equalsIgnoreCase("html"))
+            modelAndView = new ModelAndView("html"+view, parameterMap);
+        if(tipo.equalsIgnoreCase("excel"))
+            modelAndView = new ModelAndView("excel"+view, parameterMap);
+        if(tipo.equalsIgnoreCase("word"))
+            modelAndView = new ModelAndView("word"+view, parameterMap);
+
+        return modelAndView;
+
+    }
+
+    @RequestMapping(value="/reportes/html")
+    public ModelAndView reporteHtml(ModelAndView modelAndView){
+        Reportes rep = new Reportes();
+        Map<String,Object> parameterMap = new HashMap<String,Object>();
+
+        //TODO UNCOMMENT
+        /**
+         * OK
+          */
+        //List<CirujanoMetasDTO> cirujanos = rep.cirMetas();
+
+
+        //List<ProduccionEspecialidadDTO> dtoList = rep.especialidadDTOs(2015);
+
+
+//        List<Metas> metas = rep.cirMetas();
+        //JRDataSource jrDataSource = new JRBeanCollectionDataSource(cirujanos);
+        //parameterMap.put("datasource",jrDataSource);
+
+        modelAndView = new ModelAndView("pdfReport", parameterMap);
+
+        return modelAndView;
     }
 }

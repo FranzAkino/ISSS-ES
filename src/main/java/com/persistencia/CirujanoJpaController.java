@@ -7,10 +7,11 @@ package com.persistencia;
 
 import com.persistencia.exceptions.IllegalOrphanException;
 import com.persistencia.exceptions.NonexistentEntityException;
-import java.io.Serializable;
+
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -314,6 +315,60 @@ public class CirujanoJpaController implements Serializable {
             em.close();
         }
     }
+
+    public List<Cirujano> getByEspecialidad(Especialidad especialidad){
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Cirujano> query = em.createQuery("select c from Cirujano  c where c.fkidEspecialidad = :esp", Cirujano.class);
+            query.setParameter("esp",especialidad);
+            return query.getResultList();
+        }finally {
+            em.close();
+        }
+    }
+
+    public List<Cirujano> getByEspecialidadAndAnio(int esp, int anio){
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Cirujano> query = em.createQuery("select c from Cirujano c " +
+                    "join CirujanoCirujia cc on " +
+                    "c = cc.fkidCirujano " +
+                    "join Cirujia ci on ci = cc.fkidCirujia " +
+                    "where c.fkidEspecialidad.idEspecialidad = :esp " +
+                    "and ci.realizada = 1 " +
+                    "and function('YEAR',ci.fecha) = :anio " +
+                    "and cc.titular = 0", Cirujano.class);
+            query.setParameter("esp",esp);
+            query.setParameter("anio",anio);
+            List<Cirujano> lista = query.getResultList();
+            return lista;
+        }finally {
+            em.close();
+        }
+
+    }
+
+    public List<Cirujano> getBySubEspecialidadAndAnio(int anio){
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Cirujano> query = em.createQuery("select c from Cirujano c " +
+                    "join CirujanoCirujia cc on " +
+                    "c = cc.fkidCirujano " +
+                    "join Cirujia ci on ci = cc.fkidCirujia " +
+                    "where c.fkidEspecialidad.idEspecialidad != 1 " +
+                    "and c.fkidEspecialidad.idEspecialidad != 2 " +
+                    "and ci.realizada = 1 " +
+                    "and function('YEAR',ci.fecha) = :anio " +
+                    "and cc.titular = 0", Cirujano.class);
+            query.setParameter("anio",anio);
+            List<Cirujano> lista = query.getResultList();
+            return lista;
+        }finally {
+            em.close();
+        }
+    }
+
+
 }
     
 

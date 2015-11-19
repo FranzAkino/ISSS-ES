@@ -1,9 +1,11 @@
-<%@ page contentType="text/html; ISO-8859-1" %>
-<%--<%@ page contentType="application/pdf" %>--%>
+<%--<%@ page contentType="text/html; ISO-8859-1" %>--%>
+<%@ page contentType="application/pdf; text/html; ISO-8859-1" %>
+<%--<%@ page contentType="application/docx" %>--%>
 <%@ page import="net.sf.jasperreports.engine.*" %>
 <%@ page import="net.sf.jasperreports.engine.data.*" %>
 <%@ page import="java.io.*" %>
 <%@ page import="java.util.*" %>
+<%@ page import="net.sf.jasperreports.engine.export.ooxml.JRDocxExporter" %>
 <%
 
     try{
@@ -14,9 +16,19 @@
         InputStream input = new FileInputStream(new File(jrxmlFile));
         JasperReport jasperReport = JasperCompileManager.compileReport(input);
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport,null,jrDataSource);
-//        JasperExportManager.exportReportToPdfStream(jasperPrint,response.getOutputStream());
-        String htmlFile = session.getServletContext().getRealPath("/WEB-INF/pages/reportes/reporte.jsp");
-        JasperExportManager.exportReportToHtmlFile(jasperPrint,htmlFile);
+        JasperExportManager.exportReportToPdfStream(jasperPrint,response.getOutputStream());
+
+
+        //TODO export docx
+
+        /*JRDocxExporter docxExporter = new JRDocxExporter();
+        docxExporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+        docxExporter.setParameter(JRExporterParameter.OUTPUT_STREAM, response.getOutputStream());
+        docxExporter.exportReport();*/
+
+//        String htmlFile = session.getServletContext().getRealPath("/WEB-INF/pages/reporte.jsp");
+//        JasperExportManager.exportReportToHtmlFile(jasperPrint,htmlFile);
+
         response.getOutputStream().flush();
         response.getOutputStream().close();
         System.out.print("holaa");

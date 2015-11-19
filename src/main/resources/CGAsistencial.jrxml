@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
+<!-- 2015-11-10T09:53:39 -->
+<!--<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+			  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			  xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+			  http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"-->
+
+			  <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+			  <!--xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports -->
+			  <!--http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"-->
+
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+			  name="CGAsistencial" pageWidth="792" pageHeight="612"
+			  orientation="Landscape" columnWidth="752" leftMargin="20"
+			  rightMargin="20" topMargin="20" bottomMargin="20" uuid="2d0ef6c0-4363-4f07-a46d-114aea16989c">
+	<!--<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>-->
+
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="mes" class="java.lang.Integer"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="realizadas" class="java.lang.Integer"/>
+	<field name="tipoReporte" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement x="117" y="8" width="529" height="27" uuid="49da6aa3-8333-4488-9c58-25a1723be521"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INSTITUTO SALVADOREÑO DEL SEGURO SOCIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="117" y="26" width="529" height="27" uuid="2104ec02-68bc-4a3f-a32b-6cdcc0b90462"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[DEPARTAMENTO DE ATENCIÓN HOSPITALARIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="47" width="529" height="27" uuid="b071dae0-d394-4173-bb6e-2742958f47f5"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[PRODUCCIÓN QUIRURGICA  HOSPITAL REGIONAL DE SANTA ANA ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement x="243" y="5" width="220" height="18" uuid="b77e1155-474f-4ba3-a267-a6276addd668"/>
+				<textElement textAlignment="Center">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[ENERO A DICIEMBRE DE ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="447" y="5" width="100" height="18" uuid="aca9582c-9849-407f-9251-cf9a9fb0355c"/>
+				<textElement>
+					<font size="15"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="-15" y="28" width="792" height="27" uuid="8793df2e-a3ad-48ae-817f-150687fa4ab6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipoReporte}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<summary>
+		<band height="215" splitType="Stretch">
+			<crosstab>
+				<reportElement x="-15" y="15" width="765" height="200" uuid="07d492d9-96d3-41ba-8eaf-c2b31e5e9474">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+				</reportElement>
+				<rowGroup name="nombres1" width="60" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{nombres}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" >
+							<textField>
+								<reportElement x="0" y="0" width="60" height="20" uuid="6d9e78e9-7d6c-4152-a5fe-05507d4c7291"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{nombres1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents mode="Opaque" >
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="9d67a788-e438-47cb-9cf0-a594ec3289b3"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle"/>
+								<text><![CDATA[Total:   ]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="mes1" height="20" totalPosition="End">
+					<bucket class="java.lang.Integer">
+						<bucketExpression><![CDATA[$F{mes}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque" >
+							<textField>
+								<reportElement x="0" y="0" width="60" height="20" uuid="00b7e8d3-dbd6-4e4c-8911-ede41342e62e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$V{mes1}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents mode="Opaque" >
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="b6641eb1-66c9-40a2-bec0-10f88bf47261"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Total Qx]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="realizadas_MEASURE1" class="java.lang.Integer" calculation="Sum">
+					<measureExpression><![CDATA[$F{realizadas}]]></measureExpression>
+				</measure>
+				<crosstabCell width="60" height="20">
+					<cellContents mode="Opaque" >
+						<textField>
+							<reportElement x="0" y="0" width="60" height="20" uuid="9637b7da-577a-4d3d-a932-220aa9812aaf"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{realizadas_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="mes1">
+					<cellContents mode="Opaque" >
+						<textField>
+							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="117aca75-c52c-41a4-8892-c715d554436e"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{realizadas_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="nombres1">
+					<cellContents mode="Opaque" >
+						<textField>
+							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="eacfe910-9c8f-41ee-8c69-654dfa698a4f"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{realizadas_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="nombres1" columnTotalGroup="mes1">
+					<cellContents mode="Opaque" >
+						<textField>
+							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="38ada72c-e3d9-45a5-9192-8d43a27bfbf2"/>
+							<textElement textAlignment="Center" verticalAlignment="Middle"/>
+							<textFieldExpression><![CDATA[$V{realizadas_MEASURE1}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

@@ -7,15 +7,13 @@ package com.persistencia;
 
 import com.persistencia.exceptions.IllegalOrphanException;
 import com.persistencia.exceptions.NonexistentEntityException;
-import java.io.Serializable;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
+
+import javax.persistence.*;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 
 /**
  *
@@ -197,5 +195,52 @@ public class EspecialidadJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+    public Especialidad getCirujiaGeneral(){
+        return findEspecialidad(1);
+    }
+
+    public Especialidad getGyO(){
+        return findEspecialidad(2);
+    }
+
+    public Especialidad getGinecloobstetra(){
+        return findEspecialidad(2);
+    }
+
+    public Especialidad getOftalmologo(){
+        return findEspecialidad(3);
+    }
+
+    public Especialidad getOtorrino(){
+        return findEspecialidad(4);
+    }
+
+    public Especialidad getOrtopeda(){
+        return findEspecialidad(5);
+    }
+
+    public Especialidad getUrologo(){
+        return findEspecialidad(6);
+    }
+
+    public Especialidad getNeuroCirujano(){
+        return findEspecialidad(7);
+    }
+
+    public Especialidad getOncologo(){
+        return findEspecialidad(8);
+    }
+
+    public Especialidad getPlastico(){
+        return findEspecialidad(9);
+    }
+
+    public Especialidad getMastologo(){
+        return findEspecialidad(10);
+    }
+    public Especialidad getVascular(){
+        return findEspecialidad(11);
+    }
+
 }

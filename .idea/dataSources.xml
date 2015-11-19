@@ -13,10 +13,9 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
-      <libraries />
     </data-source>
     <data-source source="LOCAL" name="NewPersistenceUnit/EclipseLink" uuid="593bb102-9b1f-48fb-aa17-234d2d85e590">
-      <driver-ref>mysql</driver-ref>
+      <driver-ref>bef26b3a-2749-4c39-8307-f9b55e0f52d2</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/ISSS</jdbc-url>

@@ -234,6 +234,13 @@ public class HelloController {
         return "/ediciones/edicion-cirujano";
     }
 
+    @RequestMapping(value = "/ediciones/servlet-edicion-cirujano", method = RequestMethod.GET)
+    public String servlet_cirujano(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "/ediciones/servlet-edicion-cirujano";
+    }
+
 
 
 

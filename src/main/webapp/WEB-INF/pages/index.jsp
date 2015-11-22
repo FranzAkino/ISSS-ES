@@ -34,7 +34,9 @@
             <a class="flask" href="${pageContext.request.contextPath}historial"><img src="css/media/folder.png" /></a>
             <a class="heartbeat" href="${pageContext.request.contextPath}Registro"><img src="css/media/menu.png" /></a>
             <a class="scissors" href="${pageContext.request.contextPath}Registros-informacion"><img src="css/media/usuarios.png" /></a>
+            <a class="scissors" href="${pageContext.request.contextPath}edicion"><img src="css/media/edicion.png" /></a>
             <a class="scissors" href="${pageContext.request.contextPath}estadisticas"><img src="css/media/estadisticas.png" /></a>
+            <a class="scissors" href="${pageContext.request.contextPath}reportes"><img src="css/media/reportes.png" /></a>
 
         </div>
     </div>

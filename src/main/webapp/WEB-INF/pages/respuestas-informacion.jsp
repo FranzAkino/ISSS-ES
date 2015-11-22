@@ -48,8 +48,8 @@
 
 %>
 <%-- Paciente --%>
-Metas <%= meta%>, ID del doctor <%= n_meta2.getCirujano().getIdCirujano()%> Fecha <%= n_mes%> <%= n_anyo%>
-<%--<%response.sendRedirect("Registros-informacion"); %>--%>
+<%--Metas <%= meta%>, ID del doctor <%= n_meta2.getCirujano().getIdCirujano()%> Fecha <%= n_mes%> <%= n_anyo%>--%>
+<%response.sendRedirect("Registros-informacion"); %>
 
 
 

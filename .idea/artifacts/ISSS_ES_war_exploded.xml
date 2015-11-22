@@ -26,7 +26,8 @@
           <element id="library" level="project" name="org.springframework:spring-context-support:4.1.1.RELEASE" />
           <element id="library" level="project" name="org.modelmapper:modelmapper:0.7.5" />
           <element id="library" level="project" name="org.apache.poi:poi:3.12" />
-          <element id="library" level="project" name="net.sf.jasperreports:jasperreports:5.1.0" />
+          <element id="library" level="project" name="net.sf.jasperreports:jasperreports:5.0.1" />
+          <element id="library" level="project" name="mysql:mysql-connector-java:5.1.36" />
         </element>
       </element>
       <element id="directory" name="META-INF">

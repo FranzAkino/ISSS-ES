@@ -27,12 +27,16 @@
   EspecialidadJpaController eliminar_especialidades = new EspecialidadJpaController(emf);
   HorarioJpaController eliminar_horarios = new HorarioJpaController(emf);
   MetasJpaController eliminar_metas= new MetasJpaController(emf);
+  QuirofanoJpaController eliminar_quirofano = new QuirofanoJpaController(emf);
+  RiesgoJpaController eliminar_riesgo = new RiesgoJpaController(emf);
 
   String id= request.getParameter("cirujanos");
   String id_cie9 = request.getParameter("procedimientos");
   String id_especialidad = request.getParameter("especialidad");
   String id_horarios = request.getParameter("horarios");
   String id_metas = request.getParameter("metas");
+  String id_quirofanos = request.getParameter("quirofanos");
+  String id_riesgos = request.getParameter("riesgos");
 
 
   if(id != null){
@@ -54,7 +58,18 @@
   if(id_metas != null){
     int metas= Integer.parseInt(id_metas);
 
+//    eliminar_metas.destroy(MEtasPK);
   }
+  if(id_quirofanos != null){
+    int quirofanos= Integer.parseInt(id_quirofanos);
+    eliminar_quirofano.destroy(quirofanos);
+
+  }
+  if(id_riesgos != null){
+  int riesgos= Integer.parseInt(id_riesgos);
+    eliminar_riesgo.destroy(riesgos);
+
+}
 
 
 

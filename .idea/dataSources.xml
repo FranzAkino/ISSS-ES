@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1550770879">
+  <component name="DataSourceManagerImpl" format="xml" hash="2370335307">
     <data-source source="LOCAL" name="MySQL - ISSS@localhost" uuid="69cd816f-5d8b-49c6-8aa3-5b2cb2c142a9">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -13,9 +13,10 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
+      <libraries />
     </data-source>
     <data-source source="LOCAL" name="NewPersistenceUnit/EclipseLink" uuid="593bb102-9b1f-48fb-aa17-234d2d85e590">
-      <driver-ref>bef26b3a-2749-4c39-8307-f9b55e0f52d2</driver-ref>
+      <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/ISSS</jdbc-url>

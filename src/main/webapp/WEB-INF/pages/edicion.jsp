@@ -91,7 +91,7 @@
 %>
 <header id="header">
   <div class="content">
-    <div id="logo"><a href=""> PARALLAX </a></div>
+    <div id="logo"><a href="/"> INICIO </a></div>
 
     <nav id="nav">
       <ul>
@@ -215,6 +215,7 @@
 <div id="slide6">
   <div class="content">
     <h1>Quirofanos</h1>
+    <form action="edicion-eliminar" method="get">
     <select id="list_quirofanos" size=12 autofocus name="quirofanos">
 
       <%
@@ -224,12 +225,16 @@
       <option value="<%= lista_q.getIdQuirofano()%>"><%=lista_q.getDescripcion()%></option>
       <%}%>
     </select>
+    <button type="button" onclick="">Editar</button>
+    <button onclick="{return confirmComplete();}">Eliminar</button>
+    </form>
   </div>
 </div>
 
 <div id="slide7">
   <div class="content">
     <h1>Riesgos</h1>
+    <form action="edicion-eliminar" method="get">
     <select id="list_riesgos" size=12 autofocus name="riesgos">
 
       <%
@@ -239,6 +244,9 @@
       <option value="<%= lista_r.getIdRiesgo()%>"><%=lista_r.getNombre()%></option>
       <%}%>
     </select>
+      <button type="button" onclick="">Editar</button>
+      <button onclick="{return confirmComplete();}">Eliminar</button>
+      </form>
   </div>
 </div>
 

@@ -124,8 +124,8 @@
       <%}%>
     </select>
 
-      <button type="button" onclick="">Editar</button>
-      <button onclick="{return confirmComplete();}">Eliminar</button>
+      <button name="editar" value="Editar" onclick="">Editar</button>
+      <button name="eliminar" value="Eliminar" onclick="{return confirmComplete();}">Eliminar</button>
 
       </form>
   </div>

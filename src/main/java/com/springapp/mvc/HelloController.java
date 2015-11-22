@@ -219,6 +219,21 @@ public class HelloController {
         return "edicion-eliminar";
     }
 
+    @RequestMapping(value = "/ediciones/edicion-cirujano", method = RequestMethod.GET)
+    public String edi_cirujano(ModelMap model){
+
+        EspecialidadJpaController especialidadJpaController= new EspecialidadJpaController(emf);
+        List<Especialidad> lista_especialidad= especialidadJpaController.findEspecialidadEntities();
+        model.addAttribute("especialidades",lista_especialidad);
+
+        HorarioJpaController horarioJpaController= new HorarioJpaController(emf);
+        List<Horario> lista_horarios= horarioJpaController.findHorarioEntities();
+        model.addAttribute("horarios",lista_horarios);
+
+        model.addAttribute("ajj","ajj");
+        return "/ediciones/edicion-cirujano";
+    }
+
 
 
 

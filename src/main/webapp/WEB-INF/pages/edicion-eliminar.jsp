@@ -41,7 +41,16 @@
 
   if(id != null){
     int id_cirujano= Integer.parseInt(id);
-    eliminar_cirujano.destroy(id_cirujano);
+    if(request.getParameter("editar") != null){
+//      request.setAttribute("id",id_cirujano);
+      request.getRequestDispatcher("/ediciones/edicion-cirujano").forward(request, response);
+
+    }
+    if(request.getParameter("eliminar") != null){
+
+      eliminar_cirujano.destroy(id_cirujano);
+    }
+
   }
   if(id_cie9 != null){
     int cie9= Integer.parseInt(id_cie9);
@@ -74,7 +83,7 @@
 
 
 
-  response.sendRedirect("edicion");
+//  response.sendRedirect("edicion");
 
 
 %>

@@ -3,6 +3,7 @@
 <%@ page import="com.persistencia.*" %>
 <%@ page import="com.springapp.mvc.CreadorEntityManager" %>
 <%@ page import="javax.persistence.EntityManagerFactory" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%--
   Created by IntelliJ IDEA.
   User: zaldana
@@ -124,11 +125,12 @@
       <%}%>
     </select>
 
-      <button name="editar" value="Editar" onclick="">Editar</button>
-      <button name="eliminar" value="Eliminar" onclick="{return confirmComplete();}">Eliminar</button>
+      <button class="boton" name="editar" value="Editar" onclick="">Editar</button>
+      <button class="boton" name="eliminar" value="Eliminar" onclick="{return confirmComplete();}">Eliminar</button>
 
       </form>
   </div>
+
 </div>
 
 <div id="slide2">
@@ -145,8 +147,8 @@
       <%}%>
     </select>
 
-    <button onclick="{return confirmComplete();}">Eliminar</button>
-    <button type="button" onclick="alert('Desea editar este procedimiento?')">Editar</button>
+    <button class="boton" onclick="{return confirmComplete();}">Eliminar</button>
+    <button class="boton" type="button" onclick="alert('Desea editar este procedimiento?')">Editar</button>
     </form>
 
   </div>
@@ -166,8 +168,8 @@
       <option value="<%= lista_e.getIdEspecialidad()%>"><%=lista_e.getEspecialidad()%></option>
       <%}%>
     </select>
-      <button onclick="{return confirmComplete();}">Eliminar</button>
-      <button type="button" onclick="alert('Desea editar esta especialidad?')">Editar</button>
+      <button class="boton" onclick="{return confirmComplete();}">Eliminar</button>
+      <button class="boton" type="button" onclick="alert('Desea editar esta especialidad?')">Editar</button>
     </form>
   </div>
 </div>
@@ -180,14 +182,16 @@
     <select id="list_horarios" size=12 autofocus name="horarios">
 
       <%
+        SimpleDateFormat formato= new SimpleDateFormat("h:mm a");
+
         while(it_h.hasNext()) {
           lista_h = it_h.next();
       %>
-      <option value="<%= lista_h.getIdHorario()%>"><%=lista_h.getEntrada()%> <%=lista_h.getSalida()%></option>
+      <option value="<%= lista_h.getIdHorario()%>"><%=formato.format(lista_h.getEntrada())%> <%=formato.format(lista_h.getSalida())%></option>
       <%}%>
     </select>
-      <button onclick="{return confirmComplete();}">Eliminar</button>
-      <button type="button" onclick="alert('Desea editar este horario?')">Editar</button>
+      <button class="boton" onclick="{return confirmComplete();}">Eliminar</button>
+      <button class="boton" type="button" onclick="alert('Desea editar este horario?')">Editar</button>
     </form>
   </div>
 </div>
@@ -206,8 +210,8 @@
       <option value="<%= lista_m.getMetasPK()%>"><%=lista_m.getCirujano().getNombres()%> <%=lista_m.getMetasPK().getAnio()%> <%=lista_m.getMetasPK().getMes()%> <%=lista_m.getMeta()%></option>
       <%}%>
     </select>
-      <button onclick="{return confirmComplete();}">Eliminar</button>
-      <button type="button" onclick="alert('Desea editar esta meta?')">Editar</button>
+      <button class="boton" onclick="{return confirmComplete();}">Eliminar</button>
+      <button class="boton" type="button" onclick="alert('Desea editar esta meta?')">Editar</button>
       </form>
   </div>
 </div>
@@ -225,8 +229,8 @@
       <option value="<%= lista_q.getIdQuirofano()%>"><%=lista_q.getDescripcion()%></option>
       <%}%>
     </select>
-    <button type="button" onclick="">Editar</button>
-    <button onclick="{return confirmComplete();}">Eliminar</button>
+    <button class="boton" type="button" onclick="">Editar</button>
+    <button class="boton" onclick="{return confirmComplete();}">Eliminar</button>
     </form>
   </div>
 </div>
@@ -244,8 +248,8 @@
       <option value="<%= lista_r.getIdRiesgo()%>"><%=lista_r.getNombre()%></option>
       <%}%>
     </select>
-      <button type="button" onclick="">Editar</button>
-      <button onclick="{return confirmComplete();}">Eliminar</button>
+      <button class="boton" type="button" onclick="">Editar</button>
+      <button class="boton" onclick="{return confirmComplete();}">Eliminar</button>
       </form>
   </div>
 </div>

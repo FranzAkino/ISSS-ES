@@ -17,6 +17,25 @@
 
 
 <div id="content-main">
+    <div id="header-wrapper">
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><a href="#">ISSS</a></h1>
+            </div>
+            <div id="menu">
+                <ul>
+                    <li class="current_page_item"><a href="#" accesskey="1" title="">Inicio</a></li>
+                    <li><a href="/historial" accesskey="2" title="">Historial</a></li>
+                    <li><a href="/Registro" accesskey="3" title="">Registro</a></li>
+                    <li><a href="/Registros-informacion" accesskey="4" title="">Registro 2</a></li>
+                    <li><a href="/edicion" accesskey="5" title="">Edicion</a></li>
+                    <li><a href="/estadisticas" accesskey="6" title="">Estadisticas</a></li>
+                    <li><a href="/reportes" accesskey="7" title="">Reportes</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <div id="content">
 
         <h2>SALA DE OPERACIONES | Hospital Regional ISSS Santa Ana</h2>

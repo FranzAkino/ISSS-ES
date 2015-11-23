@@ -90,6 +90,8 @@
 <%}%>
 
   <input type="submit" id="guargarc" value="Guardar" />
+  <input type="button" id="cancelar" value="Cancelar" onclick="window.location='/edicion';return false;"/>
+
   </div>
 </form>
 

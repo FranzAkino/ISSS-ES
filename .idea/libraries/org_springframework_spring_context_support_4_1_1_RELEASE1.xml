@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="org.springframework:spring-context-support:4.1.1.RELEASE1" type="repository">
+    <properties maven-id="org.springframework:spring-context-support:4.1.1.RELEASE" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/spring-context-support-4.1.1.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-beans-4.1.1.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-core-4.1.1.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging-1.1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-context-4.1.1.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-aop-4.1.1.RELEASE.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/aopalliance-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-expression-4.1.1.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/spring-context-support-4.1.1.RELEASE-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-context-support/4.1.1.RELEASE/spring-context-support-4.1.1.RELEASE-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

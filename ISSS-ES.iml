@@ -64,5 +64,6 @@
     <orderEntry type="library" name="net.sf.jasperreports:jasperreports:5.0.1" level="project" />
     <orderEntry type="library" name="org.modelmapper:modelmapper:0.7.5" level="project" />
     <orderEntry type="library" name="mysql:mysql-connector-java:5.1.36" level="project" />
+    <orderEntry type="library" name="org.springframework:spring-context-support:4.1.1.RELEASE1" level="project" />
   </component>
 </module>

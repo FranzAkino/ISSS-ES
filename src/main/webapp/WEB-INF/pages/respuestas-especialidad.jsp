@@ -21,7 +21,7 @@
     EspecialidadJpaController nuevo_espe = new EspecialidadJpaController(emf);
     nuevo_espe.create(nueva);
 
-response.sendRedirect("Registro-informacion");
+response.sendRedirect("Registros-informacion");
 
 %>
 <%-- Paciente --%>

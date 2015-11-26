@@ -41,7 +41,7 @@
   <div>
     <h1>Edicion de Cirujano</h1>
 
-    <input type="text" id="id_c" name="id_c" value="<%=actual.getIdCirujano()%>" />
+    <%--<input type="text" id="id_c" name="id_c" value="<%=actual.getIdCirujano()%>" />--%>
 
     <span>Nombres</span><input type="text" placeholder="Nombre" id="c_nombre" name="c_nombre" value="<%=actual.getNombres()%>" />
     <span>Apellidos</span> <input type="text" placeholder="Apellido" id="c_apellido" name="c_apellido" value="<%= actual.getApellidos()%>"/>
@@ -89,7 +89,8 @@
   <input type="radio" id="est2" name="estado"  value="0"><label for="est2" >Inactivo</label>
 <%}%>
 
-  <input type="submit" id="guargarc" value="Guardar" />
+    <button class="boton" name="guardarc" type="submit" value="<%= id_c%>">GUARDAR</button>
+  <%--<input type="submit" id="guargarc" value="Guardar" />--%>
   <input type="button" id="cancelar" value="Cancelar" onclick="window.location='/edicion';return false;"/>
 
   </div>

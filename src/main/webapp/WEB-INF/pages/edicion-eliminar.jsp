@@ -49,16 +49,36 @@
     if(request.getParameter("eliminar") != null){
 
       eliminar_cirujano.destroy(id_cirujano);
+      response.sendRedirect("edicion");
     }
 
   }
   if(id_cie9 != null){
     int cie9= Integer.parseInt(id_cie9);
-    eliminar_cie9.destroy(cie9);
+    if(request.getParameter("p_editar") != null){
+
+      request.getRequestDispatcher("/ediciones/edicion-cie9").forward(request, response);
+
+    }
+    if(request.getParameter("p_eliminar") != null){
+
+      eliminar_cie9.destroy(cie9);
+      response.sendRedirect("edicion");
+    }
   }
   if(id_especialidad != null){
     int especialidad= Integer.parseInt(id_especialidad);
-    eliminar_especialidades.destroy(especialidad);
+    if(request.getParameter("e_editar") != null){
+
+      request.getRequestDispatcher("/ediciones/edicion-especialidad").forward(request, response);
+
+    }
+    if(request.getParameter("e_eliminar") != null){
+
+      eliminar_especialidades.destroy(especialidad);
+      response.sendRedirect("edicion");
+    }
+
   }
   if(id_horarios != null){
     int horarios= Integer.parseInt(id_horarios);
@@ -71,12 +91,29 @@
   }
   if(id_quirofanos != null){
     int quirofanos= Integer.parseInt(id_quirofanos);
-    eliminar_quirofano.destroy(quirofanos);
+    if(request.getParameter("q_editar") != null){
+
+      request.getRequestDispatcher("/ediciones/edicion-quirofanos").forward(request, response);
+
+    }
+    if(request.getParameter("q_eliminar") != null){
+
+      eliminar_quirofano.destroy(quirofanos);
+      response.sendRedirect("edicion");
+    }
 
   }
   if(id_riesgos != null){
-  int riesgos= Integer.parseInt(id_riesgos);
-    eliminar_riesgo.destroy(riesgos);
+
+    if(request.getParameter("r_editar") != null){
+
+      request.getRequestDispatcher("/ediciones/edicion-riesgos").forward(request, response);
+
+    }
+    if(request.getParameter("r_eliminar") != null){
+      int riesgos= Integer.parseInt(id_riesgos);
+      eliminar_riesgo.destroy(riesgos);
+    }
 
 }
 

@@ -147,8 +147,8 @@
       <%}%>
     </select>
 
-    <button class="boton" onclick="{return confirmComplete();}">Eliminar</button>
-    <button class="boton" type="button" onclick="alert('Desea editar este procedimiento?')">Editar</button>
+    <button class="boton" name="p_editar" value="Editar"  >Editar</button>
+    <button class="boton"  name="p_eliminar" value="Eliminar" onclick="{return confirmComplete();}">Eliminar</button>
     </form>
 
   </div>
@@ -168,8 +168,9 @@
       <option value="<%= lista_e.getIdEspecialidad()%>"><%=lista_e.getEspecialidad()%></option>
       <%}%>
     </select>
-      <button class="boton" onclick="{return confirmComplete();}">Eliminar</button>
-      <button class="boton" type="button" onclick="alert('Desea editar esta especialidad?')">Editar</button>
+
+      <button class="boton" name="e_editar" value="Editar"  onclick="alert('Desea editar esta especialidad?')">Editar</button>
+      <button class="boton"  name="e_eliminar" value="Eliminar" onclick="{return confirmComplete();}">Eliminar</button>
     </form>
   </div>
 </div>
@@ -229,8 +230,10 @@
       <option value="<%= lista_q.getIdQuirofano()%>"><%=lista_q.getDescripcion()%></option>
       <%}%>
     </select>
-    <button class="boton" type="button" onclick="">Editar</button>
-    <button class="boton" onclick="{return confirmComplete();}">Eliminar</button>
+      <button class="boton" name="q_editar" value="Editar"  onclick="alert('Desea editar este quirofano?')">Editar</button>
+      <button class="boton"  name="q_eliminar" value="Eliminar" onclick="{return confirmComplete();}">Eliminar</button>
+
+
     </form>
   </div>
 </div>
@@ -248,9 +251,11 @@
       <option value="<%= lista_r.getIdRiesgo()%>"><%=lista_r.getNombre()%></option>
       <%}%>
     </select>
-      <button class="boton" type="button" onclick="">Editar</button>
-      <button class="boton" onclick="{return confirmComplete();}">Eliminar</button>
-      </form>
+      <button class="boton" name="r_editar" value="Editar"  onclick="alert('Desea editar este riesgo?')">Editar</button>
+      <button class="boton"  name="r_eliminar" value="Eliminar" onclick="{return confirmComplete();}">Eliminar</button>
+
+
+    </form>
   </div>
 </div>
 

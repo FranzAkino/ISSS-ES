@@ -241,6 +241,73 @@ public class HelloController {
         return "/ediciones/servlet-edicion-cirujano";
     }
 
+    @RequestMapping(value = "/ediciones/edicion-cie9", method = RequestMethod.GET)
+    public String edi_cie9(ModelMap model){
+
+        EspecialidadJpaController especialidadJpaController= new EspecialidadJpaController(emf);
+        List<Especialidad> lista_especialidad= especialidadJpaController.findEspecialidadEntities();
+        model.addAttribute("especialidades",lista_especialidad);
+
+        HorarioJpaController horarioJpaController= new HorarioJpaController(emf);
+        List<Horario> lista_horarios= horarioJpaController.findHorarioEntities();
+        model.addAttribute("horarios",lista_horarios);
+
+        model.addAttribute("ajj","ajj");
+        return "/ediciones/edicion-cie9";
+    }
+
+    @RequestMapping(value = "/ediciones/servlet-edicion-cie9", method = RequestMethod.GET)
+    public String servlet_cie9(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "/ediciones/servlet-edicion-cie9";
+    }
+
+    @RequestMapping(value = "/ediciones/edicion-especialidad", method = RequestMethod.GET)
+    public String edicion_especialidad(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "/ediciones/edicion-especialidad";
+    }
+
+    @RequestMapping(value = "/ediciones/servlet-edicion-especialidad", method = RequestMethod.GET)
+    public String servlet_especialidad(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "/ediciones/servlet-edicion-especialidad";
+    }
+
+
+    @RequestMapping(value = "/ediciones/edicion-quirofanos", method = RequestMethod.GET)
+    public String edicion_quirofanos(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "/ediciones/edicion-quirofanos";
+    }
+
+    @RequestMapping(value = "/ediciones/servlet-edicion-quirofanos", method = RequestMethod.GET)
+    public String servlet_quirofanos(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "/ediciones/servlet-edicion-quirofanos";
+    }
+
+    @RequestMapping(value = "/ediciones/edicion-riesgos", method = RequestMethod.GET)
+    public String edicion_riesgos(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "/ediciones/edicion-riesgos";
+    }
+
+    @RequestMapping(value = "/ediciones/servlet-edicion-riesgos", method = RequestMethod.GET)
+    public String servlet_riesgos(ModelMap model){
+
+        model.addAttribute("ajj","ajj");
+        return "/ediciones/servlet-edicion-riesgos";
+    }
+
+
+
 
 
 

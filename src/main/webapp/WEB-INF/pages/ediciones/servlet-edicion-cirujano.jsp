@@ -18,7 +18,7 @@
   EntityManagerFactory emf= CreadorEntityManager.crearEMF();
   CirujanoJpaController cirujano = new CirujanoJpaController(emf);
 
-  int id_c = Integer.parseInt(request.getParameter("id_c"));
+  int id_c = Integer.parseInt(request.getParameter("guardarc"));
 
   HorarioJpaController horario = new HorarioJpaController(emf);
   Horario edi_horario = horario.findHorario(Integer.parseInt(request.getParameter("horarios")));
